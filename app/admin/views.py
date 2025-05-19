@@ -9,6 +9,8 @@ from flask import (
 )
 from flask_login import current_user, login_required
 from flask_rq import get_queue
+import os
+from werkzeug.utils import secure_filename
 
 from app import db
 from app.admin.forms import (
@@ -17,9 +19,10 @@ from app.admin.forms import (
     InviteUserForm,
     NewUserForm,
 )
+from app.admin.resident_forms import ResidentForm
 from app.decorators import admin_required
 from app.email import send_email
-from app.models import EditableHTML, Role, User
+from app.models import EditableHTML, Role, User, Resident
 
 admin = Blueprint('admin', __name__)
 
@@ -196,3 +199,106 @@ def update_editor_contents():
     db.session.commit()
 
     return 'OK', 200
+
+# Resident Management Routes
+
+@admin.route('/residents')
+@login_required
+@admin_required
+def residents():
+    """View all residents."""
+    residents = Resident.query.all()
+    return render_template('admin/residents.html', residents=residents)
+
+
+@admin.route('/resident/new', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_resident():
+    """Create a new resident."""
+    form = ResidentForm()
+    if form.validate_on_submit():
+        # Handle photo upload
+        photo_url = None
+        if form.photo.data:
+            filename = secure_filename(form.photo.data.filename)
+            photo_path = os.path.join('app', 'static', 'images', 'residents', filename)
+            form.photo.data.save(photo_path)
+            photo_url = url_for('static', filename=f'images/residents/{filename}')
+        
+        # Create resident
+        resident = Resident(
+            name=form.name.data,
+            date_of_birth=form.date_of_birth.data,
+            photo_url=photo_url
+        )
+        
+        # Add resident to database
+        db.session.add(resident)
+        db.session.commit()
+        
+        # Assign caregivers
+        for caregiver in form.caregivers.data:
+            caregiver.residents.append(resident)
+        
+        db.session.commit()
+        flash(f'Resident {resident.name} successfully created.', 'success')
+        return redirect(url_for('admin.residents'))
+    
+    return render_template('admin/new_resident.html', form=form)
+
+
+@admin.route('/resident/<int:resident_id>/edit', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_resident(resident_id):
+    """Edit a resident."""
+    resident = Resident.query.get_or_404(resident_id)
+    form = ResidentForm(obj=resident)
+    
+    # Pre-select current caregivers
+    if request.method == 'GET':
+        form.caregivers.data = resident.caregivers.all()
+    
+    if form.validate_on_submit():
+        # Update resident info
+        resident.name = form.name.data
+        resident.date_of_birth = form.date_of_birth.data
+        
+        # Handle photo upload
+        if form.photo.data:
+            filename = secure_filename(form.photo.data.filename)
+            photo_path = os.path.join('app', 'static', 'images', 'residents', filename)
+            form.photo.data.save(photo_path)
+            resident.photo_url = url_for('static', filename=f'images/residents/{filename}')
+        
+        # Update caregiver assignments
+        # Clear current caregivers
+        for caregiver in resident.caregivers.all():
+            caregiver.residents.remove(resident)
+        
+        # Add selected caregivers
+        for caregiver in form.caregivers.data:
+            caregiver.residents.append(resident)
+        
+        db.session.commit()
+        flash(f'Resident {resident.name} successfully updated.', 'success')
+        return redirect(url_for('admin.residents'))
+    
+    return render_template('admin/edit_resident.html', form=form, resident=resident)
+
+
+@admin.route('/resident/<int:resident_id>/delete')
+@login_required
+@admin_required
+def delete_resident(resident_id):
+    """Delete a resident."""
+    resident = Resident.query.get_or_404(resident_id)
+    name = resident.name
+    
+    # Delete the resident
+    db.session.delete(resident)
+    db.session.commit()
+    
+    flash(f'Resident {name} successfully deleted.', 'success')
+    return redirect(url_for('admin.residents'))

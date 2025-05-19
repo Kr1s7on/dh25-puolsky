@@ -3,13 +3,22 @@ from flask_login import AnonymousUserMixin, UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import BadSignature, SignatureExpired
 from werkzeug.security import check_password_hash, generate_password_hash
+from sqlalchemy.orm import relationship
 
 from .. import db, login_manager
 
 
+# Association table for many-to-many relationship between caregivers (users) and residents
+caregiver_resident_association = db.Table('caregiver_resident_association',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id'), primary_key=True),
+    db.Column('resident_id', db.Integer, db.ForeignKey('residents.id'), primary_key=True)
+)
+
+
 class Permission:
     GENERAL = 0x01
-    ADMINISTER = 0xff
+    CAREGIVER = 0x02  # Caregivers can manage residents, inventory, and usage logs
+    ADMINISTER = 0xFF
 
 
 class Role(db.Model):
@@ -25,6 +34,7 @@ class Role(db.Model):
     def insert_roles():
         roles = {
             'User': (Permission.GENERAL, 'main', True),
+            'Caregiver': (Permission.CAREGIVER, 'main', False),  # Changed 'caregiver' to 'main'
             'Administrator': (
                 Permission.ADMINISTER,
                 'admin',
@@ -54,6 +64,15 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    # SMS alert preferences
+    phone_number = db.Column(db.String(32), nullable=True)
+    sms_opt_in = db.Column(db.Boolean, default=False)
+
+    # Many-to-many relationship with residents for caregivers
+    residents = db.relationship('Resident',
+                             secondary='caregiver_resident_association',
+                             backref=db.backref('caregivers', lazy='dynamic'),
+                             lazy='dynamic')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -73,6 +92,9 @@ class User(UserMixin, db.Model):
 
     def is_admin(self):
         return self.can(Permission.ADMINISTER)
+
+    def is_caregiver(self):
+        return self.can(Permission.CAREGIVER)
 
     @property
     def password(self):
@@ -185,6 +207,9 @@ class AnonymousUser(AnonymousUserMixin):
         return False
 
     def is_admin(self):
+        return False
+
+    def is_caregiver(self):
         return False
 
 

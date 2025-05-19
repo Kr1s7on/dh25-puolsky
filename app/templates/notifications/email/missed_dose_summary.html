@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Missed/Overdue Dose Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+        .content {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .resident-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #c0392b;
+        }
+        .missed {
+            color: #e74c3c;
+        }
+        .overdue {
+            color: #e67e22;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Missed/Overdue Dose Summary</h2>
+    </div>
+    <div class="content">
+        <p>The following doses have been missed or are overdue:</p>
+        
+        {% for group in grouped_doses %}
+        <div class="resident-section">
+            <div class="resident-name">{{ group.resident.full_name }}</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Medication</th>
+                        <th>Scheduled Time</th>
+                        <th>Status</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dose in group.doses %}
+                    <tr>
+                        <td>{{ dose.inventory_item.name }}</td>
+                        <td>{{ dose.scheduled_time }}</td>
+                        <td class="{{ dose.status.value }}">{{ dose.status.value }}</td>
+                        <td>{{ dose.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+        
+        <p>Please follow up on these missed or overdue doses as appropriate.</p>
+        
+        <div class="footer">
+            <p>This is an automated message from DoseDash. Please do not reply to this email.</p>
+            <p>If you have any questions, please contact your administrator.</p>
+        </div>
+    </div>
+</body>
+</html>

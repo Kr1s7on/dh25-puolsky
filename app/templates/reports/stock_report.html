@@ -1,0 +1,121 @@
+{% extends 'layouts/base.html' %}
+{% import 'macros/nav_macros.html' as nav %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Stock Level Report for {{ resident.name }}</h1>
+        <div>
+            <a href="{{ url_for('reports.stock_report', resident_id=resident.id, format='pdf') }}" class="btn btn-outline-primary me-2">
+                <i class="fa fa-file-pdf"></i> Download PDF
+            </a>
+            <a href="{{ url_for('reports.email_report', report_type='stock', resident_id=resident.id) }}" class="btn btn-outline-primary">
+                <i class="fa fa-envelope"></i> Email Report
+            </a>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Report Details</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Generated:</strong> {{ date.strftime('%B %d, %Y at %H:%M') }}</p>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Current Inventory</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Current Stock</th>
+                            <th>Threshold</th>
+                            <th>Status</th>
+                            <th>Expiration</th>
+                            <th>Daily Usage</th>
+                            <th>Days Remaining</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.type }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.threshold }}</td>
+                            <td>
+                                {% if item.quantity <= 0 %}
+                                <span class="badge bg-danger">Out of Stock</span>
+                                {% elif item.quantity <= item.threshold %}
+                                <span class="badge bg-warning text-dark">Low Stock</span>
+                                {% else %}
+                                <span class="badge bg-success">In Stock</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.expiration %}
+                                {{ item.expiration.strftime('%m/%d/%Y') }}
+                                {% else %}
+                                —
+                                {% endif %}
+                            </td>
+                            <td>{{ item.daily_usage or '—' }}</td>
+                            <td>
+                                {% if item.daily_usage and item.daily_usage > 0 %}
+                                {{ (item.quantity / item.daily_usage)|round|int }} days
+                                {% else %}
+                                —
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center py-4">No inventory items found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Summary Stats -->
+    {% if items %}
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="mb-0">Total Items</h5>
+                    <p class="display-4">{{ items|length }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="mb-0">Low Stock Items</h5>
+                    <p class="display-4 text-warning">
+                        {{ items|selectattr('quantity', 'le', 'threshold')|selectattr('quantity', 'gt', 0)|list|length }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="mb-0">Out of Stock</h5>
+                    <p class="display-4 text-danger">{{ items|selectattr('quantity', 'le', 0)|list|length }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

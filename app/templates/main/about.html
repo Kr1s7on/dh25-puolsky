@@ -3,8 +3,64 @@
 
 {% block content %}
     <div class="ui text container">
-        <h1>About</h1>
-        {{ page.render_inline_editor(editable_html_obj, current_user) }}
+        <div class="ui segment">
+            <h1 class="ui header">
+                <i class="info circle icon"></i>
+                <div class="content">
+                    About DoseDash
+                    <div class="sub header">Medical Supplies & Medication Tracker</div>
+                </div>
+            </h1>
+            
+            <div class="ui divider"></div>
+            
+            <h2 class="ui header">Purpose</h2>
+            <p>
+                DoseDash is designed to be a comprehensive solution for caregivers in elderly care facilities. It provides tools for tracking medications, managing supplies, and ensuring that residents receive their prescribed treatments on schedule.
+            </p>
+            
+            <h2 class="ui header">Core Features</h2>
+            <div class="ui bulleted list">
+                <div class="item">
+                    <div class="header">Resident Management</div>
+                    Maintain profiles for each resident with their medication needs and schedules
+                </div>
+                <div class="item">
+                    <div class="header">Inventory Tracking</div>
+                    Keep track of medication quantities, expiration dates, and usage patterns
+                </div>
+                <div class="item">
+                    <div class="header">Usage Logging</div>
+                    Record when medications are taken or missed, with optional voice notes
+                </div>
+                <div class="item">
+                    <div class="header">Alerts & Notifications</div>
+                    Receive timely alerts for low stock, missed doses, or upcoming expirations
+                </div>
+                <div class="item">
+                    <div class="header">Reporting</div>
+                    Generate comprehensive reports on medication usage and inventory status
+                </div>
+            </div>
+            
+            <h2 class="ui header">Caregiver Workflow</h2>
+            <div class="ui ordered list">
+                <div class="item">Login and access your personalized dashboard</div>
+                <div class="item">Select a resident to view their medication schedule</div>
+                <div class="item">Review any notifications for low-stock or missed doses</div>
+                <div class="item">Log doses as Taken or Missed, optionally with voice notes</div>
+                <div class="item">Manage inventory levels and generate reports as needed</div>
+            </div>
+            
+            <div class="ui info message">
+                <div class="header">Getting Started</div>
+                <p>If you're a caregiver or administrator, login to access the system. If you need an account, please contact your facility administrator.</p>
+            </div>
+            
+            {% if current_user.is_authenticated and current_user.is_admin() %}
+                {{ page.render_inline_editor(editable_html_obj, current_user) }}
+            {% endif %}
+        </div>
     </div>
 
     <script src="{{ url_for('static', filename='ckeditor/ckeditor.js') }}"></script>

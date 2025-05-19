@@ -20,7 +20,11 @@ def register_template_utils(app):
 
 
 def index_for_role(role):
-    return url_for(role.index)
+    try:
+        return url_for(role.index + '.index')
+    except:
+        # Fallback to main index if the role.index endpoint doesn't exist
+        return url_for('main.index')
 
 
 class CustomSelectField(Field):

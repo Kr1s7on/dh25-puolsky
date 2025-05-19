@@ -1,2 +1,3 @@
 web: gunicorn manage:app
-worker: python -u manage.py run_worker
+worker: python -u worker.py
+scheduler: python -u scheduler.py

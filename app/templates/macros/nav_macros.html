@@ -4,11 +4,14 @@
 
 {% macro render_menu_items(endpoints) %}
     {% for endpoint, name, icon in endpoints %}
-        <a class="item {% if request.endpoint == endpoint %}active{% endif %}" href="{{ url_for(endpoint) }}">
+        <a class="item {% if request.endpoint == endpoint %}active{% endif %}" 
+           href="{{ url_for(endpoint) }}"
+           aria-current="{% if request.endpoint == endpoint %}page{% endif %}"
+           role="menuitem">
             {% if icon %}
-                <i class="{{ icon }} icon"></i>
+                <i class="{{ icon }} icon" aria-hidden="true"></i>
             {% endif %}
-            {{ name | safe }}
+            <span>{{ name | safe }}</span>
         </a>
     {% endfor %}
 {% endmacro %}
@@ -20,19 +23,36 @@
 #}
 
 {% macro menu_items(current_user) %}
-    {% set endpoints = [
-      ('main.about', 'About', 'info')
-    ]%}
-    {% set user = [] %}
+    {% set endpoints = [] %}
+    
     {% if current_user.is_authenticated %}
-      {% set user = ([(current_user.role.index + '.index', current_user.role.name + ' Dashboard', 'user')]) %}
-    {% endif %} 
-    {{ render_menu_items( endpoints +  user ) }}
+      {% set caregiver_items = [] %}
+      
+      {% if current_user.is_caregiver() or current_user.is_admin() %}
+        {% set caregiver_items = [
+          ('quick_actions.index', 'Quick Actions', 'check circle'),
+          ('inventory.index', 'Inventory', 'medkit'),
+          ('usage.index', 'Usage Logs', 'clipboard'),
+          ('notifications.index', 'Notifications', 'bell'),
+          ('chatbot.index', 'Chatbot Assistant', 'comment')
+        ] %}
+      {% endif %}
+      
+      {% set user = [] %}
+      {% if current_user.is_admin() %}
+        {% set user = [('admin.index', 'Admin Dashboard', 'user')] %}
+      {% else %}
+        {% set user = [('main.index', current_user.role.name, 'user')] %}
+      {% endif %}
+      {{ render_menu_items( endpoints + caregiver_items + user ) }}
+    {% else %}
+      {{ render_menu_items( endpoints ) }}
+    {% endif %}
 {% endmacro %}
 
 {% macro header_items(current_user) %}
        {% set endpoints = [
-        ('main.index', config.APP_NAME, 'home'),
+        ('main.index', '<img src="' ~ url_for('static', filename='images/logo.png') ~ '" alt="DoseDash Logo" style="height: 24px; margin-right: 8px; vertical-align: middle;"> ' ~ config.APP_NAME, ''),
       ] %}
      {{ render_menu_items( endpoints ) }}
  {% endmacro %}
@@ -62,12 +82,14 @@
             {{ header_items(current_user) }}
             {{ create_dropdown(dropdown) }}
             <div class="right menu">
-                <a class="icon item" id="open-nav"><i class="sidebar icon"></i></a>
+                <a class="icon item" id="open-nav" aria-label="Open Navigation Menu" role="button" tabindex="0">
+                    <i class="sidebar icon" aria-hidden="true"></i>
+                </a>
             </div>
         </div>
 
         {# The menu items which will be shown when open-nav is clicked #}
-        <div class="ui fixed vertical fluid menu">
+        <div class="ui fixed vertical fluid menu" role="menu" aria-labelledby="open-nav">
           {{ menu_items(current_user) }}
           {{ account_items(current_user) }}
           {{ create_dropdown(dropdown) }}
@@ -105,7 +127,7 @@
 {% endmacro %}
 
 {% macro render_nav(current_user, dropdown=[]) %}
-    <nav class="ui navigation grid {% if endpoints %}has-submenu{% endif %}">
+    <nav class="ui navigation grid {% if endpoints %}has-submenu{% endif %}" role="navigation" aria-label="Main Navigation">
         {{ mobile_nav(current_user, dropdown=dropdown) }}
         {{ desktop_nav(current_user, dropdown=dropdown) }}
     </nav>

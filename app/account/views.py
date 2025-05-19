@@ -23,6 +23,7 @@ from app.account.forms import (
     RegistrationForm,
     RequestResetPasswordForm,
     ResetPasswordForm,
+    SMSOptInForm,
 )
 from app.email import send_email
 from app.models import User
@@ -271,6 +272,20 @@ def join_from_invite(user_id, token):
             user=new_user,
             invite_link=invite_link)
     return redirect(url_for('main.index'))
+
+
+@account.route('/manage/sms', methods=['GET', 'POST'])
+@login_required
+def sms_preferences():
+    form = SMSOptInForm(obj=current_user)
+    if form.validate_on_submit():
+        current_user.phone_number = form.phone_number.data
+        current_user.sms_opt_in = form.sms_opt_in.data
+        db.session.add(current_user)
+        db.session.commit()
+        flash('SMS preferences updated.', 'success')
+        return redirect(url_for('account.manage'))
+    return render_template('account/sms_preferences.html', form=form)
 
 
 @account.before_app_request

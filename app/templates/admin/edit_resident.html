@@ -1,0 +1,38 @@
+{% extends 'layouts/base.html' %}
+{% import 'macros/form_macros.html' as f %}
+
+{% block content %}
+<div class="ui stackable grid container">
+    <div class="sixteen wide column">
+        <h1 class="ui header">Edit Resident: {{ resident.name }}</h1>
+        <div class="ui divider"></div>
+        
+        <div class="ui grid">
+            <div class="four wide column">
+                {% if resident.photo_url %}
+                    <img src="{{ resident.photo_url }}" class="ui medium circular image">
+                {% else %}
+                    <i class="massive user circle outline icon"></i>
+                {% endif %}
+            </div>
+            <div class="twelve wide column">
+                {{ f.render_form(form) }}
+            </div>
+        </div>
+        
+        <a class="ui basic button" href="{{ url_for('admin.residents') }}">
+            <i class="caret left icon"></i>
+            Back to Residents
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.ui.dropdown').dropdown();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'layouts/base.html' %}
+{% import 'macros/nav_macros.html' as nav %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Reports</h1>
+    
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-white">
+                    <h3 class="h5 mb-0">Choose a Resident and Report Type</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for resident in residents %}
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <img src="{{ resident.photo_url or url_for('static', filename='images/default-profile.png') }}" 
+                                                 class="rounded-circle me-3" 
+                                                 style="width: 50px; height: 50px; object-fit: cover;" 
+                                                 alt="{{ resident.name }}">
+                                            <h5 class="card-title mb-0">{{ resident.name }}</h5>
+                                        </div>
+                                        
+                                        <h6 class="text-muted mb-3">Available Reports</h6>
+                                        
+                                        <div class="d-grid gap-2">
+                                            <!-- Usage Report -->
+                                            <a href="{{ url_for('reports.usage_report', resident_id=resident.id) }}" 
+                                               class="btn btn-outline-primary btn-sm d-flex justify-content-between align-items-center">
+                                                <span>Usage History</span>
+                                                <div>
+                                                    <a href="{{ url_for('reports.usage_report', resident_id=resident.id, format='pdf') }}" 
+                                                       class="btn btn-sm btn-light" title="Download PDF">
+                                                        <i class="fa fa-file-pdf"></i>
+                                                    </a>
+                                                    <a href="{{ url_for('reports.email_report', report_type='usage', resident_id=resident.id) }}" 
+                                                       class="btn btn-sm btn-light" title="Email Report">
+                                                        <i class="fa fa-envelope"></i>
+                                                    </a>
+                                                </div>
+                                            </a>
+                                            
+                                            <!-- Stock Report -->
+                                            <a href="{{ url_for('reports.stock_report', resident_id=resident.id) }}" 
+                                               class="btn btn-outline-primary btn-sm d-flex justify-content-between align-items-center">
+                                                <span>Stock Levels</span>
+                                                <div>
+                                                    <a href="{{ url_for('reports.stock_report', resident_id=resident.id, format='pdf') }}" 
+                                                       class="btn btn-sm btn-light" title="Download PDF">
+                                                        <i class="fa fa-file-pdf"></i>
+                                                    </a>
+                                                    <a href="{{ url_for('reports.email_report', report_type='stock', resident_id=resident.id) }}" 
+                                                       class="btn btn-sm btn-light" title="Email Report">
+                                                        <i class="fa fa-envelope"></i>
+                                                    </a>
+                                                </div>
+                                            </a>
+                                            
+                                            <!-- Alerts Report -->
+                                            <a href="{{ url_for('reports.alerts_report', resident_id=resident.id) }}" 
+                                               class="btn btn-outline-primary btn-sm d-flex justify-content-between align-items-center">
+                                                <span>Alerts History</span>
+                                                <div>
+                                                    <a href="{{ url_for('reports.alerts_report', resident_id=resident.id, format='pdf') }}" 
+                                                       class="btn btn-sm btn-light" title="Download PDF">
+                                                        <i class="fa fa-file-pdf"></i>
+                                                    </a>
+                                                    <a href="{{ url_for('reports.email_report', report_type='alerts', resident_id=resident.id) }}" 
+                                                       class="btn btn-sm btn-light" title="Email Report">
+                                                        <i class="fa fa-envelope"></i>
+                                                    </a>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

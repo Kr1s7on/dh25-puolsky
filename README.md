@@ -238,3 +238,60 @@ https://medium.freecodecamp.com/how-we-got-a-2-year-old-repo-trending-on-github-
 
 ## License
 [MIT License](LICENSE.md)
+
+## Background Jobs and Notifications
+
+DoseDash includes a comprehensive notification system that alerts caregivers about important events:
+
+### Alerts System
+
+The application provides three types of alerts:
+
+* **Low-stock alerts**: When inventory items fall below their defined threshold levels
+* **Missed-dose alerts**: When a scheduled medication dose is not logged within the expected timeframe
+* **Overdue-dose alerts**: When a scheduled dose remains unlogged after a defined grace period
+
+### Background Jobs
+
+The system uses Redis Queue for scheduling periodic tasks that run in the background:
+
+* Inventory threshold checks (hourly)
+* Missed dose detection (every 30 minutes)
+* Overdue dose detection (every 15 minutes)
+* Weekly caregiver digest emails (every Monday at 8:00 AM)
+
+### Notification Channels
+
+When alerts are triggered, they are delivered through multiple channels:
+
+* In-app notifications visible on the notifications dashboard
+* Email notifications with detailed information using HTML templates
+* SMS notifications for critical alerts (if caregivers have opted in)
+
+### Alert Management
+
+Caregivers can manage alerts through several actions:
+
+* **Mark as Read**: Acknowledge an alert has been seen
+* **Snooze**: Temporarily dismiss an alert for a specified time period
+* **Acknowledge**: Permanently mark an alert as handled
+
+### Running Background Workers
+
+To start the background processing:
+
+```bash
+# Start the Redis worker
+python worker.py
+
+# Start the scheduler for periodic tasks
+python scheduler.py
+```
+
+Or use the Procfile for deployment:
+
+```bash
+web: gunicorn manage:app
+worker: python -u worker.py
+scheduler: python -u scheduler.py
+```

@@ -1,0 +1,442 @@
+{% extends 'layouts/base.html' %}
+
+{% block custom_head_tags %}
+<style>
+    .swipe-card {
+        position: relative;
+        transition: transform 0.3s;
+        transform-origin: center;
+        touch-action: pan-y;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .swipe-card.swiping {
+        transition: none;
+    }
+    
+    .swipe-card.swiped-left {
+        animation: swipeLeft 0.5s forwards;
+    }
+    
+    .swipe-card.swiped-right {
+        animation: swipeRight 0.5s forwards;
+    }
+    
+    @keyframes swipeLeft {
+        to {
+            transform: translateX(-150%) rotate(-5deg);
+            opacity: 0;
+        }
+    }
+    
+    @keyframes swipeRight {
+        to {
+            transform: translateX(150%) rotate(5deg);
+            opacity: 0;
+        }
+    }
+    
+    .swipe-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.2s;
+        z-index: 10;
+    }
+    
+    .swipe-overlay.left {
+        background-color: rgba(219, 40, 40, 0.8);
+        color: white;
+    }
+    
+    .swipe-overlay.right {
+        background-color: rgba(33, 186, 69, 0.8);
+        color: white;
+    }
+    
+    .swipe-overlay i {
+        font-size: 3rem;
+    }
+    
+    .swipe-instructions {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        align-items: center;
+    }
+    
+    .resident-header {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+        border-radius: 12px 12px 0 0;
+        background-color: #f7f7f7;
+    }
+    
+    .resident-section {
+        margin-bottom: 20px;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    
+    .medication-info {
+        padding: 15px;
+    }
+    
+    .medication-status {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .pill-time {
+        display: inline-flex;
+        align-items: center;
+        background: #f0f0f0;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.9em;
+    }
+    
+    .resident-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+    
+    .resident-name {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+    
+    .medication-count {
+        margin-left: 10px;
+        background: #e0e0e0;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 0.8em;
+    }
+    
+    .med-name {
+        font-size: 1.1em;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    @media (max-width: 768px) {
+        .ui.container {
+            width: 100% !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ui container">
+    <div class="sixteen wide column">
+        <h2 class="ui header">
+            <i class="clipboard check icon"></i>
+            <div class="content">
+                Quick Medication Check
+                <div class="sub header">Swipe right to mark as taken, left to mark as missed</div>
+            </div>
+        </h2>
+        
+        <div class="swipe-instructions">
+            <div>
+                <i class="arrow left red icon"></i> 
+                <span>Swipe left: <b>Missed</b></span>
+            </div>
+            <div>
+                <span>Swipe right: <b>Taken</b></span>
+                <i class="arrow right green icon"></i>
+            </div>
+        </div>
+    </div>
+    
+    {% if not residents_data %}
+    <div class="sixteen wide column">
+        <div class="ui placeholder segment">
+            <div class="ui icon header">
+                <i class="check circle icon"></i>
+                All Done!
+            </div>
+            <p>There are no pending medications that need to be administered right now.</p>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% for resident in residents_data %}
+    <div class="resident-section">
+        <div class="resident-header">
+            {% if resident['photo_url'] %}
+                <img class="resident-avatar" src="{{ resident['photo_url'] }}" alt="{{ resident['name'] }}">
+            {% else %}
+                <div class="resident-avatar" style="background:#e0e0e0; display:flex; align-items:center; justify-content:center;">
+                    <i class="user icon"></i>
+                </div>
+            {% endif %}
+            <div>
+                <div class="resident-name">{{ resident['name'] }}</div>
+                <span class="medication-count">
+                    {% if resident['items'] %}
+                        {{ resident['items']|length }} medication(s)
+                    {% else %}
+                        0 medication(s)
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+        
+        <div class="medication-cards">
+            {% for item in resident['items'] %}
+            <div class="swipe-card" data-item-id="{{ item['id'] }}" data-scheduled-time="{{ item['scheduled_time'] }}">
+                <div class="swipe-overlay left">    
+                    <i class="times circle icon"></i>
+                </div>
+                
+                <div class="medication-info">
+                    <div class="medication-status">
+                        {% if item['status'] == 'overdue' %}
+                            <span class="ui red label">Overdue</span>
+                        {% elif item['status'] == 'due_now' %}
+                            <span class="ui orange label">Due Now</span>
+                        {% else %}
+                            <span class="ui blue label">Upcoming</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="med-name">{{ item['name'] }}</div>
+                    <div class="pill-time">
+                        <i class="clock outline icon"></i>
+                        {{ item['scheduled_time'] }}
+                    </div>
+                    
+                    {% if item['relation_to_meals'] %}
+                        <div class="ui small label" style="margin-top: 8px; display: inline-block;">
+                            {% if item['relation_to_meals'] == 'before_meal' %}
+                                <i class="utensils icon"></i> Before meal
+                            {% elif item['relation_to_meals'] == 'with_meal' %}
+                                <i class="utensils icon"></i> With meal
+                            {% elif item['relation_to_meals'] == 'after_meal' %}
+                                <i class="utensils icon"></i> After meal
+                            {% elif item['relation_to_meals'] == 'independent' %}
+                                <i class="utensils icon"></i> Independent of meals
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="swipe-overlay right">
+                    <i class="check circle icon"></i>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Swipe functionality for each card
+    const swipeCards = document.querySelectorAll('.swipe-card');
+    
+    swipeCards.forEach(card => {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let currentTranslate = 0;
+        let isDragging = false;
+        
+        const leftOverlay = card.querySelector('.swipe-overlay.left');
+        const rightOverlay = card.querySelector('.swipe-overlay.right');
+        
+        card.addEventListener('touchstart', function(event) {
+            touchStartX = event.touches[0].clientX;
+            isDragging = true;
+            card.classList.add('swiping');
+        }, false);
+        
+        card.addEventListener('touchmove', function(event) {
+            if (!isDragging) return;
+            touchEndX = event.touches[0].clientX;
+            currentTranslate = touchEndX - touchStartX;
+            
+            // Apply the translation
+            card.style.transform = `translateX(${currentTranslate}px)`;
+            
+            // Show appropriate overlay based on swipe direction
+            if (currentTranslate < -50) {
+                leftOverlay.style.opacity = Math.min(Math.abs(currentTranslate) / 100, 1);
+                rightOverlay.style.opacity = '0';
+            } else if (currentTranslate > 50) {
+                rightOverlay.style.opacity = Math.min(currentTranslate / 100, 1);
+                leftOverlay.style.opacity = '0';
+            } else {
+                leftOverlay.style.opacity = '0';
+                rightOverlay.style.opacity = '0';
+            }
+        }, false);
+        
+        function handleSwipeEnd() {
+            isDragging = false;
+            card.classList.remove('swiping');
+            
+            const swipeDistance = Math.abs(currentTranslate);
+            const swipeThreshold = 100; // Minimum distance to trigger action
+            
+            if (swipeDistance > swipeThreshold) {
+                if (currentTranslate < 0) {
+                    // Swiped left - mark as missed
+                    card.classList.add('swiped-left');
+                    markMedication(card, 'missed');
+                } else {
+                    // Swiped right - mark as taken
+                    card.classList.add('swiped-right');
+                    markMedication(card, 'taken');
+                }
+            } else {
+                // Reset position if swipe wasn't far enough
+                card.style.transform = '';
+                leftOverlay.style.opacity = '0';
+                rightOverlay.style.opacity = '0';
+            }
+            
+            currentTranslate = 0;
+        }
+        
+        card.addEventListener('touchend', handleSwipeEnd, false);
+        card.addEventListener('touchcancel', handleSwipeEnd, false);
+        
+        // Also add click handlers for non-touch devices
+        card.addEventListener('click', function(event) {
+            const rect = card.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            
+            // If clicked on left side, mark as missed, right side as taken
+            if (x < rect.width / 2) {
+                card.classList.add('swiped-left');
+                markMedication(card, 'missed');
+            } else {
+                card.classList.add('swiped-right');
+                markMedication(card, 'taken');
+            }
+        });
+    });
+    
+    // Function to mark medication as taken/missed via AJAX
+    function markMedication(card, status) {
+        const itemId = card.getAttribute('data-item-id');
+        const scheduledTime = card.getAttribute('data-scheduled-time');
+        
+        // Send AJAX request to log medication
+        fetch('{{ url_for("quick_actions.log_medication") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('input[name="csrf_token"]').value
+            },
+            body: JSON.stringify({
+                item_id: itemId,
+                scheduled_time: scheduledTime,
+                status: status
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // After some time, remove the card
+                setTimeout(() => {
+                    card.style.display = 'none';
+                    
+                    // Check if there are no more cards for this resident
+                    const residentSection = card.closest('.resident-section');
+                    const remainingCards = residentSection.querySelectorAll('.swipe-card:not([style*="display: none"])');
+                    
+                    if (remainingCards.length === 0) {
+                        // If no more cards, update the resident section
+                        const header = residentSection.querySelector('.resident-header');
+                        const countLabel = header.querySelector('.medication-count');
+                        countLabel.textContent = '0 medication(s)';
+                        
+                        const completedMessage = document.createElement('div');
+                        completedMessage.className = 'ui success message';
+                        completedMessage.innerHTML = '<i class="check circle icon"></i> All medications completed for this resident!';
+                        completedMessage.style.margin = '10px';
+                        
+                        residentSection.appendChild(completedMessage);
+                    }
+                    
+                    // Check if all medications are completed
+                    const allCards = document.querySelectorAll('.swipe-card:not([style*="display: none"])');
+                    if (allCards.length === 0) {
+                        // Show "all done" message
+                        const container = document.querySelector('.ui.container');
+                        
+                        const allDoneMessage = document.createElement('div');
+                        allDoneMessage.className = 'ui success message';
+                        allDoneMessage.innerHTML = `
+                            <div class="header"><i class="check circle icon"></i> All Done!</div>
+                            <p>All pending medications have been administered.</p>
+                        `;
+                        
+                        container.appendChild(allDoneMessage);
+                    }
+                }, 500);
+            } else {
+                alert('Error: ' + data.message);
+                // Reset the card if there's an error
+                card.classList.remove('swiped-left', 'swiped-right');
+                card.style.transform = '';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+            // Reset the card if there's an error
+            card.classList.remove('swiped-left', 'swiped-right');
+            card.style.transform = '';
+        });
+    }
+});
+</script>
+
+<style>
+/* Additional mobile-friendly styles */
+@media (max-width: 768px) {
+    .swipe-card {
+        user-select: none;  /* Prevent text selection during swipe */
+    }
+    
+    .ui.header {
+        margin-top: 10px;
+    }
+    
+    .swipe-instructions {
+        margin: 10px;
+    }
+}
+</style>
+{% endblock %}

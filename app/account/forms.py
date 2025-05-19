@@ -117,3 +117,9 @@ class ChangeEmailForm(FlaskForm):
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('Email already registered.')
+
+
+class SMSOptInForm(FlaskForm):
+    phone_number = StringField('Mobile Number', validators=[Length(0, 32)])
+    sms_opt_in = BooleanField('Receive SMS Alerts')
+    submit = SubmitField('Update SMS Preferences')

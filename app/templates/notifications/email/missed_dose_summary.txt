@@ -1,0 +1,18 @@
+Missed/Overdue Dose Summary
+
+The following doses have been missed or are overdue:
+
+{% for group in grouped_doses %}
+RESIDENT: {{ group.resident.full_name }}
+----------------------------------------------------
+{% for dose in group.doses %}
+- {{ dose.inventory_item.name }} ({{ dose.scheduled_time }}): {{ dose.status.value.upper() }} on {{ dose.timestamp.strftime('%Y-%m-%d %H:%M') }}
+{% endfor %}
+
+{% endfor %}
+
+Please follow up on these missed or overdue doses as appropriate.
+
+---
+This is an automated message from DoseDash. Please do not reply to this email.
+If you have any questions, please contact your administrator.

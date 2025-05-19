@@ -1,0 +1,13 @@
+{% extends 'layouts/base.html' %}
+{% import 'macros/form_macros.html' as f %}
+
+{% block content %}
+<div class="ui stackable centered grid container">
+    <div class="twelve wide column">
+        <h2 class="ui header">SMS Alert Preferences</h2>
+        <div class="ui segment">
+            {{ f.render_form(form, extra_classes='fluid') }}
+        </div>
+    </div>
+</div>
+{% endblock %}

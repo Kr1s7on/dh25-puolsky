@@ -1,0 +1,68 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<div class="ui stackable grid container">
+    <div class="sixteen wide column">
+        <h2 class="ui header">Notifications</h2>
+        <form class="ui form" method="get">
+            <div class="fields">
+                <div class="field">
+                    {{ form.status.label }}
+                    {{ form.status(class_='ui dropdown') }}
+                </div>
+                <div class="field">
+                    {{ form.type.label }}
+                    {{ form.type(class_='ui dropdown') }}
+                </div>
+                <div class="field">
+                    {{ form.submit(class_='ui button primary') }}
+                </div>
+            </div>
+        </form>
+        <div class="ui divider"></div>
+        {% if notifications %}
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Type</th>
+                        <th>Message</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for n in notifications %}
+                    <tr>
+                        <td>{{ n.status.value|capitalize }}</td>
+                        <td>{{ n.type.value.replace('_', ' ')|capitalize }}</td>
+                        <td>{{ n.message }}</td>
+                        <td>{{ n.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>
+                            {% if n.status.value != 'read' %}
+                            <form method="post" action="{{ url_for('notifications.mark_read', notification_id=n.id) }}" style="display:inline;">
+                                <button class="ui mini button">Mark as Read</button>
+                            </form>
+                            {% endif %}
+                            {% if n.status.value != 'snoozed' %}
+                            <form method="post" action="{{ url_for('notifications.snooze', notification_id=n.id) }}" style="display:inline;">
+                                <input type="hidden" name="hours" value="1">
+                                <button class="ui mini button">Snooze 1h</button>
+                            </form>
+                            {% endif %}
+                            {% if n.status.value != 'acknowledged' %}
+                            <form method="post" action="{{ url_for('notifications.acknowledge', notification_id=n.id) }}" style="display:inline;">
+                                <button class="ui mini button">Acknowledge</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="ui message">No notifications found.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

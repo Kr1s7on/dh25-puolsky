@@ -1,0 +1,90 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+    <div class="ui stackable grid container">
+        <div class="sixteen wide tablet twelve wide computer centered column">
+            <div class="ui segment">
+                <h2 class="ui header">
+                    <i class="medkit icon"></i>
+                    <div class="content">
+                        Inventory Items
+                        <div class="sub header">View and manage inventory items</div>
+                    </div>
+                </h2>
+                
+                <div class="ui menu">
+                    <a class="item" href="{{ url_for('inventory.new_item') }}">
+                        <i class="plus icon"></i> Add New Item
+                    </a>
+                    <div class="right menu">
+                        <div class="ui right search item">
+                            <div class="ui transparent icon input">
+                                <input id="search-items" type="text" placeholder="Search items…">
+                                <i class="search icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="overflow-x: scroll;">
+                    <table class="ui searchable sortable unstackable selectable celled table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Quantity</th>
+                                <th>Threshold</th>
+                                <th>Expiration Date</th>
+                                <th>Resident</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in inventory_items %}
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.type }}</td>
+                                <td class="{% if item.quantity < item.threshold %}negative{% endif %}">
+                                    {{ item.quantity }}
+                                </td>
+                                <td>{{ item.threshold }}</td>
+                                <td>{{ item.expiration_date }}</td>
+                                <td>{{ item.resident.name if item.resident else 'N/A' }}</td>
+                                <td>
+                                    <a href="{{ url_for('inventory.edit_item', item_id=item.id) }}" class="ui tiny button">
+                                        <i class="edit icon"></i> Edit
+                                    </a>
+                                    <a href="{{ url_for('inventory.delete_item', item_id=item.id) }}" class="ui tiny red button">
+                                        <i class="trash icon"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="center aligned">No inventory items found.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#search-items').keyup(function () {
+                var searchText = $(this).val();
+                if (searchText.length > 0) {
+                    $('tbody td:icontains(' + searchText + ')').addClass('positive');
+                    $('td.positive').not(':icontains(' + searchText + ')').removeClass('positive');
+                    $('tbody td').not(':icontains(' + searchText + ')').closest('tr').addClass('hidden').hide();
+                    $('tr.hidden:icontains(' + searchText + ')').removeClass('hidden').show();
+                } else {
+                    $('td.positive').removeClass('positive');
+                    $('tr.hidden').removeClass('hidden').show();
+                }
+            });
+        });
+    </script>
+{% endblock %}

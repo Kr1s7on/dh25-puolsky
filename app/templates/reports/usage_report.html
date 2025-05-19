@@ -1,0 +1,121 @@
+{% extends 'layouts/base.html' %}
+{% import 'macros/nav_macros.html' as nav %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Usage Report for {{ resident.name }}</h1>
+        <div>
+            <a href="{{ url_for('reports.usage_report', resident_id=resident.id, format='pdf', days=days) }}" class="btn btn-outline-primary me-2">
+                <i class="fa fa-file-pdf"></i> Download PDF
+            </a>
+            <a href="{{ url_for('reports.email_report', report_type='usage', resident_id=resident.id, days=days) }}" class="btn btn-outline-primary">
+                <i class="fa fa-envelope"></i> Email Report
+            </a>
+        </div>
+    </div>
+    
+    <div class="card mb-4">
+        <div class="card-header bg-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Report Details</h5>
+                <div class="btn-group">
+                    <a href="{{ url_for('reports.usage_report', resident_id=resident.id, days=7) }}" 
+                       class="btn btn-sm {{ 'btn-primary' if days == 7 else 'btn-outline-primary' }}">7 Days</a>
+                    <a href="{{ url_for('reports.usage_report', resident_id=resident.id, days=14) }}" 
+                       class="btn btn-sm {{ 'btn-primary' if days == 14 else 'btn-outline-primary' }}">14 Days</a>
+                    <a href="{{ url_for('reports.usage_report', resident_id=resident.id, days=30) }}" 
+                       class="btn btn-sm {{ 'btn-primary' if days == 30 else 'btn-outline-primary' }}">30 Days</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p><strong>Period:</strong> {{ start_date.strftime('%B %d, %Y') }} to {{ end_date.strftime('%B %d, %Y') }}</p>
+            <p><strong>Generated:</strong> {{ end_date.strftime('%B %d, %Y at %H:%M') }}</p>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Medication Usage Log</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Date & Time</th>
+                            <th>Medication</th>
+                            <th>Status</th>
+                            <th>Scheduled Time</th>
+                            <th>Caregiver</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in logs %}
+                        <tr>
+                            <td>{{ log.timestamp.strftime('%m/%d/%Y %H:%M') }}</td>
+                            <td>{{ log.inventory_item.name }}</td>
+                            <td>
+                                {% if log.status == 'taken' %}
+                                <span class="badge bg-success">Taken</span>
+                                {% elif log.status == 'missed' %}
+                                <span class="badge bg-danger">Missed</span>
+                                {% else %}
+                                <span class="badge bg-secondary">{{ log.status }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ log.scheduled_time }}</td>
+                            <td>{{ log.user.full_name() }}</td>
+                            <td>
+                                {% if log.notes %}
+                                {{ log.notes }}
+                                {% endif %}
+                                {% if log.voice_note_url %}
+                                <span class="badge bg-info">Voice Note</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4">No usage logs found for this period.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Summary Stats -->
+    {% if logs %}
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="mb-0">Total Doses</h5>
+                    <p class="display-4">{{ logs|length }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="mb-0">Taken</h5>
+                    <p class="display-4 text-success">{{ logs|selectattr('status', 'equalto', 'taken')|list|length }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="mb-0">Missed</h5>
+                    <p class="display-4 text-danger">{{ logs|selectattr('status', 'equalto', 'missed')|list|length }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -2,16 +2,86 @@
 
 {% block content %}
     <div class="ui text container">
-      <h1>Hello {% if not (current_user.is_authenticated) %} world {% else %} {{ current_user.full_name() }} {% endif %},</h1>
+        <div class="ui center aligned segment">
+            <h1 class="ui header">
+                <i class="medkit icon"></i>
+                <div class="content">
+                    DoseDash
+                    <div class="sub header">Medical Supplies & Medication Tracker</div>
+                </div>
+            </h1>
+        </div>
 
-        <p>This is <a href="http://hack4impact.org">Hack4Impact</a>'s web application template. We'll use this as a
-        foundation for each of our <a href="http://flask.pocoo.org">Flask</a> projects. The goal is to reduce the work
-        necessary to get a new project off the ground, by providing boilerplate code (such as account management
-        facilities), as well as uncontroversial and extensible defaults. We have integrated an
-        <a href="http://sass-lang.com">SCSS</a>-based asset pipeline based around a (fantastic!) framework
-        called <a href="http://semantic-ui.com">Semantic UI</a>. Much of this code is appropriated from the examples
-        in Miguel Grinberg's book, <a href="http://flaskbook.com"><em>Flask Web Development</em></a>.</p>
-
-        <p>{{ lipsum(6) }}</p>
+        {% if not current_user.is_authenticated %}
+            <div class="ui segment">
+                <h2 class="ui header">Welcome to DoseDash</h2>
+                <p>
+                    DoseDash is a comprehensive solution designed for caregivers in elderly care facilities to track and manage medications and medical supplies.
+                </p>
+                
+                <h3 class="ui header">Key Features:</h3>
+                <div class="ui bulleted list">
+                    <div class="item">Medication scheduling and tracking</div>
+                    <div class="item">Inventory management for medical supplies</div>
+                    <div class="item">Usage logging with voice note attachments</div>
+                    <div class="item">Low-stock alerts and notifications</div>
+                    <div class="item">Comprehensive reporting</div>
+                </div>
+                
+                <div class="ui center aligned segment">
+                    <a class="ui primary fluid button" href="{{ url_for('account.login') }}">
+                        <i class="sign in icon"></i>
+                        Login
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <div class="ui segment">
+                <h2 class="ui header">Welcome back, {{ current_user.full_name() }}!</h2>
+                
+                {% if current_user.is_admin() %}
+                    <p>As an administrator, you have access to:</p>
+                    <div class="ui list">
+                        <a class="item" href="{{ url_for('admin.index') }}">
+                            <i class="dashboard icon"></i>
+                            Admin Dashboard
+                        </a>
+                        <a class="item" href="{{ url_for('admin.registered_users') }}">
+                            <i class="users icon"></i>
+                            User Management
+                        </a>
+                        <a class="item" href="{{ url_for('admin.residents') }}">
+                            <i class="hospital user icon"></i>
+                            Resident Management
+                        </a>
+                    </div>
+                {% elif current_user.is_caregiver() %}
+                    <p>Quick links for caregivers:</p>
+                    
+                    <div class="ui teal segment">
+                        <a class="ui fluid large teal button" href="{{ url_for('quick_actions.index') }}">
+                            <i class="check circle icon"></i>
+                            Quick Actions - Mark Medications
+                        </a>
+                        <p class="ui center aligned small text" style="margin-top: 5px;">Quickly mark medications as taken or missed</p>
+                    </div>
+                    
+                    <div class="ui list">
+                        <a class="item" href="{{ url_for('inventory.index') }}">
+                            <i class="medkit icon"></i>
+                            Manage Inventory
+                        </a>
+                        <a class="item" href="{{ url_for('usage.index') }}">
+                            <i class="clipboard icon"></i>
+                            Log Medication Usage
+                        </a>
+                        <a class="item" href="{{ url_for('notifications.index') }}">
+                            <i class="bell icon"></i>
+                            View Notifications
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

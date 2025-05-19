@@ -1,0 +1,18 @@
+Low Stock Alert Summary
+
+The following items are below their threshold levels and need to be restocked:
+
+{% for group in grouped_items %}
+RESIDENT: {{ group.resident.full_name }}
+----------------------------------------------------
+{% for item in group.items %}
+- {{ item.name }}: {{ item.quantity }} / {{ item.threshold }} {{ item.unit_type }}{% if item.quantity == 0 %} (OUT OF STOCK!){% endif %}
+{% endfor %}
+
+{% endfor %}
+
+Please restock these items as soon as possible to ensure continuous care.
+
+---
+This is an automated message from DoseDash. Please do not reply to this email.
+If you have any questions, please contact your administrator.

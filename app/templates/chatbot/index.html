@@ -1,0 +1,92 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<div class="ui stackable grid container">
+    <div class="sixteen wide computer sixteen wide tablet sixteen wide mobile column">
+        <h2 class="ui header">Caregiver Assistant</h2>
+        <div class="ui divider"></div>
+    </div>
+    
+    <div class="sixteen wide computer sixteen wide tablet sixteen wide mobile column">
+        <div class="ui segment" id="chat-container" style="height: 400px; overflow-y: auto; display: flex; flex-direction: column;">
+            <div id="chat-messages">
+                <div class="ui message">
+                    <div class="content">
+                        <div class="header">Mr. DoseDash</div>
+                        <p>Hello! I'm your care assistant powered by Gemini AI. You can ask me questions about residents, medications, and supplies. For example:
+                            <ul>
+                                <li>"When did Mrs. Johnson last miss a dose?"</li>
+                                <li>"Which residents need medication tonight?"</li>
+                                <li>"What supplies are running low?"</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <form class="ui form" id="chat-form">
+            <div class="field">
+                <div class="ui action input">
+                    <input type="text" id="user-message" placeholder="Type your question..." required autofocus>
+                    <button class="ui blue button" type="submit">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+<script>
+const md = window.markdownit();  // initialize markdown parser
+$(document).ready(function() {
+    function appendMessage(sender, message) {
+        const messageDiv = $('<div class="ui message"></div>');
+        const contentDiv = $('<div class="content"></div>');
+        const headerDiv = $('<div class="header"></div>').text(sender);
+        // render markdown in message
+        const textP = $('<div></div>').html(md.render(message));
+        
+        contentDiv.append(headerDiv, textP);
+        messageDiv.append(contentDiv);
+        
+        if (sender === "You") {
+            messageDiv.addClass("right aligned");
+        }
+        
+        $('#chat-messages').append(messageDiv);
+        $('#chat-container').scrollTop($('#chat-container')[0].scrollHeight);
+    }
+    
+    $('#chat-form').submit(function(e) {
+        e.preventDefault();
+        
+        const userMessage = $('#user-message').val().trim();
+        if (userMessage === '') return;
+        
+        // Display user message
+        appendMessage('You', userMessage);
+        
+        // Clear input field
+        $('#user-message').val('');
+        
+        // Send message to backend
+        $.ajax({
+            url: '{{ url_for("chatbot.ask") }}',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ message: userMessage }),
+            success: function(response) {
+                // Display bot response
+                appendMessage('Assistant', response.answer);
+            },
+            error: function() {
+                appendMessage('Assistant', 'Sorry, there was an error processing your request.');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

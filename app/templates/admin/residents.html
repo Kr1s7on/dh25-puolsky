@@ -1,0 +1,73 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<div class="ui stackable grid container">
+    <div class="sixteen wide column">
+        <h1 class="ui header">Residents
+            <div class="ui right floated buttons">
+                <a class="ui primary button" href="{{ url_for('admin.new_resident') }}">
+                    Add New Resident
+                </a>
+            </div>
+        </h1>
+        <div class="ui divider"></div>
+        
+        {% if residents %}
+            <table class="ui celled table">
+                <thead>
+                    <tr>
+                        <th>Photo</th>
+                        <th>Name</th>
+                        <th>Date of Birth</th>
+                        <th>Assigned Caregivers</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for resident in residents %}
+                        <tr>
+                            <td class="center aligned">
+                                {% if resident.photo_url %}
+                                    <img src="{{ resident.photo_url }}" class="ui tiny circular image">
+                                {% else %}
+                                    <i class="huge user circle outline icon"></i>
+                                {% endif %}
+                            </td>
+                            <td>{{ resident.name }}</td>
+                            <td>{{ resident.date_of_birth.strftime('%B %d, %Y') }}</td>
+                            <td>
+                                <div class="ui list">
+                                {% for caregiver in resident.caregivers %}
+                                    <div class="item">
+                                        <i class="user icon"></i>
+                                        <div class="content">{{ caregiver.full_name() }}</div>
+                                    </div>
+                                {% else %}
+                                    <em>No caregivers assigned</em>
+                                {% endfor %}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="ui mini buttons">
+                                    <a class="ui yellow button" href="{{ url_for('admin.edit_resident', resident_id=resident.id) }}">
+                                        Edit
+                                    </a>
+                                    <a class="ui negative button" href="{{ url_for('admin.delete_resident', resident_id=resident.id) }}"
+                                       onclick="return confirm('Are you sure you want to delete this resident?');">
+                                        Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="ui info message">
+                <div class="header">No residents found</div>
+                <p>Click "Add New Resident" to create a resident record.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

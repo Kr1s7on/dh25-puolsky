@@ -1,0 +1,111 @@
+{% extends 'layouts/base.html' %}
+{% import 'macros/form_macros.html' as f %}
+
+{% block content %}
+    <div class="ui stackable centered grid container">
+        <div class="twelve wide column">
+            <a class="ui basic compact button" href="{{ url_for('inventory.index') }}">
+                <i class="caret left icon"></i>
+                Back to inventory
+            </a>
+            <h2 class="ui header">
+                <i class="plus icon"></i>
+                <div class="content">
+                    New Inventory Item
+                    <div class="sub header">Add a new medication or supply</div>
+                </div>
+            </h2>
+
+            {% set flashes = {
+                'error':   get_flashed_messages(category_filter=['form-error']),
+                'info':    get_flashed_messages(category_filter=['form-info']),
+                'success': get_flashed_messages(category_filter=['form-success'])
+            } %}
+
+            {{ f.begin_form(form, flashes) }}
+                <div class="two fields">
+                    {{ f.render_form_field(form.name) }}
+                    {{ f.render_form_field(form.type) }}
+                </div>
+
+                <div class="three fields">
+                    {{ f.render_form_field(form.quantity) }}
+                    {{ f.render_form_field(form.threshold) }}
+                    {{ f.render_form_field(form.daily_usage) }}
+                </div>
+
+                {{ f.render_form_field(form.expiration_date) }}
+                
+                <div class="two fields">
+                    {{ f.render_form_field(form.resident_id) }}
+                </div>
+                
+                <h3 class="ui dividing header">Scheduling Information</h3>
+                
+                <div class="field">
+                    <label>Schedule Times</label>
+                    <div id="schedule-times-container">
+                        {% for time_field in form.schedule_times %}
+                            <div class="ui action input" style="margin-bottom: 10px;">
+                                {{ time_field(class_="schedule-time") }}
+                                <button type="button" class="ui red button remove-time">Remove</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="button" class="ui primary button" id="add-schedule-time">Add Time</button>
+                </div>
+                
+                <div class="two fields">
+                    {{ f.render_form_field(form.frequency) }}
+                    {{ f.render_form_field(form.relation_to_meals) }}
+                </div>
+
+                {{ f.form_message(flashes['error'], header='Error', class='error') }}
+                {{ f.form_message(flashes['info'], header='Information', class='info') }}
+                {{ f.form_message(flashes['success'], header='Success!', class='success') }}
+
+                {{ f.render_form_field(form.submit) }}
+            {{ f.end_form() }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.ui.dropdown').dropdown();
+            $('.ui.calendar').calendar({
+                type: 'date',
+                formatter: {
+                    date: function (date, settings) {
+                        if (!date) return '';
+                        var day = date.getDate();
+                        var month = date.getMonth() + 1;
+                        var year = date.getFullYear();
+                        return year + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
+                    }
+                }
+            });
+            
+            // Handle schedule times add/remove functionality
+            $('#add-schedule-time').click(function() {
+                var timeIndex = $('#schedule-times-container .ui.action.input').length;
+                var newTimeField = '<div class="ui action input" style="margin-bottom: 10px;">' +
+                    '<input class="schedule-time" id="schedule_times-' + timeIndex + '" name="schedule_times-' + timeIndex + '" type="text" placeholder="HH:MM">' +
+                    '<button type="button" class="ui red button remove-time">Remove</button>' +
+                    '</div>';
+                $('#schedule-times-container').append(newTimeField);
+            });
+            
+            // Use event delegation for the remove buttons
+            $('#schedule-times-container').on('click', '.remove-time', function() {
+                $(this).closest('.ui.action.input').remove();
+                // Reindex the remaining fields
+                $('#schedule-times-container .schedule-time').each(function(index) {
+                    $(this).attr('name', 'schedule_times-' + index);
+                    $(this).attr('id', 'schedule_times-' + index);
+                });
+            });
+        });
+    </script>
+{% endblock %}

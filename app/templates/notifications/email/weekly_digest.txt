@@ -1,0 +1,36 @@
+Weekly Caregiver Digest ({{ start_date }} - {{ end_date }})
+
+Hello {{ caregiver.first_name }},
+
+Here's your weekly summary of resident care activities:
+
+{% for data in digest_data %}
+====================
+RESIDENT: {{ data.resident.full_name }}
+====================
+
+{% if data.low_stock %}
+LOW STOCK ITEMS:
+{% for item in data.low_stock %}
+- {{ item.name }}: {{ item.quantity }} / {{ item.threshold }} {{ item.unit_type }}{% if item.quantity == 0 %} (OUT OF STOCK!){% endif %}
+{% endfor %}
+{% else %}
+No low stock items for this resident.
+{% endif %}
+
+{% if data.missed_doses %}
+MISSED DOSES:
+{% for dose in data.missed_doses %}
+- {{ dose.item.name }}: {{ dose.count }} time(s)
+{% endfor %}
+{% else %}
+No missed doses for this resident this week.
+{% endif %}
+
+{% endfor %}
+
+This digest helps you keep track of medication and supply status for your residents. Please address any low stock items or patterns of missed doses.
+
+---
+This is an automated weekly digest from DoseDash. Please do not reply to this email.
+If you have any questions, please contact your administrator.
