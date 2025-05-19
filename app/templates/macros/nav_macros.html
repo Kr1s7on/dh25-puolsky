@@ -51,11 +51,11 @@
 {% endmacro %}
 
 {% macro header_items(current_user) %}
-       {% set endpoints = [
-        ('main.index', '<img src="' ~ url_for('static', filename='images/logo.png') ~ '" alt="DoseDash Logo" style="height: 24px; margin-right: 8px; vertical-align: middle;"> ' ~ config.APP_NAME, ''),
-      ] %}
-     {{ render_menu_items( endpoints ) }}
- {% endmacro %}
+    {% set endpoints = [
+        ('main.index', config.APP_NAME, '')
+    ] %}
+    {{ render_menu_items(endpoints) }}
+{% endmacro %}
 
 {# This renders the right hand side of the navigation bar. If the user is logged in, it links to 
    manage their account and logout (account routes). Otherwise, it links to register and login.
@@ -77,24 +77,21 @@
 {% endmacro %}
 
 {% macro mobile_nav(current_user, dropdown=None) %}
-    <div class="mobile only row">
-        <div class="ui fixed inverted black main menu">
-            {{ header_items(current_user) }}
-            {{ create_dropdown(dropdown) }}
-            <div class="right menu">
-                <a class="icon item" id="open-nav" aria-label="Open Navigation Menu" role="button" tabindex="0">
-                    <i class="sidebar icon" aria-hidden="true"></i>
-                </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">{{ config.APP_NAME }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {{ menu_items(current_user) }}
+                    {{ account_items(current_user) }}
+                    {{ create_dropdown(dropdown) }}
+                </ul>
             </div>
         </div>
-
-        {# The menu items which will be shown when open-nav is clicked #}
-        <div class="ui fixed vertical fluid menu" role="menu" aria-labelledby="open-nav">
-          {{ menu_items(current_user) }}
-          {{ account_items(current_user) }}
-          {{ create_dropdown(dropdown) }}
-        </div>
-    </div>
+    </nav>
 {% endmacro %}
 
 {% macro create_dropdown(dropdown) %}
