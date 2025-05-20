@@ -39,6 +39,8 @@ RUN pip install --no-cache-dir wheel setuptools
 RUN pip install --no-cache-dir -r requirements_modified.txt
 # Install problematic packages separately with looser constraints
 RUN pip install jsmin
+# Explicitly install Bootstrap-Flask
+RUN pip install Bootstrap-Flask==2.3.0
 ENV PYTHONIOENCODING=UTF-8
 
 # Copy the rest of the application
