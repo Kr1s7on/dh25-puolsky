@@ -1,0 +1,18 @@
+<!-- filepath: /Users/puolsky/Downloads/GitHub/dh25-puolsky/app/templates/reports/email/report.txt -->
+DoseDash Report
+
+Hello {{ user.first_name }},
+
+Attached is the {{ report_name }} you requested on {{ date.strftime('%B %d, %Y at %H:%M') }}.
+
+Report Details:
+- Resident: {{ resident.name }}
+- Report Type: {{ report_name.split(' for ')[0] }}
+- Generated: {{ date.strftime('%B %d, %Y at %H:%M') }}
+
+The PDF report is attached to this email. You can also access all reports at any time through the DoseDash web application.
+
+Thank you for using DoseDash!
+
+---
+This is an automated email from DoseDash. Please do not reply to this message.

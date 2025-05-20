@@ -1,0 +1,44 @@
+{% extends 'email/base.html' %}
+
+{% block content %}
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td style="padding: 30px 0; text-align: center;">
+            <h2 style="margin: 0; color: #4A86E8; font-size: 24px;">DoseDash Weekly Reports</h2>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 0 30px 30px;">
+            <p>Hello {{ user.first_name }},</p>
+            
+            <p>Attached are the weekly reports for <strong>{{ resident.name }}</strong> covering the period from <strong>{{ start_date.strftime('%B %d, %Y') }}</strong> to <strong>{{ end_date.strftime('%B %d, %Y') }}</strong>.</p>
+            
+            <p>The following reports are included:</p>
+            <ul>
+                <li><strong>Usage History Report:</strong> All medication and supply usage logs for the week</li>
+                <li><strong>Stock Level Report:</strong> Current inventory levels and usage statistics</li>
+                <li><strong>Alerts History Report:</strong> Summary of all alerts generated during this period</li>
+            </ul>
+            
+            <p>You can also access these reports and more detailed information at any time through the DoseDash web application.</p>
+            
+            <div style="padding: 20px; background-color: #f8f9fa; border-radius: 5px; margin: 20px 0;">
+                <p style="margin-top: 0;"><strong>Weekly Summary:</strong></p>
+                <ul>
+                    <li>Total medication doses scheduled: <strong>{{ resident.inventory_items|selectattr('is_medication')|sum(attribute='scheduled_count')|default(0) }}</strong></li>
+                    <li>Supplies below threshold: <strong>{{ resident.inventory_items|selectattr('is_low')|list|length }}</strong></li>
+                </ul>
+            </div>
+            
+            <p>Thank you for using DoseDash to care for {{ resident.name }}!</p>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 30px; background-color: #f8f9fa; text-align: center;">
+            <p style="margin: 0; color: #6c757d; font-size: 14px;">
+                This is an automated weekly email from DoseDash. Please do not reply to this message.
+            </p>
+        </td>
+    </tr>
+</table>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'email/base.html' %}
+
+{% block head %}
+<style type="text/css">
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background: #f8f9fa;
+        margin: 0;
+        padding: 0;
+            color: #333;
+        }
+        h2 {
+            color: #4A86E8;
+            font-size: 24px;
+            margin: 0 0 20px 0;
+        }
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        p {
+            margin: 0 0 16px 0;
+            line-height: 1.6;
+        }
+        .footer {
+            color: #6c757d;
+            font-size: 14px;
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body style="background: #f8f9fa; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #333;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background: #f8f9fa;">
+        <tr>
+            <td align="center">
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin: 40px 0;">
+                    <tr>
+                        <td style="padding: 40px 40px 0 40px; text-align: center;">
+                            <img src="https://raw.githubusercontent.com/puolsky/dh25-puolsky/main/readme_media/logo.png" alt="DoseDash" style="max-width: 160px; margin-bottom: 24px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0 40px 40px 40px;">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td style="padding: 30px 0; text-align: center;">
+            <h2 style="margin: 0; color: #4A86E8; font-size: 24px;">DoseDash Report</h2>
+        </td>
+    </tr>
+    <tr>
+        <td style="padding: 0 30px 30px;">
+            <p>Hello {{ user.first_name }},</p>
+            
+            <p>Attached is the {{ report_name }} you requested on {{ date.strftime('%B %d, %Y at %H:%M') }}.</p>
+            
+            <p>Report Details:</p>
+            <ul>
+                <li><strong>Resident:</strong> {{ resident.name }}</li>
+                <li><strong>Report Type:</strong> {{ report_name.split(' for ')[0] }}</li>
+                <li><strong>Generated:</strong> {{ date.strftime('%B %d, %Y at %H:%M') }}</li>
+            </ul>
+            
+            <p>The PDF report is attached to this email. You can also access all reports at any time through the DoseDash web application.</p>
+            
+            <p>Thank you for using DoseDash!</p>
+        </td>
+    </tr>
+    <tr>
+        <td class="footer">
+            <p style="margin: 0; color: #6c757d; font-size: 14px;">
+                This is an automated email from DoseDash. Please do not reply to this message.
+            </p>
+        </td>
+    </tr>
+</table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

@@ -1,58 +1,84 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-<div class="ui stackable grid container">
-    <div class="sixteen wide column">
-        <h2 class="ui header">Notifications</h2>
-        <form class="ui form" method="get">
-            <div class="fields">
-                <div class="field">
-                    {{ form.status.label }}
-                    {{ form.status(class_='ui dropdown') }}
-                </div>
-                <div class="field">
-                    {{ form.type.label }}
-                    {{ form.type(class_='ui dropdown') }}
-                </div>
-                <div class="field">
-                    {{ form.submit(class_='ui button primary') }}
+<div class="container main-content">
+    <div class="row">
+        <div class="col-12">
+            <div class="notifications-header">
+                <div>
+                    <h2 class="mb-0">Notifications</h2>
+                    <p class="mb-0 text-white-50">Manage alerts and important updates</p>
                 </div>
             </div>
-        </form>
-        <div class="ui divider"></div>
+            
+            <div class="notifications-filters mb-4">
+                <form class="row g-3 align-items-end" method="get">
+                    <div class="col-md-4">
+                        <label class="form-label">{{ form.status.label }}</label>
+                        {{ form.status(class_='form-select') }}
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">{{ form.type.label }}</label>
+                        {{ form.type(class_='form-select') }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.submit(class_='btn btn-primary w-100') }}
+                    </div>
+                </form>
+            </div>
         {% if notifications %}
-            <table class="ui celled table">
-                <thead>
-                    <tr>
-                        <th>Status</th>
-                        <th>Type</th>
-                        <th>Message</th>
-                        <th>Created</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for n in notifications %}
-                    <tr>
-                        <td>{{ n.status.value|capitalize }}</td>
-                        <td>{{ n.type.value.replace('_', ' ')|capitalize }}</td>
-                        <td>{{ n.message }}</td>
-                        <td>{{ n.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-                        <td>
-                            {% if n.status.value != 'read' %}
-                            <form method="post" action="{{ url_for('notifications.mark_read', notification_id=n.id) }}" style="display:inline;">
-                                <button class="ui mini button">Mark as Read</button>
-                            </form>
-                            {% endif %}
-                            {% if n.status.value != 'snoozed' %}
-                            <form method="post" action="{{ url_for('notifications.snooze', notification_id=n.id) }}" style="display:inline;">
-                                <input type="hidden" name="hours" value="1">
-                                <button class="ui mini button">Snooze 1h</button>
-                            </form>
+            <div class="notification-table table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Type</th>
+                            <th>Message</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for n in notifications %}
+                        <tr>
+                            <td>
+                                <span class="status-badge {% if n.status.value == 'unread' %}unread{% elif n.status.value == 'read' %}read{% else %}snoozed{% endif %}">
+                                    {{ n.status.value|capitalize }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="type-badge {% if n.type.value == 'low_stock' %}low-stock{% elif n.type.value == 'missed_dose' %}missed-dose{% elif n.type.value == 'overdue_dose' %}overdue-dose{% else %}system{% endif %}">
+                                    {{ n.type.value.replace('_', ' ')|capitalize }}
+                                </span>
+                            </td>
+                            <td>{{ n.message }}</td>
+                            <td>
+                                <div class="notification-time">
+                                    <i class="bi bi-clock"></i>
+                                    {{ n.created_at.strftime('%Y-%m-%d %H:%M') }}
+                                </div>
+                            </td>
+                            <td class="notification-actions">
+                                {% if n.status.value != 'read' %}
+                                <form method="post" action="{{ url_for('notifications.mark_read', notification_id=n.id) }}">
+                                    <button class="btn btn-sm btn-outline-success">
+                                        <i class="bi bi-check-circle me-1"></i> Mark as Read
+                                    </button>
+                                </form>
+                                {% endif %}
+                                {% if n.status.value != 'snoozed' %}
+                                <form method="post" action="{{ url_for('notifications.snooze', notification_id=n.id) }}">
+                                    <input type="hidden" name="hours" value="1">
+                                    <button class="btn btn-sm btn-outline-warning">
+                                        <i class="bi bi-clock-history me-1"></i> Snooze 1h
+                                    </button>
+                                </form>
                             {% endif %}
                             {% if n.status.value != 'acknowledged' %}
-                            <form method="post" action="{{ url_for('notifications.acknowledge', notification_id=n.id) }}" style="display:inline;">
-                                <button class="ui mini button">Acknowledge</button>
+                            <form method="post" action="{{ url_for('notifications.acknowledge', notification_id=n.id) }}">
+                                <button class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-bell-check me-1"></i> Acknowledge
+                                </button>
                             </form>
                             {% endif %}
                         </td>
@@ -60,9 +86,15 @@
                     {% endfor %}
                 </tbody>
             </table>
+            </div>
         {% else %}
-            <div class="ui message">No notifications found.</div>
+            <div class="notifications-empty">
+                <i class="bi bi-bell"></i>
+                <h3>No Notifications</h3>
+                <p>You're all caught up! There are no notifications matching your filters.</p>
+            </div>
         {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

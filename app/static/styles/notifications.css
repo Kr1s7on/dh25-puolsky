@@ -1,0 +1,187 @@
+/* notifications.css - Enhanced styling for the notifications interface */
+
+.notifications-header {
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(to right, #0071e3, #2b8aed);
+  color: white;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notifications-header h2, 
+.notifications-header h1 {
+  margin-bottom: 0;
+  letter-spacing: -0.02em;
+}
+
+.notifications-filters {
+  background-color: #f5f5f7;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.notification-table {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+.notification-table thead th {
+  background-color: #f5f5f7;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.notification-table tbody td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  vertical-align: middle;
+}
+
+.notification-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.notification-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.notification-table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Notification status badges */
+.status-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.status-badge.unread {
+  background-color: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
+}
+
+.status-badge.read {
+  background-color: rgba(52, 199, 89, 0.1);
+  color: #34c759;
+}
+
+.status-badge.snoozed {
+  background-color: rgba(255, 149, 0, 0.1);
+  color: #ff9500;
+}
+
+/* Notification type badges */
+.type-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  border-left: 3px solid transparent;
+  font-size: 0.875rem;
+  display: inline-block;
+}
+
+.type-badge.low-stock {
+  background-color: rgba(255, 149, 0, 0.1);
+  color: #ff9500;
+}
+
+.type-badge.missed-dose {
+  background-color: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
+}
+
+.type-badge.overdue-dose {
+  background-color: rgba(255, 59, 48, 0.15);
+  color: #ff3b30;
+}
+
+.type-badge.system {
+  background-color: rgba(0, 113, 227, 0.1);
+  color: #0071e3;
+}
+
+/* Notification action buttons */
+.notification-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+/* Notification empty state */
+.notifications-empty {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.notifications-empty i {
+  font-size: 3rem;
+  color: #86868b;
+  margin-bottom: 1rem;
+}
+
+.notifications-empty h3 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1d1d1f;
+}
+
+.notifications-empty p {
+  color: #86868b;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Time indicator */
+.notification-time {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  color: #86868b;
+  font-size: 0.9rem;
+}
+
+.notification-time i {
+  font-size: 1rem;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .notification-actions {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .status-badge, .type-badge {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Dropdown styling */
+.notification-filters select {
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  background-color: white;
+}

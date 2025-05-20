@@ -16,4 +16,11 @@ def send_email(recipient, subject, template, **kwargs):
             recipients=[recipient])
         msg.body = render_template(template + '.txt', **kwargs)
         msg.html = render_template(template + '.html', **kwargs)
+        
+        # Handle PDF attachment if provided
+        if 'pdf_attachment' in kwargs:
+            pdf = kwargs['pdf_attachment']
+            filename = kwargs.get('pdf_filename', 'report.pdf')
+            msg.attach(filename, 'application/pdf', pdf.getvalue())
+            
         mail.send(msg)

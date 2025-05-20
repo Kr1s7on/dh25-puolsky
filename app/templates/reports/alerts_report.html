@@ -1,62 +1,60 @@
 {% extends 'layouts/base.html' %}
 {% import 'macros/nav_macros.html' as nav %}
 
+{% block custom_head_tags %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/reports.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Alerts History Report for {{ resident.name }}</h1>
-        <div>
-            <a href="{{ url_for('reports.alerts_report', resident_id=resident.id, format='pdf', days=days) }}" 
-               class="btn btn-outline-primary me-2" 
-               aria-label="Download PDF report">
-                <i class="fa fa-file-pdf" aria-hidden="true"></i> Download PDF
-            </a>
-            <a href="{{ url_for('reports.email_report', report_type='alerts', resident_id=resident.id, days=days) }}" 
-               class="btn btn-outline-primary"
-               aria-label="Email this report">
-                <i class="fa fa-envelope" aria-hidden="true"></i> Email Report
-            </a>
-        </div>
-    </div>
-    
-    <div class="card mb-4">
-        <div class="card-header bg-white">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Report Details</h5>
-                <div class="btn-group" role="group" aria-label="Report time range">
-                    <a href="{{ url_for('reports.alerts_report', resident_id=resident.id, days=7) }}" 
-                       class="btn btn-sm {{ 'btn-primary' if days == 7 else 'btn-outline-primary' }}"
-                       aria-current="{{ 'true' if days == 7 else 'false' }}">7 Days</a>
-                    <a href="{{ url_for('reports.alerts_report', resident_id=resident.id, days=14) }}" 
-                       class="btn btn-sm {{ 'btn-primary' if days == 14 else 'btn-outline-primary' }}"
-                       aria-current="{{ 'true' if days == 14 else 'false' }}">14 Days</a>
-                    <a href="{{ url_for('reports.alerts_report', resident_id=resident.id, days=30) }}" 
-                       class="btn btn-sm {{ 'btn-primary' if days == 30 else 'btn-outline-primary' }}"
-                       aria-current="{{ 'true' if days == 30 else 'false' }}">30 Days</a>
-                </div>
+    <div class="report-detail-header">
+        <div class="d-flex justify-content-between align-items-start flex-wrap">
+            <div>
+                <h1>Alerts History: {{ resident.name }}</h1>
+                <p class="text-white-50 mb-0">{{ start_date.strftime('%B %d, %Y') }} to {{ end_date.strftime('%B %d, %Y') }}</p>
+            </div>
+            <div class="report-actions">
+                <a href="{{ url_for('reports.alerts_report', resident_id=resident.id, format='pdf', days=days) }}" class="report-action-btn">
+                    <i class="bi bi-file-earmark-pdf"></i> Download PDF
+                </a>
+                <a href="{{ url_for('reports.email_report', report_type='alerts', resident_id=resident.id, days=days) }}" class="report-action-btn">
+                    <i class="bi bi-envelope"></i> Email Report
+                </a>
+                <a href="{{ url_for('reports.index') }}" class="report-action-btn">
+                    <i class="bi bi-arrow-left"></i> Back to Reports
+                </a>
             </div>
         </div>
-        <div class="card-body">
-            <p><strong>Period:</strong> {{ start_date.strftime('%B %d, %Y') }} to {{ end_date.strftime('%B %d, %Y') }}</p>
-            <p><strong>Generated:</strong> {{ end_date.strftime('%B %d, %Y at %H:%M') }}</p>
+        
+        <div class="mt-4">
+            <div class="time-filter">
+                <a href="{{ url_for('reports.alerts_report', resident_id=resident.id, days=7) }}" 
+                   class="{{ 'active' if days == 7 else '' }}">7 Days</a>
+                <a href="{{ url_for('reports.alerts_report', resident_id=resident.id, days=14) }}" 
+                   class="{{ 'active' if days == 14 else '' }}">14 Days</a>
+                <a href="{{ url_for('reports.alerts_report', resident_id=resident.id, days=30) }}" 
+                   class="{{ 'active' if days == 30 else '' }}">30 Days</a>
+                <a href="{{ url_for('reports.alerts_report', resident_id=resident.id, days=90) }}" 
+                   class="{{ 'active' if days == 90 else '' }}">90 Days</a>
+            </div>
         </div>
     </div>
     
-    <div class="card">
-        <div class="card-header bg-white">
-            <h5 class="mb-0">Alert History</h5>
+    <div class="report-data-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5><i class="bi bi-bell me-2"></i> Alert History</h5>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover mb-0" aria-label="Alert history table">
+                <table class="table report-table">
                     <thead>
                         <tr>
-                            <th scope="col">Date & Time</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Message</th>
-                            <th scope="col">Item</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Acknowledged By</th>
+                            <th>Date & Time</th>
+                            <th>Alert Type</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Acknowledged By</th>
+                            <th>Acknowledged At</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,46 +62,33 @@
                         <tr>
                             <td>{{ alert.timestamp.strftime('%m/%d/%Y %H:%M') }}</td>
                             <td>
-                                {% if alert.alert_type == 'low_stock' %}
-                                <span class="badge bg-warning text-dark">Low Stock</span>
-                                {% elif alert.alert_type == 'missed_dose' %}
-                                <span class="badge bg-danger">Missed Dose</span>
-                                {% elif alert.alert_type == 'overdue_dose' %}
-                                <span class="badge bg-danger">Overdue</span>
+                                {% if alert.type == 'low_stock' %}
+                                <span class="status-badge status-low">Low Stock</span>
+                                {% elif alert.type == 'missed_dose' %}
+                                <span class="status-badge status-missed">Missed Dose</span>
+                                {% elif alert.type == 'overdue_dose' %}
+                                <span class="status-badge status-missed">Overdue Dose</span>
                                 {% else %}
-                                <span class="badge bg-info">{{ alert.alert_type }}</span>
+                                <span class="status-badge">{{ alert.type }}</span>
                                 {% endif %}
                             </td>
                             <td>{{ alert.message }}</td>
                             <td>
-                                {% if alert.inventory_item %}
-                                {{ alert.inventory_item.name }}
+                                {% if alert.is_read %}
+                                <span class="status-badge status-normal">Read</span>
                                 {% else %}
-                                —
+                                <span class="status-badge">Unread</span>
                                 {% endif %}
                             </td>
-                            <td>
-                                {% if alert.acknowledged %}
-                                <span class="badge bg-success">Acknowledged</span>
-                                {% elif alert.snoozed_until and alert.snoozed_until > end_date %}
-                                <span class="badge bg-secondary">Snoozed</span>
-                                {% else %}
-                                <span class="badge bg-warning text-dark">Active</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if alert.acknowledged_by %}
-                                {{ alert.acknowledged_by.full_name() }}
-                                {% elif alert.snoozed_by %}
-                                {{ alert.snoozed_by.full_name() }} (snoozed)
-                                {% else %}
-                                —
-                                {% endif %}
-                            </td>
+                            <td>{{ alert.acknowledged_by.full_name() if alert.acknowledged_by else 'N/A' }}</td>
+                            <td>{{ alert.acknowledged_at.strftime('%m/%d/%Y %H:%M') if alert.acknowledged_at else 'N/A' }}</td>
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="6" class="text-center py-4">No alerts found for this period.</td>
+                            <td colspan="6" class="text-center py-5">
+                                <i class="bi bi-bell-slash display-4 text-muted d-block mb-3"></i>
+                                <p class="text-muted">No alerts found for this period.</p>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -112,41 +97,41 @@
         </div>
     </div>
     
-    <!-- Summary Stats -->
     {% if alerts %}
     <div class="row mt-4">
-        <div class="col-md-3">
-            <div class="card">
+        <div class="col-md-4 mb-4">
+            <div class="report-data-card h-100">
                 <div class="card-body text-center">
-                    <h5 class="mb-0">Total Alerts</h5>
-                    <p class="display-4">{{ alerts|length }}</p>
+                    <i class="bi bi-bell display-4 text-primary mb-3"></i>
+                    <h5>Total Alerts</h5>
+                    <div class="display-4 fw-bold">{{ alerts|length }}</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card">
+        <div class="col-md-4 mb-4">
+            <div class="report-data-card h-100">
                 <div class="card-body text-center">
-                    <h5 class="mb-0">Low Stock</h5>
-                    <p class="display-4 text-warning">{{ alerts|selectattr('alert_type', 'equalto', 'low_stock')|list|length }}</p>
+                    <i class="bi bi-check-circle display-4 text-success mb-3"></i>
+                    <h5>Acknowledged</h5>
+                    <div class="display-4 fw-bold text-success">{{ alerts|selectattr('is_read', 'equalto', true)|list|length }}</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card">
+        <div class="col-md-4 mb-4">
+            <div class="report-data-card h-100">
                 <div class="card-body text-center">
-                    <h5 class="mb-0">Missed Doses</h5>
-                    <p class="display-4 text-danger">{{ alerts|selectattr('alert_type', 'equalto', 'missed_dose')|list|length }}</p>
+                    <i class="bi bi-hourglass-split display-4 text-warning mb-3"></i>
+                    <h5>Pending</h5>
+                    <div class="display-4 fw-bold text-warning">{{ alerts|selectattr('is_read', 'equalto', false)|list|length }}</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-body text-center">
-                    <h5 class="mb-0">Acknowledged</h5>
-                    <p class="display-4 text-success">{{ alerts|selectattr('acknowledged')|list|length }}</p>
-                </div>
-            </div>
-        </div>
+    </div>
+    
+    <div class="text-center my-4">
+        <a href="{{ url_for('reports.index') }}" class="btn btn-primary">
+            <i class="bi bi-arrow-left me-2"></i> Back to All Reports
+        </a>
     </div>
     {% endif %}
 </div>

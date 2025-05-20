@@ -46,7 +46,7 @@ def index():
                            residents=residents, 
                            selected_resident=selected_resident, 
                            usage_logs=usage_logs,
-                           show_sidebar=True)
+                           show_sidebar=False)
 
 
 @usage.route('/new', methods=['GET', 'POST'])
@@ -146,7 +146,7 @@ def new_log():
         # Redirect back to the usage log for this resident
         return redirect(url_for('usage.index', resident_id=form.resident.data.id))
     
-    return render_template('usage/new.html', form=form)
+    return render_template('usage/new.html', form=form, show_sidebar=False)
 
 
 @usage.route('/<int:log_id>')
@@ -160,7 +160,7 @@ def view_log(log_id):
         flash('You do not have access to this log', 'error')
         return redirect(url_for('usage.index'))
     
-    return render_template('usage/view.html', log=log)
+    return render_template('usage/view.html', log=log, show_sidebar=False)
 
 
 @usage.route('/<int:log_id>/delete')

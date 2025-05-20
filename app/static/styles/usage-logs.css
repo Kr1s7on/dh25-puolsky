@@ -1,0 +1,300 @@
+/* usage-logs.css - Enhanced styling for usage logs interface */
+
+.usage-header {
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(to right, #0071e3, #2b8aed);
+  color: white;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.usage-header h2, 
+.usage-header h1 {
+  margin-bottom: 0;
+  letter-spacing: -0.02em;
+}
+
+/* Resident selector cards */
+.resident-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.resident-select-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  flex: 1 1 250px;
+  max-width: 300px;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.resident-select-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.resident-select-card.selected {
+  border-color: #0071e3;
+}
+
+.resident-select-card .card-body {
+  padding: 1rem;
+}
+
+.resident-select-card .resident-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.resident-select-card .resident-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+  border: 2px solid #f5f5f7;
+}
+
+.resident-select-card .resident-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 0.25rem;
+}
+
+.resident-select-card .resident-dob {
+  font-size: 0.9rem;
+  color: #86868b;
+}
+
+.resident-select-card .select-button {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+/* Usage logs table */
+.usage-table {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+.usage-table thead th {
+  background-color: #f5f5f7;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.usage-table tbody td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  vertical-align: middle;
+}
+
+.usage-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.usage-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.usage-table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Status badges */
+.status-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  display: inline-block;
+}
+
+.status-badge.taken {
+  background-color: rgba(52, 199, 89, 0.1);
+  color: #34c759;
+}
+
+.status-badge.missed {
+  background-color: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
+}
+
+/* Detail view styling */
+.usage-details {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+.details-header {
+  background-color: #0071e3;
+  color: white;
+  padding: 1rem;
+  font-weight: 600;
+}
+
+.details-section {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.details-section:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #86868b;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.detail-value {
+  font-size: 1.1rem;
+  color: #1d1d1f;
+}
+
+.detail-item {
+  margin-bottom: 1rem;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Voice note player */
+.voice-note-player {
+  width: 100%;
+  background-color: #f5f5f7;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+/* New log form */
+.log-form-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.log-form-card .form-label {
+  font-weight: 500;
+  color: #1d1d1f;
+}
+
+.log-form-card .form-control:focus {
+  border-color: #0071e3;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+}
+
+/* Empty state */
+.usage-empty {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.usage-empty i {
+  font-size: 3rem;
+  color: #86868b;
+  margin-bottom: 1rem;
+}
+
+.usage-empty h3 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1d1d1f;
+}
+
+.usage-empty p {
+  color: #86868b;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Schedule label */
+.schedule-label {
+  background-color: #f5f5f7;
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: inline-block;
+}
+
+/* Usage Section */
+.usage-section {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.5rem;
+}
+
+.usage-section-header {
+  padding: 1.25rem;
+  background-color: #0071e3;
+  color: white;
+}
+
+.usage-section-header h3 {
+  font-weight: 600;
+  margin-bottom: 0;
+  letter-spacing: -0.01em;
+}
+
+.usage-section-body {
+  padding: 1.5rem;
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .usage-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .usage-header .btn {
+    margin-top: 1rem;
+  }
+  
+  /* Removed flex-direction column to keep cards in rows */
+  .resident-select-card {
+    /* Adjust sizing for smaller screens but keep side-by-side */
+    flex: 1 1 150px;
+  }
+  
+  .usage-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .usage-actions .btn {
+    width: 100%;
+  }
+}

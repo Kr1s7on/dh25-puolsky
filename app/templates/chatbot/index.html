@@ -1,38 +1,47 @@
 {% extends 'layouts/base.html' %}
 
+{% block custom_head_tags %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/chatbot.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="ui stackable grid container">
     <div class="sixteen wide computer sixteen wide tablet sixteen wide mobile column">
-        <h2 class="ui header">Caregiver Assistant</h2>
-        <div class="ui divider"></div>
+        <div class="chatbot-header">
+            <h2 class="ui header">Caregiver Assistant</h2>
+        </div>
     </div>
     
     <div class="sixteen wide computer sixteen wide tablet sixteen wide mobile column">
-        <div class="ui segment" id="chat-container" style="height: 400px; overflow-y: auto; display: flex; flex-direction: column;">
+        <div id="chat-container">
             <div id="chat-messages">
-                <div class="ui message">
-                    <div class="content">
-                        <div class="header">Mr. DoseDash</div>
-                        <p>Hello! I'm your care assistant powered by Gemini AI. You can ask me questions about residents, medications, and supplies. For example:
-                            <ul>
-                                <li>"When did Mrs. Johnson last miss a dose?"</li>
-                                <li>"Which residents need medication tonight?"</li>
-                                <li>"What supplies are running low?"</li>
-                            </ul>
-                        </p>
+                <div class="message-container">
+                    <div class="message-bubble assistant-message welcome-message">
+                        <div class="message-header">Mr. DoseDash</div>
+                        <p>Hello! I'm your care assistant powered by Gemini AI. You can ask me questions about residents, medications, and supplies.</p>
+                        
+                        <div class="example-queries">
+                            <span class="example-query" data-query="When was the last medication administered?">When was the last medication administered?</span>
+                            <span class="example-query" data-query="Which medications need refills soon?">Which medications need refills soon?</span>
+                            <span class="example-query" data-query="List all medication interactions">List all medication interactions</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <form class="ui form" id="chat-form">
-            <div class="field">
-                <div class="ui action input">
-                    <input type="text" id="user-message" placeholder="Type your question..." required autofocus>
-                    <button class="ui blue button" type="submit">Send</button>
+        <div class="chat-form-container">
+            <form class="ui form" id="chat-form">
+                <div class="field">
+                    <div class="ui action input">
+                        <input type="text" id="user-message" placeholder="Type your question or click a suggestion..." required autofocus>
+                        <button class="ui button" type="submit">
+                            <i class="paper plane icon"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -42,32 +51,39 @@
 <script>
 const md = window.markdownit();  // initialize markdown parser
 $(document).ready(function() {
-    function appendMessage(sender, message) {
-        const messageDiv = $('<div class="ui message"></div>');
-        const contentDiv = $('<div class="content"></div>');
-        const headerDiv = $('<div class="header"></div>').text(sender);
-        // render markdown in message
-        const textP = $('<div></div>').html(md.render(message));
+    function appendMessage(sender, message, isUser = false) {
+        const messageContainer = $('<div class="message-container"></div>');
+        const messageBubble = $('<div class="message-bubble"></div>');
+        const messageHeader = $('<div class="message-header"></div>').text(sender);
         
-        contentDiv.append(headerDiv, textP);
-        messageDiv.append(contentDiv);
+        // Render markdown in message
+        const messageContent = $('<div class="message-content"></div>').html(md.render(message));
         
-        if (sender === "You") {
-            messageDiv.addClass("right aligned");
+        messageBubble.append(messageHeader, messageContent);
+        messageContainer.append(messageBubble);
+        
+        if (isUser) {
+            messageBubble.addClass('user-message');
+            messageContainer.addClass('user-container');
+        } else {
+            messageBubble.addClass('assistant-message');
         }
         
-        $('#chat-messages').append(messageDiv);
-        $('#chat-container').scrollTop($('#chat-container')[0].scrollHeight);
+        $('#chat-messages').append(messageContainer);
+        scrollChatToBottom();
     }
     
-    $('#chat-form').submit(function(e) {
-        e.preventDefault();
-        
-        const userMessage = $('#user-message').val().trim();
+    function scrollChatToBottom() {
+        $('#chat-container').animate({
+            scrollTop: $('#chat-container')[0].scrollHeight
+        }, 300);
+    }
+    
+    function sendMessage(userMessage) {
         if (userMessage === '') return;
         
         // Display user message
-        appendMessage('You', userMessage);
+        appendMessage('You', userMessage, true);
         
         // Clear input field
         $('#user-message').val('');
@@ -86,7 +102,40 @@ $(document).ready(function() {
                 appendMessage('Assistant', 'Sorry, there was an error processing your request.');
             }
         });
+    }
+    
+    // Handle form submission
+    $('#chat-form').submit(function(e) {
+        e.preventDefault();
+        const userMessage = $('#user-message').val().trim();
+        sendMessage(userMessage);
     });
+    
+    // Handle clickable example queries
+    $('.example-query').click(function() {
+        const $this = $(this);
+        const query = $this.data('query');
+        
+        // Visual feedback
+        $this.addClass('clicked');
+        setTimeout(() => $this.removeClass('clicked'), 800);
+        
+        // Set input value
+        $('#user-message').val(query);
+        $('#user-message').focus();
+        
+        // Highlight all example queries for a moment to show they're interactive
+        $('.example-query').not($this).addClass('active');
+        setTimeout(() => $('.example-query').not($this).removeClass('active'), 300);
+        
+        // Add a delay before sending to show the user what's being sent
+        setTimeout(function() {
+            sendMessage(query);
+        }, 500);
+    });
+    
+    // Focus the input field on page load
+    $('#user-message').focus();
 });
 </script>
 {% endblock %}

@@ -103,6 +103,9 @@ def create_app(config):
     from .quick_actions import quick_actions as quick_actions_blueprint
     app.register_blueprint(quick_actions_blueprint, url_prefix='/quick-actions')
     
+    from .reports import reports as reports_blueprint
+    app.register_blueprint(reports_blueprint, url_prefix='/reports')
+    
     from .main.api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')
 

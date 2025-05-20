@@ -1,86 +1,90 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-    <div class="ui text container">
-        <div class="ui segment">
-            <h1 class="ui header">
-                <i class="medkit icon"></i>
-                <div class="content">
-                    DoseDash
-                    <div class="sub header">Medical Supplies & Medication Tracker</div>
-                </div>
-            </h1>
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h1>DoseDash</h1>
+                <p class="lead">Medical Supplies & Medication Tracker</p>
+            </div>
         </div>
 
         {% if not current_user.is_authenticated %}
-            <div class="ui segment">
-                <h2 class="ui header">Welcome to DoseDash</h2>
-                <p>
-                    DoseDash is a comprehensive solution designed for caregivers in elderly care facilities to track and manage medications and medical supplies.
-                </p>
-                
-                <h3 class="ui header">Key Features:</h3>
-                <div class="ui bulleted list">
-                    <div class="item">Medication scheduling and tracking</div>
-                    <div class="item">Inventory management for medical supplies</div>
-                    <div class="item">Usage logging with voice note attachments</div>
-                    <div class="item">Low-stock alerts and notifications</div>
-                    <div class="item">Comprehensive reporting</div>
-                </div>
-                
-                <div class="ui center aligned segment">
-                    <a class="ui primary fluid button" href="{{ url_for('account.login') }}">
-                        <i class="sign in icon"></i>
-                        Login
-                    </a>
+            <!-- Unauthenticated Homepage -->
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Welcome to DoseDash</h2>
+                            <p>
+                                DoseDash is a comprehensive solution designed for caregivers in elderly care facilities to track and manage medications and medical supplies.
+                            </p>
+                            
+                            <h5 class="mt-4">Key Features:</h5>
+                            <ul>
+                                <li>Medication scheduling and tracking</li>
+                                <li>Inventory management for medical supplies</li>
+                                <li>Usage logging with voice note attachments</li>
+                                <li>Low-stock alerts and notifications</li>
+                                <li>Comprehensive reporting</li>
+                            </ul>
+                            
+                            <div class="mt-4">
+                                <a class="btn btn-primary" href="{{ url_for('account.login') }}">
+                                    <i class="bi bi-box-arrow-in-right me-2"></i>
+                                    Login
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% else %}
-            <div class="ui segment">
-                <h2 class="ui header">Welcome back, {{ current_user.full_name() }}!</h2>
-                
-                {% if current_user.is_admin() %}
-                    <p>As an administrator, you have access to:</p>
-                    <div class="ui list">
-                        <a class="item" href="{{ url_for('admin.index') }}">
-                            <i class="dashboard icon"></i>
-                            Admin Dashboard
-                        </a>
-                        <a class="item" href="{{ url_for('admin.registered_users') }}">
-                            <i class="users icon"></i>
-                            User Management
-                        </a>
-                        <a class="item" href="{{ url_for('admin.residents') }}">
-                            <i class="hospital user icon"></i>
-                            Resident Management
-                        </a>
+            <!-- Authenticated Homepage -->
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Welcome back, {{ current_user.full_name() }}!</h2>
+                            
+                            {% if current_user.is_admin() %}
+                                <!-- Admin Homepage -->
+                                <p class="mt-3">As an administrator, you have access to:</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <a href="{{ url_for('admin.index') }}">Admin Dashboard</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{{ url_for('admin.registered_users') }}">User Management</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{{ url_for('admin.residents') }}">Resident Management</a>
+                                    </li>
+                                </ul>
+                            {% elif current_user.is_caregiver() %}
+                                <!-- Caregiver Homepage -->
+                                <p class="mt-3">Quick links for caregivers:</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <a href="{{ url_for('quick_actions.index') }}">Quick Actions - Mark Medications</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{{ url_for('inventory.index') }}">Manage Inventory</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{{ url_for('usage.index') }}">Log Medication Usage</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{{ url_for('notifications.index') }}">View Notifications</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{{ url_for('chatbot.index') }}">Chat with AI Assistant</a>
+                                    </li>
+                                </ul>
+                            {% endif %}
+                        </div>
                     </div>
-                {% elif current_user.is_caregiver() %}
-                    <p>Quick links for caregivers:</p>
-                    
-                    <div class="ui teal segment">
-                        <a class="ui fluid large teal button" href="{{ url_for('quick_actions.index') }}">
-                            <i class="check circle icon"></i>
-                            Quick Actions - Mark Medications
-                        </a>
-                        <p class="ui center aligned small text" style="margin-top: 5px;">Quickly mark medications as taken or missed</p>
-                    </div>
-                    
-                    <div class="ui list">
-                        <a class="item" href="{{ url_for('inventory.index') }}">
-                            <i class="medkit icon"></i>
-                            Manage Inventory
-                        </a>
-                        <a class="item" href="{{ url_for('usage.index') }}">
-                            <i class="clipboard icon"></i>
-                            Log Medication Usage
-                        </a>
-                        <a class="item" href="{{ url_for('notifications.index') }}">
-                            <i class="bell icon"></i>
-                            View Notifications
-                        </a>
-                    </div>
-                {% endif %}
+                </div>
             </div>
         {% endif %}
     </div>

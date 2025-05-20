@@ -39,7 +39,7 @@ def index():
                           form=form,
                           status_filter=status_filter,
                           type_filter=type_filter,
-                          show_sidebar=True)
+                          show_sidebar=False)
 
 @notifications.route('/mark-read/<int:notification_id>', methods=['POST'])
 @login_required

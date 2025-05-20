@@ -1,36 +1,39 @@
 {% extends 'layouts/base.html' %}
 {% import 'macros/nav_macros.html' as nav %}
 
+{% block custom_head_tags %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/reports.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Stock Level Report for {{ resident.name }}</h1>
-        <div>
-            <a href="{{ url_for('reports.stock_report', resident_id=resident.id, format='pdf') }}" class="btn btn-outline-primary me-2">
-                <i class="fa fa-file-pdf"></i> Download PDF
-            </a>
-            <a href="{{ url_for('reports.email_report', report_type='stock', resident_id=resident.id) }}" class="btn btn-outline-primary">
-                <i class="fa fa-envelope"></i> Email Report
-            </a>
+    <div class="report-detail-header">
+        <div class="d-flex justify-content-between align-items-start flex-wrap">
+            <div>
+                <h1>Stock Level Report: {{ resident.name }}</h1>
+                <p class="text-white-50 mb-0">Generated on {{ date.strftime('%B %d, %Y at %H:%M') }}</p>
+            </div>
+            <div class="report-actions">
+                <a href="{{ url_for('reports.stock_report', resident_id=resident.id, format='pdf') }}" class="report-action-btn">
+                    <i class="bi bi-file-earmark-pdf"></i> Download PDF
+                </a>
+                <a href="{{ url_for('reports.email_report', report_type='stock', resident_id=resident.id) }}" class="report-action-btn">
+                    <i class="bi bi-envelope"></i> Email Report
+                </a>
+                <a href="{{ url_for('reports.index') }}" class="report-action-btn">
+                    <i class="bi bi-arrow-left"></i> Back to Reports
+                </a>
+            </div>
         </div>
     </div>
     
-    <div class="card mb-4">
-        <div class="card-header bg-white">
-            <h5 class="mb-0">Report Details</h5>
-        </div>
-        <div class="card-body">
-            <p><strong>Generated:</strong> {{ date.strftime('%B %d, %Y at %H:%M') }}</p>
-        </div>
-    </div>
-    
-    <div class="card">
-        <div class="card-header bg-white">
-            <h5 class="mb-0">Current Inventory</h5>
+    <div class="report-data-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5><i class="bi bi-box-seam me-2"></i> Current Inventory</h5>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
+                <table class="table report-table">
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -51,33 +54,30 @@
                             <td>{{ item.quantity }}</td>
                             <td>{{ item.threshold }}</td>
                             <td>
-                                {% if item.quantity <= 0 %}
-                                <span class="badge bg-danger">Out of Stock</span>
-                                {% elif item.quantity <= item.threshold %}
-                                <span class="badge bg-warning text-dark">Low Stock</span>
+                                {% if item.quantity <= item.threshold and item.quantity > 0 %}
+                                <span class="status-badge status-low">Low Stock</span>
+                                {% elif item.quantity <= 0 %}
+                                <span class="status-badge status-missed">Out of Stock</span>
                                 {% else %}
-                                <span class="badge bg-success">In Stock</span>
+                                <span class="status-badge status-normal">Normal</span>
                                 {% endif %}
                             </td>
-                            <td>
-                                {% if item.expiration %}
-                                {{ item.expiration.strftime('%m/%d/%Y') }}
-                                {% else %}
-                                —
-                                {% endif %}
-                            </td>
-                            <td>{{ item.daily_usage or '—' }}</td>
+                            <td>{{ item.expiration_date.strftime('%m/%d/%Y') if item.expiration_date else 'N/A' }}</td>
+                            <td>{{ item.daily_usage if item.daily_usage else 'N/A' }}</td>
                             <td>
                                 {% if item.daily_usage and item.daily_usage > 0 %}
                                 {{ (item.quantity / item.daily_usage)|round|int }} days
                                 {% else %}
-                                —
+                                N/A
                                 {% endif %}
                             </td>
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="8" class="text-center py-4">No inventory items found.</td>
+                            <td colspan="8" class="text-center py-5">
+                                <i class="bi bi-box-seam display-4 text-muted d-block mb-3"></i>
+                                <p class="text-muted">No inventory items found for this resident.</p>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -86,35 +86,41 @@
         </div>
     </div>
     
-    <!-- Summary Stats -->
     {% if items %}
     <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-4 mb-4">
+            <div class="report-data-card h-100">
                 <div class="card-body text-center">
-                    <h5 class="mb-0">Total Items</h5>
-                    <p class="display-4">{{ items|length }}</p>
+                    <i class="bi bi-box2 display-4 text-primary mb-3"></i>
+                    <h5>Total Items</h5>
+                    <div class="display-4 fw-bold">{{ items|length }}</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-4 mb-4">
+            <div class="report-data-card h-100">
                 <div class="card-body text-center">
-                    <h5 class="mb-0">Low Stock Items</h5>
-                    <p class="display-4 text-warning">
-                        {{ items|selectattr('quantity', 'le', 'threshold')|selectattr('quantity', 'gt', 0)|list|length }}
-                    </p>
+                    <i class="bi bi-exclamation-triangle display-4 text-warning mb-3"></i>
+                    <h5>Low Stock</h5>
+                    <div class="display-4 fw-bold text-warning">{{ items|selectattr('quantity', 'le', 'threshold')|selectattr('quantity', 'gt', 0)|list|length }}</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-4 mb-4">
+            <div class="report-data-card h-100">
                 <div class="card-body text-center">
-                    <h5 class="mb-0">Out of Stock</h5>
-                    <p class="display-4 text-danger">{{ items|selectattr('quantity', 'le', 0)|list|length }}</p>
+                    <i class="bi bi-x-octagon display-4 text-danger mb-3"></i>
+                    <h5>Out of Stock</h5>
+                    <div class="display-4 fw-bold text-danger">{{ items|selectattr('quantity', 'le', 0)|list|length }}</div>
                 </div>
             </div>
         </div>
+    </div>
+    
+    <div class="text-center my-4">
+        <a href="{{ url_for('reports.index') }}" class="btn btn-primary">
+            <i class="bi bi-arrow-left me-2"></i> Back to All Reports
+        </a>
     </div>
     {% endif %}
 </div>

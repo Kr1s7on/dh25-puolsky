@@ -11,6 +11,7 @@ import datetime
 
 from app import create_app, db
 from app.tasks.alerts import check_inventory_thresholds, check_missed_doses, check_overdue_doses, send_weekly_digest
+from app.tasks.reports import send_weekly_reports
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 
@@ -61,6 +62,15 @@ def initialize_scheduler():
         queue_name='default'
     )
     print("✅ Scheduled weekly caregiver digest every Monday at 8:00 AM")
+    
+    # 5. Weekly reports for all residents every Monday at 9:00 AM
+    scheduler.cron(
+        "0 9 * * 1",  # Run at 9:00 AM every Monday
+        func=send_weekly_reports,
+        repeat=None,
+        queue_name='default'
+    )
+    print("✅ Scheduled weekly reports generation every Monday at 9:00 AM")
     
     print("All jobs scheduled successfully!")
     return scheduler

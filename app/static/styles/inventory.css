@@ -1,0 +1,280 @@
+/* inventory.css - Enhanced styling for the inventory management interface */
+
+/* Inventory section headers */
+.inventory-header {
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(to right, #0071e3, #2b8aed);
+  color: white;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inventory-header h1, 
+.inventory-header h2 {
+  margin-bottom: 0;
+  letter-spacing: -0.02em;
+}
+
+.inventory-filters {
+  background-color: #f5f5f7;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Inventory item cards */
+.inventory-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.25rem;
+  transition: all 0.3s ease;
+  border-left: 5px solid #0071e3;
+}
+
+.inventory-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.inventory-card.low-stock {
+  border-left-color: #ff9500;
+}
+
+.inventory-card.out-of-stock {
+  border-left-color: #ff3b30;
+}
+
+.inventory-card-header {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inventory-item-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1d1d1f;
+  margin-bottom: 0;
+}
+
+.inventory-card-body {
+  padding: 1rem;
+}
+
+.inventory-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.inventory-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.inventory-detail-label {
+  font-size: 0.875rem;
+  color: #86868b;
+  margin-bottom: 0.25rem;
+}
+
+.inventory-detail-value {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #1d1d1f;
+}
+
+.inventory-action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+/* Inventory stock status badges */
+.stock-badge {
+  padding: 0.35rem 0.75rem;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.stock-badge.in-stock {
+  background-color: rgba(52, 199, 89, 0.1);
+  color: #34c759;
+}
+
+.stock-badge.low-stock {
+  background-color: rgba(255, 149, 0, 0.1);
+  color: #ff9500;
+}
+
+.stock-badge.out-of-stock {
+  background-color: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
+}
+
+/* Inventory form styling */
+.inventory-form {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.inventory-form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #1d1d1f;
+}
+
+.form-group label {
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: #1d1d1f;
+}
+
+.form-control {
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #0071e3;
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.2);
+}
+
+/* Inventory table styling */
+.inventory-table {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+.inventory-table thead th {
+  background-color: #f5f5f7;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1rem;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.inventory-table tbody td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  vertical-align: middle;
+}
+
+.inventory-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.inventory-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.inventory-table tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .inventory-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .inventory-header .btn {
+    margin-top: 1rem;
+    align-self: flex-start;
+  }
+  
+  .inventory-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .inventory-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* Quantity indicator styling */
+.quantity-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  min-width: 50px;
+  padding: 0 10px;
+  border-radius: 15px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.quantity-indicator.high {
+  background-color: rgba(52, 199, 89, 0.15);
+  color: #34c759;
+}
+
+.quantity-indicator.medium {
+  background-color: rgba(0, 113, 227, 0.15);
+  color: #0071e3;
+}
+
+.quantity-indicator.low {
+  background-color: rgba(255, 149, 0, 0.15);
+  color: #ff9500;
+}
+
+.quantity-indicator.critical {
+  background-color: rgba(255, 59, 48, 0.15);
+  color: #ff3b30;
+}
+
+/* Progress bar styling */
+.stock-progress {
+  height: 8px;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  background-color: #e8e8ed;
+  overflow: hidden;
+}
+
+.stock-progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.stock-progress-bar.high {
+  background-color: #34c759;
+}
+
+.stock-progress-bar.medium {
+  background-color: #0071e3;
+}
+
+.stock-progress-bar.low {
+  background-color: #ff9500;
+}
+
+.stock-progress-bar.critical {
+  background-color: #ff3b30;
+}

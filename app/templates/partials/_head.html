@@ -2,12 +2,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block page_title %}{{ config.APP_NAME }}{% endblock %}</title>
 <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}" type="image/png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/mobile-nav.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/layout-adjustments.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/quick-actions.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/inventory.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/notifications.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/usage-logs.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/chatbot.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/homepage.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/flash-fixes.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/custom-link-styles.css') }}">
 
 {% assets 'vendor_css' %}<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">{% endassets %}
 {% assets 'app_css' %}<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">{% endassets %}
-
-<!-- Apple-inspired minimal design -->
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/apple-minimal.css') }}">
 
 {% assets 'vendor_js' %}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}
 {% assets 'app_js' %}<script type="text/javascript" src="{{ ASSET_URL }}"></script>{% endassets %}

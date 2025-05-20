@@ -1,0 +1,43 @@
+/* layout-adjustments.css - Custom layout improvements */
+
+/* Add more space below navbar */
+.main-content {
+  padding-top: 10px;
+}
+
+/* Flash messages positioning */
+.flashes-container {
+  position: fixed;
+  top: 76px;
+  left: 0;
+  right: 0;
+  z-index: 1020;
+  padding: 0 20px;
+}
+
+.flashes {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+
+.flashes .ui.message {
+  margin-bottom: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Add some padding to the main content to avoid overlap with fixed notifications */
+.container-fluid {
+  padding-top: 10px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 991.98px) {
+  .main-content {
+    padding-top: 5px;
+  }
+  
+  .flashes-container {
+    top: 60px; /* Adjust based on mobile navbar height */
+  }
+}

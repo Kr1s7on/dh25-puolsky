@@ -1,0 +1,449 @@
+/* 
+* homepage.css - Basic styling for the DoseDash homepage
+* For DoseDash Medication Management System
+*/
+
+/* Very simple styles for homepage elements */
+h1 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+
+.lead {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+.card {
+    border: 1px solid #ddd;
+    margin-bottom: 2rem;
+}
+
+.card-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Basic styles */
+a {
+    color: #0071e3;
+}
+
+a:hover {
+    color: #2b8aed;
+}
+
+/* This file intentionally kept very simple */
+    margin-top: var(--spacing-md);
+    position: relative;
+}
+
+.login-container:before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(to right, rgba(0, 113, 227, 0), var(--primary), rgba(0, 113, 227, 0));
+    border-radius: 2px;
+}
+
+.login-button {
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: var(--spacing) var(--spacing-lg);
+    border-radius: 24px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-decoration: none;
+    max-width: 300px;
+    box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    color: #fff !important;
+}
+
+.login-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.login-button:hover::before {
+    transform: translateX(100%);
+}
+
+.login-button i {
+    margin-right: var(--spacing);
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.login-button:hover {
+    background-color: var(--primary-light);
+    color: var(--white);
+    box-shadow: 0 6px 16px rgba(0, 113, 227, 0.4);
+    transform: translateY(-3px) scale(1.02);
+}
+
+.login-button:hover i {
+    transform: translateX(-3px) rotate(-10deg);
+}
+
+.login-button:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+}
+
+/* Authenticated user homepage (common) */
+.welcome-back {
+    padding: var(--spacing-lg);
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--gray-light);
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.6s ease-in-out;
+    animation-delay: 0.1s;
+    animation-fill-mode: both;
+}
+
+.welcome-back::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(0, 113, 227, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+}
+
+.welcome-back::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(0, 113, 227, 0.03) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+}
+
+.welcome-back h2 {
+    margin-bottom: var(--spacing);
+    color: var(--dark);
+    position: relative;
+    padding-bottom: var(--spacing-sm);
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.welcome-back h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary), var(--primary-light));
+    border-radius: 3px;
+}
+
+.welcome-back p {
+    color: var(--gray);
+    margin-bottom: var(--spacing);
+    font-size: 1.05rem;
+    position: relative;
+}
+
+/* Admin specific styles */
+.admin-links {
+    margin-top: var(--spacing-md);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing);
+}
+
+.admin-link-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md);
+    background-color: var(--white);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--dark);
+    border: 1px solid var(--gray-light);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-link-item:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: top;
+}
+
+.admin-link-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(43, 138, 237, 0.15);
+    border-color: rgba(0, 113, 227, 0.3);
+    padding-left: calc(var(--spacing-md) + 4px);
+}
+
+.admin-link-item:hover:after {
+    transform: scaleY(1);
+}
+
+.admin-link-item i {
+    color: var(--primary);
+    margin-right: var(--spacing-md);
+    font-size: 1.4rem;
+    background-color: rgba(0, 113, 227, 0.1);
+    padding: 12px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.admin-link-item:hover i {
+    transform: scale(1.1) rotate(-5deg);
+    background-color: rgba(0, 113, 227, 0.15);
+}
+
+@media (min-width: 768px) {
+    .admin-links {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+/* Caregiver specific styles */
+.quick-action-card {
+    background: linear-gradient(135deg, var(--success), #28a745);
+    color: var(--white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
+    text-decoration: none;
+    display: block;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 8px 20px rgba(52, 199, 89, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.quick-action-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.quick-action-card::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+}
+
+.quick-action-card:hover::before {
+    transform: translateX(100%);
+}
+
+.quick-action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(52, 199, 89, 0.3);
+    color: var(--white);
+    background: linear-gradient(135deg, #28a745, #1b8b34); /* Darker green gradient on hover */
+}
+
+.quick-action-card .card-content {
+    font-size: 1.3rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+}
+
+.quick-action-card i {
+    margin-right: var(--spacing);
+    font-size: 1.6rem;
+    transition: all 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.quick-action-card:hover i {
+    transform: scale(1.2) rotate(-10deg);
+}
+
+.quick-action-note {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    margin-top: var(--spacing);
+    text-align: center;
+    font-weight: 300;
+    letter-spacing: 0.03em;
+}
+
+.caregiver-links {
+    margin-top: var(--spacing-md);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing);
+}
+
+.caregiver-link-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-md);
+    background-color: var(--white);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--dark);
+    border: 1px solid var(--gray-light);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.caregiver-link-item:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: linear-gradient(to bottom, var(--primary), var(--primary-light));
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+    transform-origin: top;
+}
+
+.caregiver-link-item:before {
+    content: '→';
+    position: absolute;
+    right: var(--spacing-md);
+    opacity: 0;
+    color: var(--primary);
+    font-size: 1.2rem;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+}
+
+.caregiver-link-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(43, 138, 237, 0.15);
+    border-color: rgba(0, 113, 227, 0.3);
+    color: var(--primary);
+    padding-left: calc(var(--spacing-md) + 4px);
+}
+
+.caregiver-link-item:hover:after {
+    transform: scaleY(1);
+}
+
+.caregiver-link-item:hover:before {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.caregiver-link-item i {
+    margin-right: var(--spacing-md);
+    color: var(--primary);
+    font-size: 1.4rem;
+    background-color: rgba(0, 113, 227, 0.1);
+    padding: 12px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.caregiver-link-item:hover i {
+    transform: scale(1.1) rotate(-5deg);
+    background-color: rgba(0, 113, 227, 0.15);
+}
+
+@media (min-width: 768px) {
+    .caregiver-links {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .welcome-card h2,
+    .welcome-back h2 {
+        font-size: 1.5rem;
+    }
+    
+    .welcome-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .admin-link-item,
+    .caregiver-link-item {
+        padding: var(--spacing);
+    }
+    
+    .admin-link-item i,
+    .caregiver-link-item i {
+        padding: 8px;
+        font-size: 1.2rem;
+        margin-right: var(--spacing);
+    }
+    
+    .quick-action-card {
+        padding: var(--spacing);
+    }
+    
+    .quick-action-card .card-content {
+        font-size: 1.1rem;
+    }
+    
+    .quick-action-note {
+        font-size: 0.9rem;
+        margin-top: var(--spacing-sm);
+    }
+    
+    .login-button {
+        font-size: 1rem;
+        padding: var(--spacing-sm) var(--spacing);
+    }
+}

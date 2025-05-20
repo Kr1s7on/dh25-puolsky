@@ -1,0 +1,159 @@
+/* quick-actions.css - Enhanced styling for the quick actions interface */
+
+.quick-actions-header {
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(to right, #0071e3, #2b8aed);
+  color: white;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+}
+
+.swipe-card {
+  position: relative;
+  transition: all 0.3s ease;
+  transform-origin: center;
+  touch-action: pan-y;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  background-color: white;
+  border-left: 5px solid transparent;
+}
+
+.swipe-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.swipe-card.due-now {
+  border-left-color: #ff9500;
+}
+
+.swipe-card.overdue {
+  border-left-color: #ff3b30;
+}
+
+.swipe-card.upcoming {
+  border-left-color: #0071e3;
+}
+
+.swipe-instructions {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+}
+
+.swipe-instruction {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-weight: 500;
+}
+
+.swipe-instruction.missed {
+  color: #ff3b30;
+  background-color: rgba(255, 59, 48, 0.1);
+}
+
+.swipe-instruction.taken {
+  color: #34c759;
+  background-color: rgba(52, 199, 89, 0.1);
+}
+
+.resident-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 12px 12px 0 0;
+  background-color: #f8f9fa;
+}
+
+.resident-section {
+  margin-bottom: 30px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.medication-info {
+  padding: 20px 15px;
+  position: relative;
+}
+
+.medication-cards {
+  padding: 15px;
+}
+
+.resident-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+  border: 3px solid white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.resident-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1d1d1f;
+}
+
+.medication-count {
+  margin-left: 10px;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.med-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1d1d1f;
+}
+
+.pill-time {
+  display: inline-flex;
+  align-items: center;
+  background: #f5f5f7;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-right: 8px;
+  color: #1d1d1f;
+}
+
+.pill-time i {
+  margin-right: 6px;
+  color: #86868b;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .resident-name {
+    font-size: 1.2rem;
+  }
+  
+  .quick-actions-header {
+    padding: 1.2rem 0.8rem;
+  }
+  
+  .resident-avatar {
+    width: 50px;
+    height: 50px;
+  }
+}

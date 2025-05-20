@@ -1,80 +1,106 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-<div class="ui stackable grid container">
-    <div class="sixteen wide column">
-        <h1 class="ui header">Usage Log Details</h1>
-        <div class="ui divider"></div>
-        
-        <div class="ui segments">
-            <div class="ui blue segment">
-                <h3 class="ui header">Basic Information</h3>
-            </div>
-            <div class="ui segment">
-                <div class="ui list">
-                    <div class="item">
-                        <div class="header">Resident</div>
-                        {{ log.resident.name }}
-                    </div>
-                    <div class="item">
-                        <div class="header">Medication/Supply</div>
-                        {{ log.inventory_item.name }} ({{ log.inventory_item.type }})
-                    </div>
-                    <div class="item">
-                        <div class="header">Status</div>
-                        <div class="ui {% if log.status.name == 'TAKEN' %}green{% else %}red{% endif %} label">
-                            {{ log.status.value }}
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="header">Timestamp</div>
-                        {{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}
-                    </div>
-                    {% if log.scheduled_time %}
-                        <div class="item">
-                            <div class="header">Scheduled Time</div>
-                            {{ log.scheduled_time }}
-                        </div>
-                    {% endif %}
-                    <div class="item">
-                        <div class="header">Caregiver</div>
-                        {{ log.caregiver.full_name() }}
-                    </div>
+<div class="container main-content">
+    <div class="row">
+        <div class="col-12">
+            <div class="usage-header">
+                <div>
+                    <h2 class="mb-0">Usage Log Details</h2>
+                    <p class="mb-0 text-white-50">Detailed information about this medication or supply usage</p>
                 </div>
             </div>
             
-            {% if log.notes %}
-                <div class="ui blue segment">
-                    <h3 class="ui header">Notes</h3>
+            <div class="usage-details">
+                <div class="details-header">
+                    <h3 class="mb-0">Basic Information</h3>
                 </div>
-                <div class="ui segment">
+                <div class="details-section">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <div class="detail-label">Resident</div>
+                                <div class="detail-value">{{ log.resident.name }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <div class="detail-label">Medication/Supply</div>
+                                <div class="detail-value">{{ log.inventory_item.name }} <span class="badge bg-light text-dark">{{ log.inventory_item.type }}</span></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <div class="detail-label">Status</div>
+                                <div class="detail-value">
+                                    <span class="status-badge {% if log.status.name == 'TAKEN' %}taken{% else %}missed{% endif %}">
+                                        {% if log.status.name == 'TAKEN' %}
+                                            <i class="bi bi-check-circle me-1"></i> TAKEN
+                                        {% else %}
+                                            <i class="bi bi-x-circle me-1"></i> MISSED
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <div class="detail-label">Timestamp</div>
+                                <div class="detail-value">{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</div>
+                            </div>
+                        </div>
+                        {% if log.scheduled_time %}
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <div class="detail-label">Scheduled Time</div>
+                                <div class="detail-value">{{ log.scheduled_time }}</div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="col-md-6">
+                            <div class="detail-item">
+                                <div class="detail-label">Caregiver</div>
+                                <div class="detail-value">{{ log.caregiver.full_name() }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            {% if log.notes %}
+                <div class="details-header">
+                    <h3 class="mb-0">Notes</h3>
+                </div>
+                <div class="details-section">
                     <p>{{ log.notes }}</p>
                 </div>
             {% endif %}
             
             {% if log.voice_note_url %}
-                <div class="ui blue segment">
-                    <h3 class="ui header">Voice Note</h3>
+                <div class="details-header">
+                    <h3 class="mb-0">Voice Note</h3>
                 </div>
-                <div class="ui segment">
-                    <audio controls>
-                        <source src="{{ log.voice_note_url }}" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
+                <div class="details-section">
+                    <div class="voice-note-player">
+                        <audio controls class="w-100">
+                            <source src="{{ log.voice_note_url }}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
                 </div>
             {% endif %}
-        </div>
-        
-        <div class="ui buttons">
-            <a class="ui basic button" href="{{ url_for('usage.index', resident_id=log.resident_id) }}">
-                <i class="caret left icon"></i>
-                Back to Usage Logs
-            </a>
-            <a class="ui negative button" href="{{ url_for('usage.delete_log', log_id=log.id) }}"
-               onclick="return confirm('Are you sure you want to delete this log?');">
-                <i class="trash icon"></i>
-                Delete Log
-            </a>
+            </div>
+            
+            <div class="mt-4 mb-2 usage-actions d-flex gap-2">
+                <a class="btn btn-outline-secondary" href="{{ url_for('usage.index', resident_id=log.resident_id) }}">
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Back to Usage Logs
+                </a>
+                <a class="btn btn-outline-danger" href="{{ url_for('usage.delete_log', log_id=log.id) }}"
+                onclick="return confirm('Are you sure you want to delete this log?');">
+                    <i class="bi bi-trash me-1"></i>
+                    Delete Log
+                </a>
+            </div>
         </div>
     </div>
 </div>

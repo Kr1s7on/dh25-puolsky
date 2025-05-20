@@ -1,47 +1,52 @@
 {% extends 'layouts/base.html' %}
 {% import 'macros/nav_macros.html' as nav %}
 
+{% block custom_head_tags %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/reports.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Usage Report for {{ resident.name }}</h1>
-        <div>
-            <a href="{{ url_for('reports.usage_report', resident_id=resident.id, format='pdf', days=days) }}" class="btn btn-outline-primary me-2">
-                <i class="fa fa-file-pdf"></i> Download PDF
-            </a>
-            <a href="{{ url_for('reports.email_report', report_type='usage', resident_id=resident.id, days=days) }}" class="btn btn-outline-primary">
-                <i class="fa fa-envelope"></i> Email Report
-            </a>
-        </div>
-    </div>
-    
-    <div class="card mb-4">
-        <div class="card-header bg-white">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Report Details</h5>
-                <div class="btn-group">
-                    <a href="{{ url_for('reports.usage_report', resident_id=resident.id, days=7) }}" 
-                       class="btn btn-sm {{ 'btn-primary' if days == 7 else 'btn-outline-primary' }}">7 Days</a>
-                    <a href="{{ url_for('reports.usage_report', resident_id=resident.id, days=14) }}" 
-                       class="btn btn-sm {{ 'btn-primary' if days == 14 else 'btn-outline-primary' }}">14 Days</a>
-                    <a href="{{ url_for('reports.usage_report', resident_id=resident.id, days=30) }}" 
-                       class="btn btn-sm {{ 'btn-primary' if days == 30 else 'btn-outline-primary' }}">30 Days</a>
-                </div>
+    <div class="report-detail-header">
+        <div class="d-flex justify-content-between align-items-start flex-wrap">
+            <div>
+                <h1>Usage Report: {{ resident.name }}</h1>
+                <p class="text-white-50 mb-0">{{ start_date.strftime('%B %d, %Y') }} to {{ end_date.strftime('%B %d, %Y') }}</p>
+            </div>
+            <div class="report-actions">
+                <a href="{{ url_for('reports.usage_report', resident_id=resident.id, format='pdf', days=days) }}" class="report-action-btn">
+                    <i class="bi bi-file-earmark-pdf"></i> Download PDF
+                </a>
+                <a href="{{ url_for('reports.email_report', report_type='usage', resident_id=resident.id, days=days) }}" class="report-action-btn">
+                    <i class="bi bi-envelope"></i> Email Report
+                </a>
+                <a href="{{ url_for('reports.index') }}" class="report-action-btn">
+                    <i class="bi bi-arrow-left"></i> Back to Reports
+                </a>
             </div>
         </div>
-        <div class="card-body">
-            <p><strong>Period:</strong> {{ start_date.strftime('%B %d, %Y') }} to {{ end_date.strftime('%B %d, %Y') }}</p>
-            <p><strong>Generated:</strong> {{ end_date.strftime('%B %d, %Y at %H:%M') }}</p>
+        
+        <div class="mt-4">
+            <div class="time-filter">
+                <a href="{{ url_for('reports.usage_report', resident_id=resident.id, days=7) }}" 
+                   class="{{ 'active' if days == 7 else '' }}">7 Days</a>
+                <a href="{{ url_for('reports.usage_report', resident_id=resident.id, days=14) }}" 
+                   class="{{ 'active' if days == 14 else '' }}">14 Days</a>
+                <a href="{{ url_for('reports.usage_report', resident_id=resident.id, days=30) }}" 
+                   class="{{ 'active' if days == 30 else '' }}">30 Days</a>
+                <a href="{{ url_for('reports.usage_report', resident_id=resident.id, days=90) }}" 
+                   class="{{ 'active' if days == 90 else '' }}">90 Days</a>
+            </div>
         </div>
     </div>
     
-    <div class="card">
-        <div class="card-header bg-white">
-            <h5 class="mb-0">Medication Usage Log</h5>
+    <div class="report-data-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5><i class="bi bi-clipboard-data me-2"></i> Medication Usage Log</h5>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover mb-0">
+                <table class="table report-table">
                     <thead>
                         <tr>
                             <th>Date & Time</th>
@@ -59,15 +64,15 @@
                             <td>{{ log.inventory_item.name }}</td>
                             <td>
                                 {% if log.status == 'taken' %}
-                                <span class="badge bg-success">Taken</span>
+                                <span class="status-badge status-taken">Taken</span>
                                 {% elif log.status == 'missed' %}
-                                <span class="badge bg-danger">Missed</span>
+                                <span class="status-badge status-missed">Missed</span>
                                 {% else %}
-                                <span class="badge bg-secondary">{{ log.status }}</span>
+                                <span class="status-badge">{{ log.status }}</span>
                                 {% endif %}
                             </td>
                             <td>{{ log.scheduled_time }}</td>
-                            <td>{{ log.user.full_name() }}</td>
+                            <td>{{ log.caregiver.full_name() }}</td>
                             <td>
                                 {% if log.notes %}
                                 {{ log.notes }}
@@ -79,7 +84,10 @@
                         </tr>
                         {% else %}
                         <tr>
-                            <td colspan="6" class="text-center py-4">No usage logs found for this period.</td>
+                            <td colspan="6" class="text-center py-5">
+                                <i class="bi bi-clipboard-x display-4 text-muted d-block mb-3"></i>
+                                <p class="text-muted">No usage logs found for this period.</p>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -88,33 +96,41 @@
         </div>
     </div>
     
-    <!-- Summary Stats -->
     {% if logs %}
     <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-4 mb-4">
+            <div class="report-data-card h-100">
                 <div class="card-body text-center">
-                    <h5 class="mb-0">Total Doses</h5>
-                    <p class="display-4">{{ logs|length }}</p>
+                    <i class="bi bi-clipboard-check display-4 text-primary mb-3"></i>
+                    <h5>Total Doses</h5>
+                    <div class="display-4 fw-bold">{{ logs|length }}</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-4 mb-4">
+            <div class="report-data-card h-100">
                 <div class="card-body text-center">
-                    <h5 class="mb-0">Taken</h5>
-                    <p class="display-4 text-success">{{ logs|selectattr('status', 'equalto', 'taken')|list|length }}</p>
+                    <i class="bi bi-check-circle display-4 text-success mb-3"></i>
+                    <h5>Doses Taken</h5>
+                    <div class="display-4 fw-bold text-success">{{ logs|selectattr('status', 'equalto', 'taken')|list|length }}</div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card">
+        <div class="col-md-4 mb-4">
+            <div class="report-data-card h-100">
                 <div class="card-body text-center">
-                    <h5 class="mb-0">Missed</h5>
-                    <p class="display-4 text-danger">{{ logs|selectattr('status', 'equalto', 'missed')|list|length }}</p>
+                    <i class="bi bi-x-circle display-4 text-danger mb-3"></i>
+                    <h5>Doses Missed</h5>
+                    <div class="display-4 fw-bold text-danger">{{ logs|selectattr('status', 'equalto', 'missed')|list|length }}</div>
                 </div>
             </div>
         </div>
+    </div>
+    
+    <div class="text-center my-4">
+        <a href="{{ url_for('reports.index') }}" class="btn btn-primary">
+            <i class="bi bi-arrow-left me-2"></i> Back to All Reports
+        </a>
     </div>
     {% endif %}
 </div>

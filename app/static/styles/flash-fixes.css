@@ -1,0 +1,84 @@
+/* Notification Flash Message Fixes */
+
+/* Position flashes properly below the navbar with appropriate spacing */
+.flashes-container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  z-index: 1020; /* Below navbar z-index but above other content */
+}
+
+.flashes {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* Style the flash messages */
+.ui.message {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  border-left: 4px solid;
+  padding: 12px 15px;
+  position: relative;
+  animation: slideIn 0.3s ease-out;
+}
+
+.ui.error.message {
+  border-left-color: #ff3b30;
+  background-color: rgba(255, 59, 48, 0.1);
+}
+
+.ui.warning.message {
+  border-left-color: #ff9500;
+  background-color: rgba(255, 149, 0, 0.1);
+}
+
+.ui.info.message {
+  border-left-color: #0071e3;
+  background-color: rgba(0, 113, 227, 0.1);
+}
+
+.ui.success.message {
+  border-left-color: #34c759;
+  background-color: rgba(52, 199, 89, 0.1);
+}
+
+/* Improve close button styling */
+.ui.message .close.icon {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+.ui.message .close.icon:hover {
+  opacity: 1;
+}
+
+/* Animation */
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .flashes-container {
+    padding: 0 10px;
+  }
+  
+  .flashes {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+}

@@ -4,18 +4,45 @@ from flask import render_template, request, url_for, redirect, flash, send_file
 from flask_login import login_required, current_user
 
 from . import reports
-from app.models import Resident, InventoryItem, UsageLog, Notification
+from app.models import Resident, InventoryItem, UsageLog
+from app.models.notification import Notification
 from app import db
 
-from weasyprint import HTML
+# Try to import WeasyPrint, but don't fail if it's not available or missing system dependencies
+try:
+    from weasyprint import HTML
+    # Test rendering a simple PDF to verify all dependencies are available
+    test_html = "<html><body>Test</body></html>"
+    test_pdf = io.BytesIO()
+    HTML(string=test_html).write_pdf(test_pdf)
+    WEASYPRINT_AVAILABLE = True
+except Exception as e:
+    print(f"WeasyPrint error: {e}")
+    WEASYPRINT_AVAILABLE = False
+    # Dummy class for when WeasyPrint is not available
+    class HTML:
+        def __init__(self, *args, **kwargs):
+            pass
+        
+        def write_pdf(self, *args, **kwargs):
+            pass
 
 
 def generate_pdf(html_content):
     """Generate PDF from HTML content."""
-    pdf_file = io.BytesIO()
-    HTML(string=html_content).write_pdf(pdf_file)
-    pdf_file.seek(0)
-    return pdf_file
+    if not WEASYPRINT_AVAILABLE:
+        flash('PDF generation is currently unavailable. WeasyPrint requires additional system libraries. Please run: brew install cairo pango gdk-pixbuf libffi', 'warning')
+        return None
+    
+    try:    
+        pdf_file = io.BytesIO()
+        HTML(string=html_content).write_pdf(pdf_file)
+        pdf_file.seek(0)
+        return pdf_file
+    except Exception as e:
+        flash(f'Error generating PDF: {str(e)}', 'error')
+        print(f"PDF generation error: {str(e)}")
+        return None
 
 
 @reports.route('/')
@@ -23,7 +50,7 @@ def generate_pdf(html_content):
 def index():
     """Reports landing page."""
     residents = Resident.query.all()
-    return render_template('reports/index.html', residents=residents, show_sidebar=True)
+    return render_template('reports/index.html', residents=residents, show_sidebar=False)
 
 
 @reports.route('/usage/<int:resident_id>')
@@ -50,9 +77,19 @@ def usage_report(resident_id):
                             start_date=start_date,
                             end_date=end_date,
                             days=days,
-                            show_sidebar=True)
+                            show_sidebar=False)
     
     # For PDF download
+    if not WEASYPRINT_AVAILABLE:
+        flash('PDF generation requires WeasyPrint to be installed. Please contact the administrator.', 'warning')
+        return render_template('reports/usage_report.html', 
+                            resident=resident, 
+                            logs=logs,
+                            start_date=start_date,
+                            end_date=end_date,
+                            days=days,
+                            show_sidebar=True)
+    
     pdf_html = render_template('reports/usage_report_pdf.html', 
                             resident=resident, 
                             logs=logs,
@@ -83,7 +120,7 @@ def stock_report(resident_id):
                             resident=resident, 
                             items=items,
                             date=datetime.datetime.now(),
-                            show_sidebar=True)
+                            show_sidebar=False)
     
     # For PDF download
     pdf_html = render_template('reports/stock_report_pdf.html', 
@@ -123,7 +160,7 @@ def alerts_report(resident_id):
                             start_date=start_date,
                             end_date=end_date,
                             days=days,
-                            show_sidebar=True)
+                            show_sidebar=False)
     
     # For PDF download
     pdf_html = render_template('reports/alerts_report_pdf.html', 
@@ -199,16 +236,38 @@ def email_report(report_type, resident_id):
         return redirect(url_for('reports.index'))
     
     # Email the report
-    send_email(
-        current_user.email,
-        f'DoseDash: {report_name}',
-        'reports/email/report',
-        user=current_user,
-        resident=resident,
-        report_name=report_name,
-        date=datetime.datetime.now(),
-        pdf_attachment=pdf_attachment
-    )
+    filename = ""
+    if report_type == 'usage':
+        filename = f"usage_report_{resident.name}_{start_date.date()}_{end_date.date()}.pdf"
+    elif report_type == 'stock':
+        filename = f"stock_report_{resident.name}_{datetime.datetime.now().date()}.pdf"
+    elif report_type == 'alerts':
+        filename = f"alerts_report_{resident.name}_{start_date.date()}_{end_date.date()}.pdf"
+    
+    # Check if PDF was generated
+    if pdf_attachment is None:
+        flash('Unable to generate PDF report. WeasyPrint requires system libraries. Run: brew install cairo pango gdk-pixbuf libffi', 'error')
+        return redirect(url_for('reports.index'))
+        
+    try:
+        from app.email import send_email
+        send_email(
+            current_user.email,
+            f'DoseDash: {report_name}',
+            'reports/email/report',
+            user=current_user,
+            resident=resident,
+            report_name=report_name,
+            date=datetime.datetime.now(),
+            pdf_attachment=pdf_attachment,
+            pdf_filename=filename
+        )
+        flash(f'Report has been sent to {current_user.email}', 'success')
+    except Exception as e:
+        flash(f'Error sending email: {str(e)}', 'error')
+        print(f"Email error: {e}")
+        print(f"Email error: {str(e)}")
+        return redirect(url_for('reports.index'))
     
     flash(f'Report has been emailed to {current_user.email}.', 'success')
     return redirect(url_for('reports.index'))

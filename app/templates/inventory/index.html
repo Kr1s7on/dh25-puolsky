@@ -1,33 +1,41 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-    <div class="ui stackable grid container">
-        <div class="sixteen wide tablet twelve wide computer centered column">
-            <div class="ui segment">
-                <h2 class="ui header">
-                    <i class="medkit icon"></i>
-                    <div class="content">
-                        Inventory Items
-                        <div class="sub header">View and manage inventory items</div>
+    <div class="container main-content">
+        <div class="row">
+            <div class="col-12">
+                <div class="inventory-header">
+                    <div>
+                        <h2 class="mb-0">Inventory Management</h2>
+                        <p class="mb-0 text-white-50">View and manage medication and supplies</p>
                     </div>
-                </h2>
-                
-                <div class="ui menu">
-                    <a class="item" href="{{ url_for('inventory.new_item') }}">
-                        <i class="plus icon"></i> Add New Item
+                    <a href="{{ url_for('inventory.new_item') }}" class="btn btn-light">
+                        <i class="bi bi-plus-lg me-1"></i> Add New Item
                     </a>
-                    <div class="right menu">
-                        <div class="ui right search item">
-                            <div class="ui transparent icon input">
-                                <input id="search-items" type="text" placeholder="Search items…">
-                                <i class="search icon"></i>
+                </div>
+                
+                <div class="inventory-filters mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <span class="input-group-text bg-white border-end-0">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                                <input id="search-items" type="text" class="form-control border-start-0" placeholder="Search inventory items...">
                             </div>
+                        </div>
+                        <div class="col-md-4 mt-3 mt-md-0">
+                            <select class="form-select" id="filter-status">
+                                <option value="">All Items</option>
+                                <option value="low-stock">Low Stock</option>
+                                <option value="out-of-stock">Out of Stock</option>
+                            </select>
                         </div>
                     </div>
                 </div>
 
-                <div style="overflow-x: scroll;">
-                    <table class="ui searchable sortable unstackable selectable celled table">
+                <div class="inventory-table">
+                    <table class="table table-hover mb-0">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -41,22 +49,46 @@
                         </thead>
                         <tbody>
                         {% for item in inventory_items %}
-                            <tr>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.type }}</td>
-                                <td class="{% if item.quantity < item.threshold %}negative{% endif %}">
-                                    {{ item.quantity }}
+                            <tr class="{% if item.quantity == 0 %}table-danger{% elif item.quantity < item.threshold %}table-warning{% endif %}">
+                                <td>
+                                    <div class="fw-semibold">{{ item.name }}</div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark">{{ item.type }}</span>
+                                </td>
+                                <td>
+                                    {% if item.quantity == 0 %}
+                                        <span class="quantity-indicator critical">{{ item.quantity }}</span>
+                                    {% elif item.quantity < item.threshold %}
+                                        <span class="quantity-indicator low">{{ item.quantity }}</span>
+                                    {% elif item.quantity < item.threshold * 2 %}
+                                        <span class="quantity-indicator medium">{{ item.quantity }}</span>
+                                    {% else %}
+                                        <span class="quantity-indicator high">{{ item.quantity }}</span>
+                                    {% endif %}
+                                    <div class="stock-progress">
+                                        <div class="stock-progress-bar {% if item.quantity == 0 %}critical{% elif item.quantity < item.threshold %}low{% elif item.quantity < item.threshold * 2 %}medium{% else %}high{% endif %}" 
+                                             {% if item.threshold and item.threshold > 0 %}
+                                             {% set percentage = ((item.quantity / (item.threshold * 3)) * 100)|round %}
+                                             style="width: {% if percentage > 100 %}100%{% else %}{{ percentage }}%{% endif %}"
+                                             {% else %}
+                                             style="width: 0%"
+                                             {% endif %}
+                                             ></div>
+                                    </div>
                                 </td>
                                 <td>{{ item.threshold }}</td>
                                 <td>{{ item.expiration_date }}</td>
                                 <td>{{ item.resident.name if item.resident else 'N/A' }}</td>
                                 <td>
-                                    <a href="{{ url_for('inventory.edit_item', item_id=item.id) }}" class="ui tiny button">
-                                        <i class="edit icon"></i> Edit
-                                    </a>
-                                    <a href="{{ url_for('inventory.delete_item', item_id=item.id) }}" class="ui tiny red button">
-                                        <i class="trash icon"></i> Delete
-                                    </a>
+                                    <div class="inventory-action-buttons">
+                                        <a href="{{ url_for('inventory.edit_item', item_id=item.id) }}" class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-pencil-square me-1"></i> Edit
+                                        </a>
+                                        <a href="{{ url_for('inventory.delete_item', item_id=item.id) }}" class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash me-1"></i> Delete
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         {% else %}

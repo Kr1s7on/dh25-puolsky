@@ -132,16 +132,16 @@ Key points:
 ## Phase 5: Reporting, Exports & Accessibility
 
 ### 5.1 Weekly & Ad-hoc Reports
-- [ ] Generate reports (HTML and PDF via WeasyPrint) covering:
+- [x] Generate reports (HTML and PDF via WeasyPrint) covering:
   - Usage logs (taken/missed)
   - Current stock levels
   - Alerts history
-- [ ] Provide download links and email delivery options
+- [x] Provide download links and email delivery options
 
 ### 5.2 Frontend Styling (Bootstrap/MUI Core)
-- [ ] Integrate Bootstrap or MUI for responsive layouts
-- [ ] Global layout: navbar, sidebar (residents list), main pane (detail views)
-- [ ] Responsive grid for tablets and mobile devices used in rounds
+- [x] Integrate Bootstrap or MUI for responsive layouts
+- [x] Global layout: navbar, main pane (detail views)
+- [X] Responsive grid for tablets and mobile devices used in rounds
 
 ### 5.3 Accessibility Enhancements
 - [ ] Add ARIA attributes on interactive elements

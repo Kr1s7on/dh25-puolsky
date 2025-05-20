@@ -1,0 +1,23 @@
+/* Custom link styles for admin dashboard */
+a {
+    color: #000 !important; /* Black color by default */
+    text-decoration: none !important; /* No underline by default */
+}
+
+a:hover, a:focus {
+    color: #0071e3; /* Blue color on hover/focus */
+    text-decoration: underline; /* Add underline on hover */
+}
+
+/* Specifically for admin dashboard links */
+.ui.padded.segment a,
+.admin-dashboard a {
+    color: #000 !important; 
+    text-decoration: none !important;
+}
+
+/* .ui.padded.segment:hover a,
+.admin-dashboard a:hover {
+    color: #0071e3 !important;
+    text-decoration: underline !important;
+} */

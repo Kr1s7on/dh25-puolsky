@@ -2,17 +2,6 @@
 
 {% block custom_head_tags %}
 <style>
-    .swipe-card {
-        position: relative;
-        transition: transform 0.3s;
-        transform-origin: center;
-        touch-action: pan-y;
-        border-radius: 12px;
-        overflow: hidden;
-        margin-bottom: 16px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    
     .swipe-card.swiping {
         transition: none;
     }
@@ -55,12 +44,12 @@
     }
     
     .swipe-overlay.left {
-        background-color: rgba(219, 40, 40, 0.8);
+        background-color: rgba(255, 59, 48, 0.8);
         color: white;
     }
     
     .swipe-overlay.right {
-        background-color: rgba(33, 186, 69, 0.8);
+        background-color: rgba(52, 199, 89, 0.8);
         color: white;
     }
     
@@ -68,35 +57,7 @@
         font-size: 3rem;
     }
     
-    .swipe-instructions {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        align-items: center;
-    }
-    
-    .resident-header {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        border-bottom: 1px solid #eee;
-        border-radius: 12px 12px 0 0;
-        background-color: #f7f7f7;
-    }
-    
-    .resident-section {
-        margin-bottom: 20px;
-        border: 1px solid #eee;
-        border-radius: 12px;
-        overflow: hidden;
-    }
-    
-    .medication-info {
-        padding: 15px;
-    }
+    /* Using styles from quick-actions.css instead */
     
     .medication-status {
         position: absolute;
@@ -151,48 +112,47 @@
 {% endblock %}
 
 {% block content %}
-<div class="ui container">
-    <div class="sixteen wide column">
-        <h2 class="ui header">
-            <i class="clipboard check icon"></i>
-            <div class="content">
-                Quick Medication Check
-                <div class="sub header">Swipe right to mark as taken, left to mark as missed</div>
+<div class="container main-content">
+    <div class="row">
+        <div class="col-12">
+            <div class="quick-actions-header">
+                <h2 class="mb-0">Quick Medication Check</h2>
+                <p class="mb-0 text-white-50">Swipe or tap to quickly mark medications as taken or missed</p>
             </div>
-        </h2>
-        
-        <div class="swipe-instructions">
-            <div>
-                <i class="arrow left red icon"></i> 
-                <span>Swipe left: <b>Missed</b></span>
-            </div>
-            <div>
-                <span>Swipe right: <b>Taken</b></span>
-                <i class="arrow right green icon"></i>
+            
+            <div class="swipe-instructions mb-4">
+                <div class="swipe-instruction missed">
+                    <i class="bi bi-arrow-left-circle me-2"></i>
+                    <span>Swipe left for <b>Missed</b></span>
+                </div>
+                <div class="swipe-instruction taken">
+                    <span>Swipe right for <b>Taken</b></span>
+                    <i class="bi bi-arrow-right-circle ms-2"></i>
+                </div>
             </div>
         </div>
-    </div>
     
     {% if not residents_data %}
-    <div class="sixteen wide column">
-        <div class="ui placeholder segment">
-            <div class="ui icon header">
-                <i class="check circle icon"></i>
-                All Done!
+        <div class="col-12">
+            <div class="card p-4 text-center">
+                <div class="py-3">
+                    <i class="bi bi-check-circle text-success" style="font-size: 3rem;"></i>
+                    <h3 class="mt-3">All Done!</h3>
+                    <p class="text-muted">There are no pending medications that need to be administered right now.</p>
+                </div>
             </div>
-            <p>There are no pending medications that need to be administered right now.</p>
         </div>
-    </div>
     {% endif %}
     
     {% for resident in residents_data %}
-    <div class="resident-section">
-        <div class="resident-header">
+        <div class="col-12">
+            <div class="resident-section">
+                <div class="resident-header">
             {% if resident['photo_url'] %}
                 <img class="resident-avatar" src="{{ resident['photo_url'] }}" alt="{{ resident['name'] }}">
             {% else %}
-                <div class="resident-avatar" style="background:#e0e0e0; display:flex; align-items:center; justify-content:center;">
-                    <i class="user icon"></i>
+                <div class="resident-avatar d-flex align-items-center justify-content-center bg-light">
+                    <i class="bi bi-person"></i>
                 </div>
             {% endif %}
             <div>
@@ -209,45 +169,45 @@
         
         <div class="medication-cards">
             {% for item in resident['items'] %}
-            <div class="swipe-card" data-item-id="{{ item['id'] }}" data-scheduled-time="{{ item['scheduled_time'] }}">
+            <div class="swipe-card {% if item['status'] == 'overdue' %}overdue{% elif item['status'] == 'due_now' %}due-now{% else %}upcoming{% endif %}" data-item-id="{{ item['id'] }}" data-scheduled-time="{{ item['scheduled_time'] }}">
                 <div class="swipe-overlay left">    
-                    <i class="times circle icon"></i>
+                    <i class="bi bi-x-circle" style="font-size: 3rem;"></i>
                 </div>
                 
                 <div class="medication-info">
                     <div class="medication-status">
                         {% if item['status'] == 'overdue' %}
-                            <span class="ui red label">Overdue</span>
+                            <span class="badge bg-danger">Overdue</span>
                         {% elif item['status'] == 'due_now' %}
-                            <span class="ui orange label">Due Now</span>
+                            <span class="badge bg-warning text-dark">Due Now</span>
                         {% else %}
-                            <span class="ui blue label">Upcoming</span>
+                            <span class="badge bg-info">Upcoming</span>
                         {% endif %}
                     </div>
                     
                     <div class="med-name">{{ item['name'] }}</div>
                     <div class="pill-time">
-                        <i class="clock outline icon"></i>
+                        <i class="bi bi-clock"></i>
                         {{ item['scheduled_time'] }}
                     </div>
                     
                     {% if item['relation_to_meals'] %}
-                        <div class="ui small label" style="margin-top: 8px; display: inline-block;">
+                        <div class="badge bg-light text-dark mt-2 d-inline-block">
                             {% if item['relation_to_meals'] == 'before_meal' %}
-                                <i class="utensils icon"></i> Before meal
+                                <i class="bi bi-cup-hot"></i> Before meal
                             {% elif item['relation_to_meals'] == 'with_meal' %}
-                                <i class="utensils icon"></i> With meal
+                                <i class="bi bi-cup-hot"></i> With meal
                             {% elif item['relation_to_meals'] == 'after_meal' %}
-                                <i class="utensils icon"></i> After meal
+                                <i class="bi bi-cup-hot"></i> After meal
                             {% elif item['relation_to_meals'] == 'independent' %}
-                                <i class="utensils icon"></i> Independent of meals
+                                <i class="bi bi-clock"></i> Independent of meals
                             {% endif %}
                         </div>
                     {% endif %}
                 </div>
                 
                 <div class="swipe-overlay right">
-                    <i class="check circle icon"></i>
+                    <i class="bi bi-check-circle" style="font-size: 3rem;"></i>
                 </div>
             </div>
             {% endfor %}
@@ -382,9 +342,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         countLabel.textContent = '0 medication(s)';
                         
                         const completedMessage = document.createElement('div');
-                        completedMessage.className = 'ui success message';
-                        completedMessage.innerHTML = '<i class="check circle icon"></i> All medications completed for this resident!';
-                        completedMessage.style.margin = '10px';
+                        completedMessage.className = 'alert alert-success';
+                        completedMessage.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i> All medications completed for this resident!';
+                        completedMessage.style.margin = '15px';
                         
                         residentSection.appendChild(completedMessage);
                     }
@@ -393,13 +353,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     const allCards = document.querySelectorAll('.swipe-card:not([style*="display: none"])');
                     if (allCards.length === 0) {
                         // Show "all done" message
-                        const container = document.querySelector('.ui.container');
+                        const container = document.querySelector('.container.main-content .row');
                         
                         const allDoneMessage = document.createElement('div');
-                        allDoneMessage.className = 'ui success message';
+                        allDoneMessage.className = 'col-12 mt-4';
                         allDoneMessage.innerHTML = `
-                            <div class="header"><i class="check circle icon"></i> All Done!</div>
-                            <p>All pending medications have been administered.</p>
+                            <div class="card p-4 text-center">
+                                <div class="py-3">
+                                    <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                                    <h3 class="mt-3">All Done!</h3>
+                                    <p class="text-muted">All pending medications have been administered.</p>
+                                </div>
+                            </div>
                         `;
                         
                         container.appendChild(allDoneMessage);
@@ -428,14 +393,6 @@ document.addEventListener('DOMContentLoaded', function() {
 @media (max-width: 768px) {
     .swipe-card {
         user-select: none;  /* Prevent text selection during swipe */
-    }
-    
-    .ui.header {
-        margin-top: 10px;
-    }
-    
-    .swipe-instructions {
-        margin: 10px;
     }
 }
 </style>

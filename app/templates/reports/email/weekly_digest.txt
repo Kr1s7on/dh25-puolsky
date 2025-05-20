@@ -1,0 +1,22 @@
+<!-- filepath: /Users/puolsky/Downloads/GitHub/dh25-puolsky/app/templates/reports/email/weekly_digest.txt -->
+DoseDash Weekly Reports
+
+Hello {{ user.first_name }},
+
+Attached are the weekly reports for {{ resident.name }} covering the period from {{ start_date.strftime('%B %d, %Y') }} to {{ end_date.strftime('%B %d, %Y') }}.
+
+The following reports are included:
+- Usage History Report: All medication and supply usage logs for the week
+- Stock Level Report: Current inventory levels and usage statistics
+- Alerts History Report: Summary of all alerts generated during this period
+
+You can also access these reports and more detailed information at any time through the DoseDash web application.
+
+WEEKLY SUMMARY:
+- Total medication doses scheduled: {{ resident.inventory_items|selectattr('is_medication')|sum(attribute='scheduled_count')|default(0) }}
+- Supplies below threshold: {{ resident.inventory_items|selectattr('is_low')|list|length }}
+
+Thank you for using DoseDash to care for {{ resident.name }}!
+
+---
+This is an automated weekly email from DoseDash. Please do not reply to this message.

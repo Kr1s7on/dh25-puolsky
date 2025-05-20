@@ -1,0 +1,445 @@
+/* Reports Styling - Clean version */
+
+/* Base layout styles for reports */
+.reports-dashboard {
+    padding: 3rem 0 3rem 0;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header styling */
+.reports-header {
+    background: linear-gradient(135deg, #4A86E8 0%, #167EE6 100%);
+    color: white;
+    padding: 3.5rem 0 3.5rem 0;
+    margin-bottom: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 20px rgba(74, 134, 232, 0.2);
+}
+
+.reports-header .display-4 {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.reports-header .lead {
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Resident report cards */
+.report-card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    margin-bottom: 2.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.report-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Resident card header */
+.resident-header {
+    background: #f8f9fa;
+    padding: 1.75rem 1.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.resident-header img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.resident-header h4 {
+    font-weight: 600;
+}
+
+/* Report type cards */
+.report-type-card {
+    background: #f8f9fa;
+    border-radius: 0.75rem;
+    border: none;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.report-type-card:hover {
+    background: #f0f4f8;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.report-type-card .card-body {
+    padding: 1.75rem 1.5rem;
+}
+
+.report-type-card h5 {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+/* Report icons */
+.report-type-card .report-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: white;
+}
+
+.report-type-card.usage .report-icon {
+    background-color: #4A86E8;
+}
+
+.report-type-card.stock .report-icon {
+    background-color: #34A853;
+}
+
+.report-type-card.alerts .report-icon {
+    background-color: #FBBC05;
+}
+
+.report-type-card .card-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.reports-header .display-4 {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.reports-header .lead {
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Report Cards */
+.report-card {
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    margin-bottom: 2.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.report-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.resident-header {
+    background: #f8f9fa;
+    padding: 1.75rem 1.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.resident-header img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.resident-header h4 {
+    font-weight: 600;
+}
+
+/* Report Types */
+.report-type-card {
+    background: #f8f9fa;
+    border-radius: 0.75rem;
+    border: none;
+    margin-bottom: 1.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.report-type-card:hover {
+    background: #f0f4f8;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.report-type-card .card-body {
+    padding: 1.75rem 1.5rem;
+}
+
+.report-type-card h5 {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.report-type-card .report-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: white;
+}
+
+.report-type-card.usage .report-icon {
+    background-color: #4A86E8;
+}
+
+.report-type-card.stock .report-icon {
+    background-color: #34A853;
+}
+
+.report-type-card.alerts .report-icon {
+    background-color: #FBBC05;
+}
+
+.report-type-card .card-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+/* Action Buttons */
+.action-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.view-btn {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+}
+
+.action-tools {
+    display: flex;
+    gap: 1rem;
+}
+
+.tool-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid #dee2e6;
+    color: #495057;
+    transition: all 0.2s ease;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+}
+
+.tool-btn:hover {
+    background: #495057;
+    color: white;
+    border-color: #495057;
+}
+
+/* Detail Report Pages */
+.report-detail-header {
+    background: linear-gradient(135deg, #4A86E8 0%, #167EE6 100%);
+    color: white;
+    padding: 2.75rem 2rem;
+    margin-bottom: 2.5rem;
+    border-radius: 1rem;
+    position: relative;
+}
+
+.report-detail-header h1 {
+    font-weight: 700;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.report-actions {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.report-action-btn {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.report-action-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+    color: white;
+}
+
+.report-action-btn i {
+    margin-right: 0.5rem;
+}
+
+/* Report Data Cards */
+.report-data-card {
+    border-radius: 0.75rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border: none;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+}
+
+.report-data-card .card-header {
+    background: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.75rem 1.5rem;
+}
+
+.report-data-card .card-header h5 {
+    font-weight: 600;
+    margin: 0;
+}
+
+.report-data-card .card-body {
+    padding: 1.75rem 1.5rem;
+}
+
+/* Tables */
+.report-table {
+    width: 100%;
+}
+
+.report-table th {
+    font-weight: 600;
+    color: #495057;
+    background: #f8f9fa;
+    border-top: none;
+    padding: 1rem 1.25rem;
+}
+
+.report-table td {
+    vertical-align: middle;
+    padding: 1rem 1.25rem;
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-taken {
+    background: rgba(52, 168, 83, 0.15);
+    color: #34A853;
+}
+
+.status-missed {
+    background: rgba(234, 67, 53, 0.15);
+    color: #EA4335;
+}
+
+.status-low {
+    background: rgba(251, 188, 5, 0.15);
+    color: #FBBC05;
+}
+
+.status-normal {
+    background: rgba(52, 168, 83, 0.15);
+    color: #34A853;
+}
+
+/* Time filters */
+.time-filter {
+    background: white;
+    border-radius: 2rem;
+    overflow: hidden;
+    display: inline-flex;
+    border: 1px solid #dee2e6;
+    margin-bottom: 1.5rem;
+}
+
+.time-filter a {
+    padding: 0.5rem 1rem;
+    color: #6c757d;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.time-filter a.active {
+    background: #4A86E8;
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .report-detail-header {
+        padding: 2rem 1rem;
+    }
+    
+    .report-detail-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .report-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .action-btns {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .action-tools {
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+        justify-content: center;
+    }
+    
+    .reports-dashboard {
+        padding: 1.5rem 0;
+    }
+    
+    .reports-header {
+        padding: 2rem 0;
+    }
+    
+    .report-type-card .card-body,
+    .report-data-card .card-body,
+    .report-data-card .card-header {
+        padding: 1.25rem 0.75rem;
+    }
+}

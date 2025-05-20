@@ -11,6 +11,7 @@ def init_app(app):
         import redis
         from rq_scheduler import Scheduler
         from app.tasks.alerts import check_inventory_thresholds, check_missed_doses, check_overdue_doses, send_weekly_digest
+        from app.tasks.reports import send_weekly_reports
         
         redis_url = app.config.get('REDIS_URL', 'redis://localhost:6379')
         conn = redis.from_url(redis_url)

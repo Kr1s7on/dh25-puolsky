@@ -1,0 +1,59 @@
+/* Mobile navigation styles */
+.navbar {
+  transition: all 0.3s ease;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  color: #0071e3;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #1d1d1f;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  margin: 0.25rem 0;
+  transition: all 0.2s ease;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  background-color: rgba(0, 113, 227, 0.1);
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+  background-color: #0071e3;
+  color: white !important;
+}
+
+.navbar-collapse {
+  padding: 1rem 0;
+}
+
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+  
+  .navbar-nav {
+    padding-bottom: 1rem;
+  }
+}
+
+/* Add spacing for fixed navbar */
+body {
+  padding-top: 76px; /* Height of navbar + extra space */
+  padding-top: calc(76px + env(safe-area-inset-top)); /* For iPhone notches */
+}
+
+/* Ensure content doesn't overlap with fixed navbar and notifications */
+.container.main-content {
+  margin-top: 3rem; /* Increased to accommodate notifications */
+}
+
+/* Fix for when navbar is sticky and user scrolls */
+.navbar.fixed-top {
+  z-index: 1030;
+  backdrop-filter: saturate(180%) blur(20px);
+  background-color: rgba(255, 255, 255, 0.9);
+}
