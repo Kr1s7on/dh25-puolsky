@@ -1,22 +1,34 @@
 FROM python:3.8-alpine
 
+# Packages required for psycopg2 and WeasyPrint dependencies
+RUN apk update && apk add --no-cache \
+    postgresql-dev \
+    gcc \
+    python3-dev \
+    musl-dev \
+    # WeasyPrint dependencies
+    pango \
+    cairo \
+    fontconfig \
+    ttf-dejavu \
+    # Additional build dependencies
+    build-base
 
-# Packages required for psycopg2
-RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
-
-#MAINTANER Your Name "youremail@domain.tld"
-ENV MAIL_USERNAME=yourmail@test.com
-ENV MAIL_PASSWORD=testpass
-ENV SECRET_KEY=SuperRandomStringToBeUsedForEncryption
 # We copy just the requirements.txt first to leverage Docker cache
 COPY ./requirements.txt /app/requirements.txt
 
 WORKDIR /app
-RUN pip3 install -r requirements.txt 
+RUN pip3 install --no-cache-dir -r requirements.txt
 ENV PYTHONIOENCODING=UTF-8
-RUN pip3 install sqlalchemy_utils==0.38.3 flask_dance==5.1.0 Flask-Caching==1.11.1 python-gitlab==3.10.0
+RUN pip3 install --no-cache-dir sqlalchemy_utils==0.38.3 flask_dance==5.1.0 Flask-Caching==1.11.1 python-gitlab==3.10.0
 
+# Copy the rest of the application
 COPY . /app
 
-ENTRYPOINT ["python3", "-u" ,"manage.py", "run_worker"]
+# Set environment variables - these will be overridden by Render
+ENV FLASK_APP=manage.py
+ENV FLASK_ENV=production
+
+# Run the worker process
+CMD ["python3", "-u", "manage.py", "run_worker"]
 

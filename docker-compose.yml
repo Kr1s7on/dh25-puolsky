@@ -1,5 +1,6 @@
 version: '3.4'
 services:
+  # Web service for local development
   server:
     build:
       context: .
@@ -8,12 +9,21 @@ services:
     volumes: 
       - './:/app'
     environment: 
-      # set environment variables
+      # Local development environment variables
+      FLASK_APP: manage.py
+      FLASK_ENV: development
+      FLASK_CONFIG: development
+      PORT: 5000
       REDISTOGO_URL: http://redis:6379
-      DEV_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      TEST_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      DEV_DATABASE_URL: postgres://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-example}@postgres:5432/${POSTGRES_DB:-mydatabase}
+      TEST_DATABASE_URL: postgres://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-example}@postgres:5432/${POSTGRES_DB:-mydatabase}
+      DATABASE_URL: postgres://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-example}@postgres:5432/${POSTGRES_DB:-mydatabase}
+    command: python manage.py runserver
+    depends_on:
+      - postgres
+      - redis
   
+  # Worker service for local development
   worker:
     build:
       dockerfile: Dockerfile.worker
@@ -21,29 +31,44 @@ services:
     volumes: 
       - './:/app'
     environment: 
-      # set environment variables
+      # Local development environment variables
+      FLASK_APP: manage.py
+      FLASK_ENV: development
+      FLASK_CONFIG: development
       REDISTOGO_URL: http://redis:6379
-      DEV_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      TEST_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      DEV_DATABASE_URL: postgres://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-example}@postgres:5432/${POSTGRES_DB:-mydatabase}
+      TEST_DATABASE_URL: postgres://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-example}@postgres:5432/${POSTGRES_DB:-mydatabase}
+      DATABASE_URL: postgres://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-example}@postgres:5432/${POSTGRES_DB:-mydatabase}
+    depends_on:
+      - postgres
+      - redis
 
+  # Database service
   postgres:
-    image: postgres
+    image: postgres:13-alpine
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: example
-      POSTGRES_DB: mydatabase
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-example}
+      POSTGRES_DB: ${POSTGRES_DB:-mydatabase}
     volumes:
-    - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  # Database admin tool
   adminer:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - '8080:8080'
+    depends_on:
+      - postgres
 
+  # Redis service for job queue
   redis:
-    image:
-      redis:6-alpine
+    image: redis:6-alpine
+    ports:
+      - '6379:6379'
 
 volumes:
   db-data:

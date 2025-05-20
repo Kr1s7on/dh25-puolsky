@@ -1,0 +1,63 @@
+services:
+  # Web Service
+  - type: web
+    name: dh25-web
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_APP
+        value: manage.py
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dh25-db
+          property: connectionString
+      - key: REDISTOGO_URL
+        fromService:
+          type: redis
+          name: dh25-redis
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+    healthCheckPath: /health
+
+  # Worker Service
+  - type: worker
+    name: dh25-worker
+    env: docker
+    dockerfilePath: ./Dockerfile.worker
+    plan: starter
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_APP
+        value: manage.py
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dh25-db
+          property: connectionString
+      - key: REDISTOGO_URL
+        fromService:
+          type: redis
+          name: dh25-redis
+          property: connectionString
+      - key: SECRET_KEY
+        sync: dh25-web
+
+# Database
+databases:
+  - name: dh25-db
+    plan: starter
+    databaseName: mydatabase
+    user: admin
+
+# Redis
+services:
+  - type: redis
+    name: dh25-redis
+    plan: starter
+    ipAllowList: []  # allow all connections

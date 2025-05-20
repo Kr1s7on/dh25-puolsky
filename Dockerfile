@@ -1,28 +1,38 @@
 FROM python:3.8-alpine
 
+# Packages required for psycopg2 and WeasyPrint dependencies
+RUN apk update && apk add --no-cache \
+    postgresql-dev \
+    gcc \
+    python3-dev \
+    musl-dev \
+    make \
+    # WeasyPrint dependencies
+    pango \
+    cairo \
+    fontconfig \
+    ttf-dejavu \
+    # Additional build dependencies
+    build-base
 
-# Packages required for psycopg2
-RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
+# Install Gunicorn for production serving
+RUN pip install gunicorn
 
-# Ruby sass
-RUN apk add make ruby-dev
-RUN gem install sass
-
-#MAINTANER Your Name "youremail@domain.tld"
-ENV MAIL_USERNAME=yourmail@test.com
-ENV MAIL_PASSWORD=testpass
-ENV SECRET_KEY=SuperRandomStringToBeUsedForEncryption
 # We copy just the requirements.txt first to leverage Docker cache
 COPY ./requirements.txt /app/requirements.txt
 
 WORKDIR /app
-RUN pip3 install -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 ENV PYTHONIOENCODING=UTF-8
-RUN pip3 install sqlalchemy_utils==0.38.3 flask_dance==5.1.0 Flask-Caching==1.11.1 python-gitlab==3.10.0
+RUN pip3 install --no-cache-dir sqlalchemy_utils==0.38.3 flask_dance==5.1.0 Flask-Caching==1.11.1 python-gitlab==3.10.0
 
+# Copy the rest of the application
 COPY . /app
 
-#RUN python3 manage.py recreate_db && python3 manage.py setup_dev && python3 manage.py add_fake_data
+# Set environment variables - these will be overridden by Render
+ENV FLASK_APP=manage.py
+ENV FLASK_ENV=production
 
-ENTRYPOINT ["python3", "-u" ,"manage.py", "runserver"]
+# Run migrations and start the application with Gunicorn
+CMD gunicorn --bind 0.0.0.0:$PORT --workers=2 --threads=4 manage:app
 
