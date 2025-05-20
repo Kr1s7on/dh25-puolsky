@@ -1,15 +1,19 @@
 FROM python:3.8-alpine
 
-# Packages required for psycopg2 and WeasyPrint dependencies
+# Packages required for psycopg2, WeasyPrint, and cffi dependencies
 RUN apk update && apk add --no-cache \
     postgresql-dev \
     gcc \
     python3-dev \
     musl-dev \
     make \
+    # libffi for cffi
+    libffi-dev \
+    pkgconfig \
     # WeasyPrint dependencies
     pango \
     cairo \
+    cairo-dev \
     fontconfig \
     ttf-dejavu \
     # Additional build dependencies
@@ -24,8 +28,15 @@ COPY ./requirements.txt /app/requirements.txt
 WORKDIR /app
 # Install pip and upgrade
 RUN pip install --upgrade pip
-# Install requirements with increased timeout
-RUN pip install --no-cache-dir -r requirements.txt
+
+# Install requirements with pip-tools to handle dependency conflicts
+RUN pip install pip-tools
+# Copy requirements file for processing
+COPY requirements.txt .
+# First install basic requirements that might be needed for others
+RUN pip install --no-cache-dir wheel setuptools
+# Then install the rest with increased dependency solver capabilities
+RUN pip install --no-cache-dir -r requirements.txt --use-pep517
 ENV PYTHONIOENCODING=UTF-8
 
 # Copy the rest of the application

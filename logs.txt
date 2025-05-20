@@ -1,0 +1,150 @@
+2025-05-20T11:13:19.193245983Z #12 18.72   Created wheel for Flask-Assets: filename=Flask_Assets-0.12-py3-none-any.whl size=8482 sha256=c4bdaa7de3ea4033bf2f50b01d377535fec6e94ab4e5ff8f109c66f3f22b5361
+2025-05-20T11:13:19.193251763Z #12 18.72   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/38/be/87/23900db2a32b1826bf3acd92c3d2e019b91cd659e2a8668e42
+2025-05-20T11:13:19.193255603Z #12 18.73   Building wheel for Flask-Compress (setup.py): started
+2025-05-20T11:13:19.494334692Z #12 18.99   Building wheel for Flask-Compress (setup.py): finished with status 'done'
+2025-05-20T11:13:19.494351953Z #12 18.99   Created wheel for Flask-Compress: filename=Flask_Compress-1.4.0-py3-none-any.whl size=3726 sha256=547da84cc6ebae9be980bc6004c1e08ac9df378d9ba5c70213a1a7a6ba19d06f
+2025-05-20T11:13:19.494368384Z #12 19.00   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/c2/65/96/67b7ac3408f46613da4b5d6b722eead441c18a8452372f5c3a
+2025-05-20T11:13:19.494371624Z #12 19.00   Building wheel for Flask-Login (setup.py): started
+2025-05-20T11:13:19.794612047Z #12 19.34   Building wheel for Flask-Login (setup.py): finished with status 'done'
+2025-05-20T11:13:19.794630798Z #12 19.34   Created wheel for Flask-Login: filename=Flask_Login-0.4.1-py2.py3-none-any.whl size=15950 sha256=ab18253181d4749f2759086890bbe6b9b19522b21d277c74128e56ca85bb0899
+2025-05-20T11:13:19.794638299Z #12 19.34   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/ec/8e/42/16110a8b4f17e4ef4bd0abd42969fc1fc38229348de9f071df
+2025-05-20T11:13:19.794641619Z #12 19.34   Building wheel for Flask-Mail (setup.py): started
+2025-05-20T11:13:20.24597037Z #12 19.79   Building wheel for Flask-Mail (setup.py): finished with status 'done'
+2025-05-20T11:13:20.245989031Z #12 19.79   Created wheel for Flask-Mail: filename=Flask_Mail-0.9.1-py3-none-any.whl size=7580 sha256=70e4ff13106034739485a8d06c089301e2e89b25491964a0f1cbfaa6a39939e9
+2025-05-20T11:13:20.245992661Z #12 19.79   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/98/bc/8c/34c329e4d7efeaf7b9886db0c76d0b23170e54de443f688e3c
+2025-05-20T11:13:20.245995501Z #12 19.79   Building wheel for Flask-RQ (setup.py): started
+2025-05-20T11:13:20.546421893Z #12 20.10   Building wheel for Flask-RQ (setup.py): finished with status 'done'
+2025-05-20T11:13:20.579366365Z #12 20.10   Created wheel for Flask-RQ: filename=Flask_RQ-0.2-py3-none-any.whl size=2508 sha256=9d099fd956efab9e3507f36ac9572a48422e85f3398d65c5659253a734dc9d13
+2025-05-20T11:13:20.579379035Z #12 20.10   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/01/fb/f7/394f675c9c64388e96acfd57bdd89ba3c49ab30b5f0fbe92e1
+2025-05-20T11:13:20.579384026Z #12 20.10   Building wheel for Flask-Script (setup.py): started
+2025-05-20T11:13:20.801193971Z #12 20.43   Building wheel for Flask-Script (setup.py): finished with status 'done'
+2025-05-20T11:13:20.951581331Z #12 20.43   Created wheel for Flask-Script: filename=Flask_Script-2.0.6-py3-none-any.whl size=14030 sha256=38a370bef76518bd357293503c9098a99faffd323b23f4567bd16466f983da17
+2025-05-20T11:13:20.968280519Z #12 20.43   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/a6/92/a0/56c5c19087f99e30262c53b66874c1a5e84447631ee475ccad
+2025-05-20T11:13:20.96829296Z #12 20.43   Building wheel for Flask-SSLify (setup.py): started
+2025-05-20T11:13:21.073753016Z #12 20.70   Building wheel for Flask-SSLify (setup.py): finished with status 'done'
+2025-05-20T11:13:21.224321545Z #12 20.70   Created wheel for Flask-SSLify: filename=Flask_SSLify-0.1.5-py3-none-any.whl size=2439 sha256=ab56998da597ecebd273943610494d7585ac4a0bf9139f80a799ed9864734380
+2025-05-20T11:13:21.224343466Z #12 20.70   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/1c/8f/e1/87e06606ae20c0f84de7fc8a0cf024747341d8316180ee2ffe
+2025-05-20T11:13:21.224349416Z #12 20.70   Building wheel for jsmin (setup.py): started
+2025-05-20T11:13:22.126435678Z #12 21.62   Building wheel for jsmin (setup.py): finished with status 'done'
+2025-05-20T11:13:22.12646459Z #12 21.62   Created wheel for jsmin: filename=jsmin-2.2.2-py3-none-any.whl size=13937 sha256=3358b42faa51a389a4b565debcddec4e32de091f3e467f9411f21547f92122c2
+2025-05-20T11:13:22.12647381Z #12 21.62   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/65/b7/04/fc4b059d177fd88f3ca362ad372a15e364b0c5433121c7b135
+2025-05-20T11:13:22.126479271Z #12 21.63   Building wheel for Mako (setup.py): started
+2025-05-20T11:13:22.427793266Z #12 21.95   Building wheel for Mako (setup.py): finished with status 'done'
+2025-05-20T11:13:22.427813168Z #12 21.96   Created wheel for Mako: filename=Mako-1.1.0-py3-none-any.whl size=75378 sha256=392add244095b662bd2525a2325390c80b69c985f1c5c2a604b4422dab29cf28
+2025-05-20T11:13:22.427816378Z #12 21.96   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/09/96/2a/e72b7b2e0d2cb3b5a20f42822447e3f66d9a7d7af5abf68169
+2025-05-20T11:13:22.427818878Z #12 21.96   Building wheel for MarkupSafe (setup.py): started
+2025-05-20T11:13:22.992582531Z #12 22.62   Building wheel for MarkupSafe (setup.py): finished with status 'done'
+2025-05-20T11:13:23.143302006Z #12 22.62   Created wheel for MarkupSafe: filename=MarkupSafe-1.1.1-cp38-cp38-linux_x86_64.whl size=31443 sha256=53e4d020ec36104be47fb5341cfc2a9e99cf66dc89000fbabca91f0e10e1df13
+2025-05-20T11:13:23.143323117Z #12 22.62   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/0c/61/d6/4db4f4c28254856e82305fdb1f752ed7f8482e54c384d8cb0e
+2025-05-20T11:13:23.143327848Z #12 22.62   Building wheel for psycopg2 (setup.py): started
+2025-05-20T11:13:31.396944372Z #12 31.02   Building wheel for psycopg2 (setup.py): finished with status 'done'
+2025-05-20T11:13:31.547017364Z #12 31.02   Created wheel for psycopg2: filename=psycopg2-2.8.3-cp38-cp38-linux_x86_64.whl size=455618 sha256=aee383034bbe1ceb48c4a12a09aa65361cbf8f486a30314fe3e0aba9e4cd2b2c
+2025-05-20T11:13:31.547035945Z #12 31.02   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/9c/f4/9e/329d4de5959958bf6cf7db89d6bc9adbf3903dc1a52c651162
+2025-05-20T11:13:31.547041046Z #12 31.03   Building wheel for raygun4py (setup.py): started
+2025-05-20T11:13:31.668270352Z #12 31.29   Building wheel for raygun4py (setup.py): finished with status 'done'
+2025-05-20T11:13:31.819280995Z #12 31.29   Created wheel for raygun4py: filename=raygun4py-4.3.0-py3-none-any.whl size=15046 sha256=e11f471ef14faeaed3924681f5e578fc0812151fce112a173cbaeb299b273102
+2025-05-20T11:13:31.819301846Z #12 31.29   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/20/34/3d/34b8592cccea5548a8784946c1d9004e7138845851df94da4b
+2025-05-20T11:13:31.819307587Z #12 31.30   Building wheel for SQLAlchemy (setup.py): started
+2025-05-20T11:13:33.17268213Z #12 32.68   Building wheel for SQLAlchemy (setup.py): finished with status 'done'
+2025-05-20T11:13:33.172703271Z #12 32.68   Created wheel for SQLAlchemy: filename=SQLAlchemy-1.3.8-cp38-cp38-linux_x86_64.whl size=1184674 sha256=12a291d8265686ef000e872481adac776a2b22c4df68b07ed6a5b77861b47d6f
+2025-05-20T11:13:33.172709431Z #12 32.68   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/a1/8d/1b/b97f579172b14beadd9b7d0f26fe3c6fb6176e4aba8b7c4059
+2025-05-20T11:13:33.172714612Z #12 32.69   Building wheel for webassets (setup.py): started
+2025-05-20T11:13:33.473016442Z #12 33.03   Building wheel for webassets (setup.py): finished with status 'done'
+2025-05-20T11:13:33.473037463Z #12 33.03   Created wheel for webassets: filename=webassets-0.12.1-py3-none-any.whl size=136807 sha256=f3b953f586dee835dba66e19587a768cd54ccd1aba61f31997f472e114d74047
+2025-05-20T11:13:33.473042703Z #12 33.03   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/10/e2/04/23353900659c0fb9984fe285abb4f0e83abfef2bb3fda10a61
+2025-05-20T11:13:33.473049054Z #12 33.03   Building wheel for cffi (pyproject.toml): started
+2025-05-20T11:13:33.767096234Z #12 33.39   Building wheel for cffi (pyproject.toml): finished with status 'error'
+2025-05-20T11:13:33.92076231Z #12 33.40   error: subprocess-exited-with-error
+2025-05-20T11:13:33.920790701Z #12 33.40   
+2025-05-20T11:13:33.920796342Z #12 33.40   × Building wheel for cffi (pyproject.toml) did not run successfully.
+2025-05-20T11:13:33.920801752Z #12 33.40   │ exit code: 1
+2025-05-20T11:13:33.920821823Z #12 33.40   ╰─> [55 lines of output]
+2025-05-20T11:13:33.920825063Z #12 33.40       Package libffi was not found in the pkg-config search path.
+2025-05-20T11:13:33.920827494Z #12 33.40       Perhaps you should add the directory containing `libffi.pc'
+2025-05-20T11:13:33.920830274Z #12 33.40       to the PKG_CONFIG_PATH environment variable
+2025-05-20T11:13:33.920832534Z #12 33.40       Package 'libffi' not found
+2025-05-20T11:13:33.920834724Z #12 33.40       Package libffi was not found in the pkg-config search path.
+2025-05-20T11:13:33.920837064Z #12 33.40       Perhaps you should add the directory containing `libffi.pc'
+2025-05-20T11:13:33.920839334Z #12 33.40       to the PKG_CONFIG_PATH environment variable
+2025-05-20T11:13:33.920841604Z #12 33.40       Package 'libffi' not found
+2025-05-20T11:13:33.920843754Z #12 33.40       Package libffi was not found in the pkg-config search path.
+2025-05-20T11:13:33.920846035Z #12 33.40       Perhaps you should add the directory containing `libffi.pc'
+2025-05-20T11:13:33.920848184Z #12 33.40       to the PKG_CONFIG_PATH environment variable
+2025-05-20T11:13:33.920850635Z #12 33.40       Package 'libffi' not found
+2025-05-20T11:13:33.920852775Z #12 33.40       Package libffi was not found in the pkg-config search path.
+2025-05-20T11:13:33.920854985Z #12 33.40       Perhaps you should add the directory containing `libffi.pc'
+2025-05-20T11:13:33.920857205Z #12 33.40       to the PKG_CONFIG_PATH environment variable
+2025-05-20T11:13:33.920859435Z #12 33.40       Package 'libffi' not found
+2025-05-20T11:13:33.920861635Z #12 33.40       Package libffi was not found in the pkg-config search path.
+2025-05-20T11:13:33.920863805Z #12 33.40       Perhaps you should add the directory containing `libffi.pc'
+2025-05-20T11:13:33.920865896Z #12 33.40       to the PKG_CONFIG_PATH environment variable
+2025-05-20T11:13:33.920868096Z #12 33.40       Package 'libffi' not found
+2025-05-20T11:13:33.920870196Z #12 33.40       running bdist_wheel
+2025-05-20T11:13:33.920872456Z #12 33.40       running build
+2025-05-20T11:13:33.920874606Z #12 33.40       running build_py
+2025-05-20T11:13:33.920876786Z #12 33.40       creating build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920879506Z #12 33.40       copying src/cffi/_shimmed_dist_utils.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920881806Z #12 33.40       copying src/cffi/api.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920883966Z #12 33.40       copying src/cffi/cparser.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920886187Z #12 33.40       copying src/cffi/recompiler.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920892377Z #12 33.40       copying src/cffi/__init__.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920894777Z #12 33.40       copying src/cffi/pkgconfig.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920938989Z #12 33.40       copying src/cffi/ffiplatform.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.92094284Z #12 33.40       copying src/cffi/lock.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.92094525Z #12 33.40       copying src/cffi/setuptools_ext.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.92095079Z #12 33.40       copying src/cffi/cffi_opcode.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.92095324Z #12 33.40       copying src/cffi/backend_ctypes.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.92095547Z #12 33.40       copying src/cffi/vengine_gen.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920957881Z #12 33.40       copying src/cffi/commontypes.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920966641Z #12 33.40       copying src/cffi/vengine_cpy.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920969031Z #12 33.40       copying src/cffi/error.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920971261Z #12 33.40       copying src/cffi/_imp_emulation.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920973521Z #12 33.40       copying src/cffi/verifier.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920975731Z #12 33.40       copying src/cffi/model.py -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920977992Z #12 33.40       copying src/cffi/_cffi_include.h -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920980162Z #12 33.40       copying src/cffi/parse_c_type.h -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920982602Z #12 33.40       copying src/cffi/_embedding.h -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920984792Z #12 33.40       copying src/cffi/_cffi_errors.h -> build/lib.linux-x86_64-cpython-38/cffi
+2025-05-20T11:13:33.920987142Z #12 33.40       running build_ext
+2025-05-20T11:13:33.920989562Z #12 33.40       building '_cffi_backend' extension
+2025-05-20T11:13:33.920992402Z #12 33.40       creating build/temp.linux-x86_64-cpython-38/src/c
+2025-05-20T11:13:33.920995612Z #12 33.40       gcc -Wno-unused-result -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall -fPIC -DFFI_BUILDING=1 -DUSE__THREAD -DHAVE_SYNC_SYNCHRONIZE -I/usr/include/ffi -I/usr/include/libffi -I/usr/local/include/python3.8 -c src/c/_cffi_backend.c -o build/temp.linux-x86_64-cpython-38/src/c/_cffi_backend.o
+2025-05-20T11:13:33.920997973Z #12 33.40       src/c/_cffi_backend.c:15:10: fatal error: ffi.h: No such file or directory
+2025-05-20T11:13:33.921000133Z #12 33.40          15 | #include <ffi.h>
+2025-05-20T11:13:33.921002383Z #12 33.40             |          ^~~~~~~
+2025-05-20T11:13:33.921004593Z #12 33.40       compilation terminated.
+2025-05-20T11:13:33.921006843Z #12 33.40       error: command '/usr/bin/gcc' failed with exit code 1
+2025-05-20T11:13:33.921009033Z #12 33.40       [end of output]
+2025-05-20T11:13:33.921011124Z #12 33.40   
+2025-05-20T11:13:33.921013344Z #12 33.40   note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-05-20T11:13:33.921017504Z #12 33.40   ERROR: Failed building wheel for cffi
+2025-05-20T11:13:33.921019954Z #12 33.40   Building wheel for urlobject (setup.py): started
+2025-05-20T11:13:34.039538801Z #12 33.66   Building wheel for urlobject (setup.py): finished with status 'done'
+2025-05-20T11:13:34.189688535Z #12 33.67   Created wheel for urlobject: filename=URLObject-2.4.3-py3-none-any.whl size=14534 sha256=4151e66f84926d40611ce20eec1c8cf1b67ebf4634771678a4f70384218e5f6a
+2025-05-20T11:13:34.189704745Z #12 33.67   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/6d/9f/65/f0e414e2ac1be3f726f12d3952e38a624629b1056d5fc76401
+2025-05-20T11:13:34.189707916Z #12 33.67 Successfully built alembic blinker Flask-Assets Flask-Compress Flask-Login Flask-Mail Flask-RQ Flask-Script Flask-SSLify jsmin Mako MarkupSafe psycopg2 raygun4py SQLAlchemy webassets urlobject
+2025-05-20T11:13:34.189710286Z #12 33.67 Failed to build cffi
+2025-05-20T11:13:34.189712576Z #12 33.74 ERROR: Failed to build installable wheels for some pyproject.toml based projects (cffi)
+2025-05-20T11:13:34.677902968Z #12 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
+2025-05-20T11:13:34.677925599Z ------
+2025-05-20T11:13:34.677931619Z  > [7/8] RUN pip install --no-cache-dir -r requirements.txt:
+2025-05-20T11:13:34.67793543Z 33.40   
+2025-05-20T11:13:34.6779404Z 33.40   note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-05-20T11:13:34.67795331Z 33.40   ERROR: Failed building wheel for cffi
+2025-05-20T11:13:34.67795556Z 33.40   Building wheel for urlobject (setup.py): started
+2025-05-20T11:13:34.677958531Z 33.66   Building wheel for urlobject (setup.py): finished with status 'done'
+2025-05-20T11:13:34.677961141Z 33.67   Created wheel for urlobject: filename=URLObject-2.4.3-py3-none-any.whl size=14534 sha256=4151e66f84926d40611ce20eec1c8cf1b67ebf4634771678a4f70384218e5f6a
+2025-05-20T11:13:34.677963881Z 33.67   Stored in directory: /tmp/pip-ephem-wheel-cache-e4fjldh1/wheels/6d/9f/65/f0e414e2ac1be3f726f12d3952e38a624629b1056d5fc76401
+2025-05-20T11:13:34.677966611Z 33.67 Successfully built alembic blinker Flask-Assets Flask-Compress Flask-Login Flask-Mail Flask-RQ Flask-Script Flask-SSLify jsmin Mako MarkupSafe psycopg2 raygun4py SQLAlchemy webassets urlobject
+2025-05-20T11:13:34.677969211Z 33.67 Failed to build cffi
+2025-05-20T11:13:34.677971351Z 33.74 ERROR: Failed to build installable wheels for some pyproject.toml based projects (cffi)
+2025-05-20T11:13:34.677986912Z ------
+2025-05-20T11:13:34.679137475Z Dockerfile:28
+2025-05-20T11:13:34.679150125Z --------------------
+2025-05-20T11:13:34.679153725Z   26 |     RUN pip install --upgrade pip
+2025-05-20T11:13:34.679156736Z   27 |     # Install requirements with increased timeout
+2025-05-20T11:13:34.679158716Z   28 | >>> RUN pip install --no-cache-dir -r requirements.txt
+2025-05-20T11:13:34.679160646Z   29 |     ENV PYTHONIOENCODING=UTF-8
+2025-05-20T11:13:34.679162766Z   30 |     
+2025-05-20T11:13:34.679164926Z --------------------
+2025-05-20T11:13:34.679167656Z error: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt" did not complete successfully: exit code: 1
