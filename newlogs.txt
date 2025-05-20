@@ -1,0 +1,50 @@
+2025-05-20T11:22:43.195919085Z #15 18.16 Collecting Jinja2==2.11.3 (from -r requirements.txt (line 24))
+2025-05-20T11:22:43.195922246Z #15 18.18   Downloading Jinja2-2.11.3-py2.py3-none-any.whl.metadata (3.5 kB)
+2025-05-20T11:22:43.195924876Z #15 18.19 Collecting jsmin==2.2.2 (from -r requirements.txt (line 25))
+2025-05-20T11:22:43.195927866Z #15 18.20   Downloading jsmin-2.2.2.tar.gz (12 kB)
+2025-05-20T11:22:43.195930616Z #15 18.21   Installing build dependencies: started
+2025-05-20T11:22:44.698762999Z #15 19.69   Installing build dependencies: finished with status 'done'
+2025-05-20T11:22:44.69878325Z #15 19.70   Getting requirements to build wheel: started
+2025-05-20T11:22:44.837977566Z #15 19.86   Getting requirements to build wheel: finished with status 'error'
+2025-05-20T11:22:44.837997357Z #15 19.86   error: subprocess-exited-with-error
+2025-05-20T11:22:44.838000837Z #15 19.86   
+2025-05-20T11:22:44.838003547Z #15 19.86   × Getting requirements to build wheel did not run successfully.
+2025-05-20T11:22:44.838006527Z #15 19.86   │ exit code: 1
+2025-05-20T11:22:44.838008747Z #15 19.86   ╰─> [3 lines of output]
+2025-05-20T11:22:44.838013657Z #15 19.86       /tmp/pip-build-env-dpmede9h/overlay/lib/python3.8/site-packages/setuptools/_distutils/dist.py:261: UserWarning: Unknown distribution option: 'test_suite'
+2025-05-20T11:22:44.838015957Z #15 19.86         warnings.warn(msg)
+2025-05-20T11:22:44.838018157Z #15 19.86       error in jsmin setup command: use_2to3 is invalid.
+2025-05-20T11:22:44.838020267Z #15 19.86       [end of output]
+2025-05-20T11:22:44.838022687Z #15 19.86   
+2025-05-20T11:22:44.838025437Z #15 19.86   note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-05-20T11:22:44.838027967Z #15 19.93 error: subprocess-exited-with-error
+2025-05-20T11:22:44.838030157Z #15 19.93 
+2025-05-20T11:22:44.838032287Z #15 19.93 × Getting requirements to build wheel did not run successfully.
+2025-05-20T11:22:44.838034458Z #15 19.93 │ exit code: 1
+2025-05-20T11:22:44.838036587Z #15 19.93 ╰─> See above for output.
+2025-05-20T11:22:44.838038738Z #15 19.93 
+2025-05-20T11:22:44.838040918Z #15 19.93 note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-05-20T11:22:45.490369596Z #15 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt --use-pep517" did not complete successfully: exit code: 1
+2025-05-20T11:22:45.490392526Z ------
+2025-05-20T11:22:45.490399427Z  > [10/11] RUN pip install --no-cache-dir -r requirements.txt --use-pep517:
+2025-05-20T11:22:45.490405977Z 19.86       [end of output]
+2025-05-20T11:22:45.490411617Z 19.86   
+2025-05-20T11:22:45.490415917Z 19.86   note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-05-20T11:22:45.490420127Z 19.93 error: subprocess-exited-with-error
+2025-05-20T11:22:45.490423687Z 19.93 
+2025-05-20T11:22:45.490427398Z 19.93 × Getting requirements to build wheel did not run successfully.
+2025-05-20T11:22:45.490431528Z 19.93 │ exit code: 1
+2025-05-20T11:22:45.490435168Z 19.93 ╰─> See above for output.
+2025-05-20T11:22:45.490438758Z 19.93 
+2025-05-20T11:22:45.490442358Z 19.93 note: This error originates from a subprocess, and is likely not a problem with pip.
+2025-05-20T11:22:45.490446048Z ------
+2025-05-20T11:22:45.492157056Z Dockerfile:39
+2025-05-20T11:22:45.492180597Z --------------------
+2025-05-20T11:22:45.492183877Z   37 |     RUN pip install --no-cache-dir wheel setuptools
+2025-05-20T11:22:45.492186437Z   38 |     # Then install the rest with increased dependency solver capabilities
+2025-05-20T11:22:45.492188537Z   39 | >>> RUN pip install --no-cache-dir -r requirements.txt --use-pep517
+2025-05-20T11:22:45.492191187Z   40 |     ENV PYTHONIOENCODING=UTF-8
+2025-05-20T11:22:45.492193247Z   41 |     
+2025-05-20T11:22:45.492195337Z --------------------
+2025-05-20T11:22:45.492198907Z error: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt --use-pep517" did not complete successfully: exit code: 1
+2025-05-20T11:22:45.508054471Z error: exit status 1

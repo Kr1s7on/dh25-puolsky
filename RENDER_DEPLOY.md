@@ -27,7 +27,12 @@ If you prefer to set up your services manually:
    - Connect your Git repository
    - Use Docker runtime
    - Set the Dockerfile path to `./Dockerfile`
-   - Set environment variables as defined in the `render.yaml` file
+   - Set the following environment variables:
+     - `FLASK_APP=manage.py`
+     - `FLASK_ENV=production`
+     - `FLASK_CONFIG=production`
+     - `PORT=10000` (Render will override this with its own PORT)
+     - `SECRET_KEY` (generate a secure random string)
    - Set the health check path to `/health`
 
 2. **Worker Service**:
