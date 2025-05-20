@@ -18,9 +18,11 @@ RUN apk update && apk add --no-cache \
 COPY ./requirements.txt /app/requirements.txt
 
 WORKDIR /app
-RUN pip3 install --no-cache-dir -r requirements.txt
+# Install pip and upgrade
+RUN pip install --upgrade pip
+# Install requirements with increased timeout
+RUN pip install --no-cache-dir -r requirements.txt
 ENV PYTHONIOENCODING=UTF-8
-RUN pip3 install --no-cache-dir sqlalchemy_utils==0.38.3 flask_dance==5.1.0 Flask-Caching==1.11.1 python-gitlab==3.10.0
 
 # Copy the rest of the application
 COPY . /app
