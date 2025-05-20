@@ -50,5 +50,5 @@ twilio==8.10.0
 urllib3==1.25.8
 weasyprint==57.1
 webassets==0.12.1
-Werkzeug==0.15.5
+Werkzeug<1.0.0
 WTForms==2.2.1

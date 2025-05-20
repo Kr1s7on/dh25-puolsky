@@ -44,7 +44,7 @@ RUN cat requirements.txt | grep -v "^jsmin==" > requirements_modified.txt && \
 
 # Install dependencies in stages
 RUN pip install --no-cache-dir wheel setuptools
-RUN pip install --no-cache-dir -r requirements_modified.txt
+RUN pip install --no-cache-dir -r requirements.txt
 # Install problematic packages separately with looser constraints
 RUN pip install jsmin
 # Explicitly install Bootstrap-Flask

@@ -1,50 +1,200 @@
-2025-05-20T11:22:43.195919085Z #15 18.16 Collecting Jinja2==2.11.3 (from -r requirements.txt (line 24))
-2025-05-20T11:22:43.195922246Z #15 18.18   Downloading Jinja2-2.11.3-py2.py3-none-any.whl.metadata (3.5 kB)
-2025-05-20T11:22:43.195924876Z #15 18.19 Collecting jsmin==2.2.2 (from -r requirements.txt (line 25))
-2025-05-20T11:22:43.195927866Z #15 18.20   Downloading jsmin-2.2.2.tar.gz (12 kB)
-2025-05-20T11:22:43.195930616Z #15 18.21   Installing build dependencies: started
-2025-05-20T11:22:44.698762999Z #15 19.69   Installing build dependencies: finished with status 'done'
-2025-05-20T11:22:44.69878325Z #15 19.70   Getting requirements to build wheel: started
-2025-05-20T11:22:44.837977566Z #15 19.86   Getting requirements to build wheel: finished with status 'error'
-2025-05-20T11:22:44.837997357Z #15 19.86   error: subprocess-exited-with-error
-2025-05-20T11:22:44.838000837Z #15 19.86   
-2025-05-20T11:22:44.838003547Z #15 19.86   × Getting requirements to build wheel did not run successfully.
-2025-05-20T11:22:44.838006527Z #15 19.86   │ exit code: 1
-2025-05-20T11:22:44.838008747Z #15 19.86   ╰─> [3 lines of output]
-2025-05-20T11:22:44.838013657Z #15 19.86       /tmp/pip-build-env-dpmede9h/overlay/lib/python3.8/site-packages/setuptools/_distutils/dist.py:261: UserWarning: Unknown distribution option: 'test_suite'
-2025-05-20T11:22:44.838015957Z #15 19.86         warnings.warn(msg)
-2025-05-20T11:22:44.838018157Z #15 19.86       error in jsmin setup command: use_2to3 is invalid.
-2025-05-20T11:22:44.838020267Z #15 19.86       [end of output]
-2025-05-20T11:22:44.838022687Z #15 19.86   
-2025-05-20T11:22:44.838025437Z #15 19.86   note: This error originates from a subprocess, and is likely not a problem with pip.
-2025-05-20T11:22:44.838027967Z #15 19.93 error: subprocess-exited-with-error
-2025-05-20T11:22:44.838030157Z #15 19.93 
-2025-05-20T11:22:44.838032287Z #15 19.93 × Getting requirements to build wheel did not run successfully.
-2025-05-20T11:22:44.838034458Z #15 19.93 │ exit code: 1
-2025-05-20T11:22:44.838036587Z #15 19.93 ╰─> See above for output.
-2025-05-20T11:22:44.838038738Z #15 19.93 
-2025-05-20T11:22:44.838040918Z #15 19.93 note: This error originates from a subprocess, and is likely not a problem with pip.
-2025-05-20T11:22:45.490369596Z #15 ERROR: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt --use-pep517" did not complete successfully: exit code: 1
-2025-05-20T11:22:45.490392526Z ------
-2025-05-20T11:22:45.490399427Z  > [10/11] RUN pip install --no-cache-dir -r requirements.txt --use-pep517:
-2025-05-20T11:22:45.490405977Z 19.86       [end of output]
-2025-05-20T11:22:45.490411617Z 19.86   
-2025-05-20T11:22:45.490415917Z 19.86   note: This error originates from a subprocess, and is likely not a problem with pip.
-2025-05-20T11:22:45.490420127Z 19.93 error: subprocess-exited-with-error
-2025-05-20T11:22:45.490423687Z 19.93 
-2025-05-20T11:22:45.490427398Z 19.93 × Getting requirements to build wheel did not run successfully.
-2025-05-20T11:22:45.490431528Z 19.93 │ exit code: 1
-2025-05-20T11:22:45.490435168Z 19.93 ╰─> See above for output.
-2025-05-20T11:22:45.490438758Z 19.93 
-2025-05-20T11:22:45.490442358Z 19.93 note: This error originates from a subprocess, and is likely not a problem with pip.
-2025-05-20T11:22:45.490446048Z ------
-2025-05-20T11:22:45.492157056Z Dockerfile:39
-2025-05-20T11:22:45.492180597Z --------------------
-2025-05-20T11:22:45.492183877Z   37 |     RUN pip install --no-cache-dir wheel setuptools
-2025-05-20T11:22:45.492186437Z   38 |     # Then install the rest with increased dependency solver capabilities
-2025-05-20T11:22:45.492188537Z   39 | >>> RUN pip install --no-cache-dir -r requirements.txt --use-pep517
-2025-05-20T11:22:45.492191187Z   40 |     ENV PYTHONIOENCODING=UTF-8
-2025-05-20T11:22:45.492193247Z   41 |     
-2025-05-20T11:22:45.492195337Z --------------------
-2025-05-20T11:22:45.492198907Z error: failed to solve: process "/bin/sh -c pip install --no-cache-dir -r requirements.txt --use-pep517" did not complete successfully: exit code: 1
-2025-05-20T11:22:45.508054471Z error: exit status 1
+2025-05-20T12:55:25.895570232Z ==> Your service is live 🎉
+2025-05-20T12:55:27.144092139Z /usr/local/lib/python3.8/os.py:1023: RuntimeWarning: line buffering (buffering=1) isn't supported in binary mode, the default buffer size will be used
+2025-05-20T12:55:27.144131042Z   return io.open(fd, *args, **kwargs)
+2025-05-20T12:55:27.144139352Z [2025-05-20 12:55:27 +0000] [7] [INFO] Shutting down: Master
+2025-05-20T12:55:27.144209187Z [2025-05-20 12:55:27 +0000] [7] [INFO] Reason: Worker failed to boot.
+2025-05-20T12:55:29.199859048Z [2025-05-20 12:55:29 +0000] [6] [INFO] Starting gunicorn 19.9.0
+2025-05-20T12:55:29.200304797Z [2025-05-20 12:55:29 +0000] [6] [INFO] Listening at: http://0.0.0.0:5000 (6)
+2025-05-20T12:55:29.200321138Z [2025-05-20 12:55:29 +0000] [6] [INFO] Using worker: threads
+2025-05-20T12:55:29.28871046Z /usr/local/lib/python3.8/os.py:1023: RuntimeWarning: line buffering (buffering=1) isn't supported in binary mode, the default buffer size will be used
+2025-05-20T12:55:29.288730822Z   return io.open(fd, *args, **kwargs)
+2025-05-20T12:55:29.288734682Z [2025-05-20 12:55:29 +0000] [8] [INFO] Booting worker with pid: 8
+2025-05-20T12:55:29.387882575Z /usr/local/lib/python3.8/os.py:1023: RuntimeWarning: line buffering (buffering=1) isn't supported in binary mode, the default buffer size will be used
+2025-05-20T12:55:29.387901746Z   return io.open(fd, *args, **kwargs)
+2025-05-20T12:55:29.387905247Z [2025-05-20 12:55:29 +0000] [9] [INFO] Booting worker with pid: 9
+2025-05-20T12:55:34.896256717Z [2025-05-20 12:55:34 +0000] [8] [ERROR] Exception in worker process
+2025-05-20T12:55:34.896300539Z Traceback (most recent call last):
+2025-05-20T12:55:34.89630454Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+2025-05-20T12:55:34.89630773Z     worker.init_process()
+2025-05-20T12:55:34.89631073Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/gthread.py", line 104, in init_process
+2025-05-20T12:55:34.89631304Z     super(ThreadWorker, self).init_process()
+2025-05-20T12:55:34.89631551Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/base.py", line 129, in init_process
+2025-05-20T12:55:34.896318761Z     self.load_wsgi()
+2025-05-20T12:55:34.896321361Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/base.py", line 138, in load_wsgi
+2025-05-20T12:55:34.896323801Z     self.wsgi = self.app.wsgi()
+2025-05-20T12:55:34.896325861Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/base.py", line 67, in wsgi
+2025-05-20T12:55:34.896328231Z     self.callable = self.load()
+2025-05-20T12:55:34.896341032Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/wsgiapp.py", line 52, in load
+2025-05-20T12:55:34.896343902Z     return self.load_wsgiapp()
+2025-05-20T12:55:34.896346583Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/wsgiapp.py", line 41, in load_wsgiapp
+2025-05-20T12:55:34.896349223Z     return util.import_app(self.app_uri)
+2025-05-20T12:55:34.896351613Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/util.py", line 350, in import_app
+2025-05-20T12:55:34.896353903Z     __import__(module)
+2025-05-20T12:55:34.896356413Z   File "/app/manage.py", line 10, in <module>
+2025-05-20T12:55:34.896358943Z     from app import create_app, db
+2025-05-20T12:55:34.896362373Z   File "/app/app/__init__.py", line 11, in <module>
+2025-05-20T12:55:34.896364944Z     from flask_wtf import CSRFProtect
+2025-05-20T12:55:34.896367924Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/__init__.py", line 17, in <module>
+2025-05-20T12:55:34.896370594Z     from .recaptcha import *
+2025-05-20T12:55:34.896373014Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/__init__.py", line 2, in <module>
+2025-05-20T12:55:34.896375594Z     from .fields import *
+2025-05-20T12:55:34.896378025Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/fields.py", line 3, in <module>
+2025-05-20T12:55:34.896380605Z     from . import widgets
+2025-05-20T12:55:34.896382755Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/widgets.py", line 5, in <module>
+2025-05-20T12:55:34.896384985Z     from werkzeug import url_encode
+2025-05-20T12:55:34.896387985Z ImportError: cannot import name 'url_encode' from 'werkzeug' (/usr/local/lib/python3.8/site-packages/werkzeug/__init__.py)
+2025-05-20T12:55:34.987066949Z [2025-05-20 12:55:34 +0000] [8] [INFO] Worker exiting (pid: 8)
+2025-05-20T12:55:34.988332842Z [2025-05-20 12:55:34 +0000] [9] [ERROR] Exception in worker process
+2025-05-20T12:55:34.988346563Z Traceback (most recent call last):
+2025-05-20T12:55:34.988375005Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+2025-05-20T12:55:34.988378555Z     worker.init_process()
+2025-05-20T12:55:34.988381255Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/gthread.py", line 104, in init_process
+2025-05-20T12:55:34.988383786Z     super(ThreadWorker, self).init_process()
+2025-05-20T12:55:34.988386116Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/base.py", line 129, in init_process
+2025-05-20T12:55:34.988388806Z     self.load_wsgi()
+2025-05-20T12:55:34.988391216Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/base.py", line 138, in load_wsgi
+2025-05-20T12:55:34.988393516Z     self.wsgi = self.app.wsgi()
+2025-05-20T12:55:34.988396096Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/base.py", line 67, in wsgi
+2025-05-20T12:55:34.988398347Z     self.callable = self.load()
+2025-05-20T12:55:34.988400757Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/wsgiapp.py", line 52, in load
+2025-05-20T12:55:34.988403037Z     return self.load_wsgiapp()
+2025-05-20T12:55:34.988405297Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/wsgiapp.py", line 41, in load_wsgiapp
+2025-05-20T12:55:34.988407547Z     return util.import_app(self.app_uri)
+2025-05-20T12:55:34.988409767Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/util.py", line 350, in import_app
+2025-05-20T12:55:34.988411977Z     __import__(module)
+2025-05-20T12:55:34.988414178Z   File "/app/manage.py", line 10, in <module>
+2025-05-20T12:55:34.988416438Z     from app import create_app, db
+2025-05-20T12:55:34.988419028Z   File "/app/app/__init__.py", line 11, in <module>
+2025-05-20T12:55:34.988421268Z     from flask_wtf import CSRFProtect
+2025-05-20T12:55:34.98845249Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/__init__.py", line 17, in <module>
+2025-05-20T12:55:34.98845608Z     from .recaptcha import *
+2025-05-20T12:55:34.98845886Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/__init__.py", line 2, in <module>
+2025-05-20T12:55:34.988461121Z     from .fields import *
+2025-05-20T12:55:34.988463451Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/fields.py", line 3, in <module>
+2025-05-20T12:55:34.988465801Z     from . import widgets
+2025-05-20T12:55:34.988468111Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/widgets.py", line 5, in <module>
+2025-05-20T12:55:34.988470431Z     from werkzeug import url_encode
+2025-05-20T12:55:34.988473141Z ImportError: cannot import name 'url_encode' from 'werkzeug' (/usr/local/lib/python3.8/site-packages/werkzeug/__init__.py)
+2025-05-20T12:55:34.988555867Z [2025-05-20 12:55:34 +0000] [9] [INFO] Worker exiting (pid: 9)
+2025-05-20T12:55:36.499092247Z /usr/local/lib/python3.8/os.py:1023: RuntimeWarning: line buffering (buffering=1) isn't supported in binary mode, the default buffer size will be used
+2025-05-20T12:55:36.499110708Z   return io.open(fd, *args, **kwargs)
+2025-05-20T12:55:36.588843439Z Traceback (most recent call last):
+2025-05-20T12:55:36.58886339Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 210, in run
+2025-05-20T12:55:36.58886645Z     self.sleep()
+2025-05-20T12:55:36.58886954Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 360, in sleep
+2025-05-20T12:55:36.588882241Z     ready = select.select([self.PIPE[0]], [], [], 1.0)
+2025-05-20T12:55:36.588885192Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 245, in handle_chld
+2025-05-20T12:55:36.588888292Z     self.reap_workers()
+2025-05-20T12:55:36.588891292Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 525, in reap_workers
+2025-05-20T12:55:36.588893862Z     raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+2025-05-20T12:55:36.588897032Z gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+2025-05-20T12:55:36.588899282Z 
+2025-05-20T12:55:36.588901843Z During handling of the above exception, another exception occurred:
+2025-05-20T12:55:36.588903993Z 
+2025-05-20T12:55:36.588906173Z Traceback (most recent call last):
+2025-05-20T12:55:36.588908773Z   File "/usr/local/bin/gunicorn", line 8, in <module>
+2025-05-20T12:55:36.588911263Z     sys.exit(run())
+2025-05-20T12:55:36.588913963Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/wsgiapp.py", line 61, in run
+2025-05-20T12:55:36.588916414Z     WSGIApplication("%(prog)s [OPTIONS] [APP_MODULE]").run()
+2025-05-20T12:55:36.588919644Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/base.py", line 223, in run
+2025-05-20T12:55:36.588922154Z     super(Application, self).run()
+2025-05-20T12:55:36.588924794Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/base.py", line 72, in run
+2025-05-20T12:55:36.588927074Z     Arbiter(self).run()
+2025-05-20T12:55:36.588929735Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 232, in run
+2025-05-20T12:55:36.588932365Z     self.halt(reason=inst.reason, exit_status=inst.exit_status)
+2025-05-20T12:55:36.588934765Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 345, in halt
+2025-05-20T12:55:36.588937305Z     self.stop()
+2025-05-20T12:55:36.588939775Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 393, in stop
+2025-05-20T12:55:36.588942215Z     time.sleep(0.1)
+2025-05-20T12:55:36.588944705Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 245, in handle_chld
+2025-05-20T12:55:36.588947096Z     self.reap_workers()
+2025-05-20T12:55:36.588949296Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 525, in reap_workers
+2025-05-20T12:55:36.588951956Z     raise HaltServer(reason, self.WORKER_BOOT_ERROR)
+2025-05-20T12:55:36.588954826Z gunicorn.errors.HaltServer: <HaltServer 'Worker failed to boot.' 3>
+2025-05-20T12:55:50.736263691Z [2025-05-20 12:55:50 +0000] [6] [INFO] Starting gunicorn 19.9.0
+2025-05-20T12:55:50.736318714Z [2025-05-20 12:55:50 +0000] [6] [INFO] Listening at: http://0.0.0.0:5000 (6)
+2025-05-20T12:55:50.736323625Z [2025-05-20 12:55:50 +0000] [6] [INFO] Using worker: threads
+2025-05-20T12:55:50.741015455Z /usr/local/lib/python3.8/os.py:1023: RuntimeWarning: line buffering (buffering=1) isn't supported in binary mode, the default buffer size will be used
+2025-05-20T12:55:50.741029486Z   return io.open(fd, *args, **kwargs)
+2025-05-20T12:55:50.741033196Z [2025-05-20 12:55:50 +0000] [8] [INFO] Booting worker with pid: 8
+2025-05-20T12:55:50.831256779Z /usr/local/lib/python3.8/os.py:1023: RuntimeWarning: line buffering (buffering=1) isn't supported in binary mode, the default buffer size will be used
+2025-05-20T12:55:50.833946507Z   return io.open(fd, *args, **kwargs)
+2025-05-20T12:55:50.833956338Z [2025-05-20 12:55:50 +0000] [9] [INFO] Booting worker with pid: 9
+2025-05-20T12:55:56.438612401Z [2025-05-20 12:55:56 +0000] [9] [ERROR] Exception in worker process
+2025-05-20T12:55:56.438638623Z Traceback (most recent call last):
+2025-05-20T12:55:56.438644603Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+2025-05-20T12:55:56.438649554Z     worker.init_process()
+2025-05-20T12:55:56.438654334Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/gthread.py", line 104, in init_process
+2025-05-20T12:55:56.438658624Z     super(ThreadWorker, self).init_process()
+2025-05-20T12:55:56.438663335Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/base.py", line 129, in init_process
+2025-05-20T12:55:56.438668435Z     self.load_wsgi()
+2025-05-20T12:55:56.438672745Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/base.py", line 138, in load_wsgi
+2025-05-20T12:55:56.438677066Z     self.wsgi = self.app.wsgi()
+2025-05-20T12:55:56.438681256Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/base.py", line 67, in wsgi
+2025-05-20T12:55:56.438685456Z     self.callable = self.load()
+2025-05-20T12:55:56.438689877Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/wsgiapp.py", line 52, in load
+2025-05-20T12:55:56.438694307Z     return self.load_wsgiapp()
+2025-05-20T12:55:56.438699007Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/wsgiapp.py", line 41, in load_wsgiapp
+2025-05-20T12:55:56.438703687Z     return util.import_app(self.app_uri)
+2025-05-20T12:55:56.438708468Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/util.py", line 350, in import_app
+2025-05-20T12:55:56.438712398Z     __import__(module)
+2025-05-20T12:55:56.438716418Z   File "/app/manage.py", line 10, in <module>
+2025-05-20T12:55:56.438721248Z     from app import create_app, db
+2025-05-20T12:55:56.438726489Z   File "/app/app/__init__.py", line 11, in <module>
+2025-05-20T12:55:56.438730819Z     from flask_wtf import CSRFProtect
+2025-05-20T12:55:56.438734929Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/__init__.py", line 17, in <module>
+2025-05-20T12:55:56.4387391Z     from .recaptcha import *
+2025-05-20T12:55:56.43874334Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/__init__.py", line 2, in <module>
+2025-05-20T12:55:56.43874754Z     from .fields import *
+2025-05-20T12:55:56.43875181Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/fields.py", line 3, in <module>
+2025-05-20T12:55:56.438755771Z     from . import widgets
+2025-05-20T12:55:56.438759891Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/widgets.py", line 5, in <module>
+2025-05-20T12:55:56.438764211Z     from werkzeug import url_encode
+2025-05-20T12:55:56.438768642Z ImportError: cannot import name 'url_encode' from 'werkzeug' (/usr/local/lib/python3.8/site-packages/werkzeug/__init__.py)
+2025-05-20T12:55:56.438798094Z [2025-05-20 12:55:56 +0000] [9] [INFO] Worker exiting (pid: 9)
+2025-05-20T12:55:56.730820084Z [2025-05-20 12:55:56 +0000] [8] [ERROR] Exception in worker process
+2025-05-20T12:55:56.730841806Z Traceback (most recent call last):
+2025-05-20T12:55:56.730845486Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/arbiter.py", line 583, in spawn_worker
+2025-05-20T12:55:56.730848736Z     worker.init_process()
+2025-05-20T12:55:56.730851756Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/gthread.py", line 104, in init_process
+2025-05-20T12:55:56.730854677Z     super(ThreadWorker, self).init_process()
+2025-05-20T12:55:56.730857497Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/base.py", line 129, in init_process
+2025-05-20T12:55:56.730860347Z     self.load_wsgi()
+2025-05-20T12:55:56.730862157Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/workers/base.py", line 138, in load_wsgi
+2025-05-20T12:55:56.730864787Z     self.wsgi = self.app.wsgi()
+2025-05-20T12:55:56.730867608Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/base.py", line 67, in wsgi
+2025-05-20T12:55:56.730870348Z     self.callable = self.load()
+2025-05-20T12:55:56.730873108Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/wsgiapp.py", line 52, in load
+2025-05-20T12:55:56.730875778Z     return self.load_wsgiapp()
+2025-05-20T12:55:56.730878468Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/app/wsgiapp.py", line 41, in load_wsgiapp
+2025-05-20T12:55:56.730880998Z     return util.import_app(self.app_uri)
+2025-05-20T12:55:56.730883638Z   File "/usr/local/lib/python3.8/site-packages/gunicorn/util.py", line 350, in import_app
+2025-05-20T12:55:56.730886179Z     __import__(module)
+2025-05-20T12:55:56.730888719Z   File "/app/manage.py", line 10, in <module>
+2025-05-20T12:55:56.730891709Z     from app import create_app, db
+2025-05-20T12:55:56.730894289Z   File "/app/app/__init__.py", line 11, in <module>
+2025-05-20T12:55:56.73089595Z     from flask_wtf import CSRFProtect
+2025-05-20T12:55:56.730897779Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/__init__.py", line 17, in <module>
+2025-05-20T12:55:56.73089948Z     from .recaptcha import *
+2025-05-20T12:55:56.73090124Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/__init__.py", line 2, in <module>
+2025-05-20T12:55:56.73090297Z     from .fields import *
+2025-05-20T12:55:56.7309047Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/fields.py", line 3, in <module>
+2025-05-20T12:55:56.73090636Z     from . import widgets
+2025-05-20T12:55:56.730908Z   File "/usr/local/lib/python3.8/site-packages/flask_wtf/recaptcha/widgets.py", line 5, in <module>
+2025-05-20T12:55:56.73090966Z     from werkzeug import url_encode
+2025-05-20T12:55:56.7309119Z ImportError: cannot import name 'url_encode' from 'werkzeug' (/usr/local/lib/python3.8/site-packages/werkzeug/__init__.py)
+2025-05-20T12:55:56.731026098Z [2025-05-20 12:55:56 +0000] [8] [INFO] Worker exiting (pid: 8)
+2025-05-20T12:55:57.831412056Z /usr/local/lib/python3.8/os.py:1023: RuntimeWarning: line buffering (buffering=1) isn't supported in binary mode, the default buffer size will be used
+2025-05-20T12:55:57.831437008Z   return io.open(fd, *args, **kwargs)
+2025-05-20T12:55:57.831442238Z [2025-05-20 12:55:57 +0000] [6] [INFO] Shutting down: Master
+2025-05-20T12:55:57.831452239Z [2025-05-20 12:55:57 +0000] [6] [INFO] Reason: Worker failed to boot.
+2025-05-20T12:56:06.889948665Z ==> No open HTTP ports detected on 0.0.0.0, continuing to scan...
+2025-05-20T12:56:21.728609683Z [2025-05-20 12:56:21 +0000] [7] [INFO] Starting gunicorn 19.9.0
+2025-05-20T12:56:21.728928784Z [2025-05-20 12:56:21 +0000] [7] [INFO] Listening at: http://0.0.0.0:5000 (7)
+2025-05-20T12:56:21.728976847Z [2025-05-20 12:56:21 +0000] [7] [INFO] Using worker: threads
+2025-05-20T12:56:21.733092299Z /usr/local/lib/python3.8/os.py:1023: RuntimeWarning: line buffering (buffering=1) isn't supported in binary mode, the default buffer size will be used
+2025-05-20T12:56:21.73310588Z   return io.open(fd, *args, **kwargs)
+2025-05-20T12:56:21.73310954Z [2025-05-20 12:56:21 +0000] [9] [INFO] Booting worker with pid: 9
+2025-05-20T12:56:21.805848758Z /usr/local/lib/python3.8/os.py:1023: RuntimeWarning: line buffering (buffering=1) isn't supported in binary mode, the default buffer size will be used
+2025-05-20T12:56:21.805868159Z   return io.open(fd, *args, **kwargs)
+2025-05-20T12:56:21.805871849Z [2025-05-20 12:56:21 +0000] [10] [INFO] Booting worker with pid: 10
